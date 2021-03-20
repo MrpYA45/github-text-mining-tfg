@@ -1,0 +1,1039 @@
+{
+    "url": "https://github.com/dmlls/jizt-tfg",
+    "issues": {
+        "815803267": {
+            "title": "¡El proyecto continua! 🚀",
+            "description": "El proyecto Jizt continuará a partir de ahora [aquí](https://github.com/jizt-it).\r\n\r\nEste respositorio se archivará a fin de preservarlo tal y como se presentó en la entrega del TFG. De este modo, futuros estudiantes podrán consultarlo como referencia cuando se encuentren realizando su propio TFG.\r\n\r\nSe han actualizado los *links* en la Memoria, Anexos y documentación en línea, para que apunten a sus correspondientes repositorios, de forma que se mantengan invariables en el tiempo (ya que el dominio de jizt.it seguirá siendo usado para el futuro desarrollo del proyecto).\r\n\r\nLos *links* correspondientes son:\r\n\r\n- *Landing page*: https://dmlls.github.io/jizt-tfg-website.\r\n- *Web App*: https://dmlls.github.io/jizt-tfg-app.\r\n- Documentación: https://dmlls.github.io/jizt-tfg.\r\n- Especificación de la API REST: https://dmlls.github.io/jizt-tfg-api-docs.\r\n- Kanban: [link](https://web.archive.org/web/20210224162004/https://board.jizt.it/public/board/c08ea3322e2876652a0581e79d6430e2dc0c27720d8a06d7853e84c3cd2b).\r\n\r\nEstos *links* por tanto, se mantendrán invariables a lo largo del tiempo, y representan el estado del proyecto tal y como se encontraba a la hora de realizar la entrega del TFG.",
+            "labels": [],
+            "comments": []
+        },
+        "813260279": {
+            "title": "[Web] El botón de compartir no funciona",
+            "description": "**Describe el error:**\r\nEl botón de compartir (en web) no funciona y tampoco muestra ningún mensaje de que dicha funcionalidad no esté soportada.\r\n\r\n**Pasos para reproduccir:**\r\nAbrir un navegador (Firefox en mi caso):\r\n1. Resumir cualquier texto.\r\n2. Pulsar el botón de compartir del resumen generado.\r\n\r\n**Resultados esperados:**\r\nEntiendo que debería indicar que la funcionalidad no está todavía soportada o que abra una ventana con las opciones de compartir.\r\n\r\n**Resultados obtenidos:**\r\nSimplemente no hace nada.\r\n\r\n**Información adicional:**\r\nEsto ocurre en la versión web, se ha probado en Firefox y Chrome.\r\n",
+            "labels": [
+                "bug"
+            ],
+            "comments": [
+                {
+                    "785163879": "Resuelto en https://github.com/dmlls/jizt-app/commit/2ecdd2a5631a96db955564403135f56393064940.\r\n\r\nEn la versión web, solo se muestra el botón de copiar."
+                }
+            ]
+        },
+        "810113796": {
+            "title": "Cross-Origin Request Blocked",
+            "description": "**Describe el error:**\r\nEl navegador bloquea la *request* de la *web app* a la API REST porque el subdominio desde el que se hace (app.jizt.it), es diferente del subdominio de la API REST (api.jizt.it). Esto indica que la política de CORS no está configurada correctamente en la API REST.\r\n\r\n**Pasos para reproduccir:**\r\nEntrar a la *web app*. Escribir resumen y pulsar en \"Summarize\".\r\n\r\n**Resultados esperados:**\r\nObtener resumen.\r\n\r\n**Resultados obtenidos:**\r\n\"oops try again!\"\r\n\r\nLog de la consola:\r\n```\r\nCross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at\r\nhttps://api.jizt.it/v1/summaries/plain-text. (Reason: CORS header ‘Access-Control-Allow-Origin’\r\nmissing).\r\n```\r\n",
+            "labels": [
+                "bug"
+            ],
+            "comments": []
+        },
+        "809175137": {
+            "title": "[Memoria y Anexos] Últimos retoques y correcciones",
+            "description": "",
+            "labels": [
+                "enhancement"
+            ],
+            "comments": [
+                {
+                    "782716100": "La documentación completa (incluyendo Memoria y Anexos) se puede encontrar en línea en [docs.jizt.it](https://docs.jizt.it)."
+                }
+            ]
+        },
+        "809148617": {
+            "title": "Actualizar READMEs",
+            "description": "Actualizar los README de los repositorios de JIZT (https://github.com/dmlls/jizt) y JIZT App (https://github.com/dmlls/jizt).",
+            "labels": [
+                "enhancement"
+            ],
+            "comments": []
+        },
+        "808499084": {
+            "title": "[Docs] Crear documentación en línea con Sphinx",
+            "description": "Pasar la Memoria, Anexos y otros contenidos a Sphinx para poder publicarlos en línea.",
+            "labels": [
+                "documentation"
+            ],
+            "comments": [
+                {
+                    "779711833": "Documentación en línea disponible a través de [docs.jizt.it](https://docs.jizt.it).\r\n\r\n![Screenshot_20210216_104003](https://user-images.githubusercontent.com/22967053/108045091-59fffb00-7043-11eb-89dc-6d8399a49052.png)\r\n"
+                }
+            ]
+        },
+        "807326673": {
+            "title": "[App] Implementar diseño final de la aplicación",
+            "description": "",
+            "labels": [
+                "feature"
+            ],
+            "comments": [
+                {
+                    "782715593": "Resultado en [app.jizt.it](https://app.jizt.it)."
+                }
+            ]
+        },
+        "803078053": {
+            "title": "[API] Añadir tests a CI/CD",
+            "description": "",
+            "labels": [
+                "feature"
+            ],
+            "comments": []
+        },
+        "803077594": {
+            "title": "[Memoria] Escribir Anexos",
+            "description": "",
+            "labels": [
+                "documentation"
+            ],
+            "comments": []
+        },
+        "803077462": {
+            "title": "Actualizar landing page",
+            "description": "Crear una página de presentación que incluya los aspectos más relevantes de JIZT, así como un _link_ a la _web-app_.\r\n\r\nDicha página reemplazará a la actual https://www.jizt.it (¡por fin!).",
+            "labels": [
+                "feature"
+            ],
+            "comments": []
+        },
+        "803076935": {
+            "title": "[API] Implementar tests",
+            "description": "",
+            "labels": [
+                "test"
+            ],
+            "comments": []
+        },
+        "802813072": {
+            "title": "[App] Implementar capa de caché",
+            "description": "La aplicación contará con una base de datos local que, además de almacenar los resúmenes generados previamente, operará como capa de caché, de forma que si un resumen ya se ha generado previamente, se recuperará directamente de la base de datos local, sin necesidad de hacer una nueva petición a la API.",
+            "labels": [
+                "feature"
+            ],
+            "comments": [
+                {
+                    "774559578": "Implementado en https://github.com/dmlls/jizt-app/commit/1103847f1e92b18b3a2921be9b288144429864eb."
+                }
+            ]
+        },
+        "802274016": {
+            "title": "[App] Implementar la pantalla de detalle de resumen",
+            "description": "Esta pantalla contendrá el texto original, el resumen generado, y metadatos como la hora de inicio y final de la generación del resumen, modelo empleado, parámetros del resúmen, etc.",
+            "labels": [
+                "feature"
+            ],
+            "comments": [
+                {
+                    "775569356": "Implementado en https://github.com/dmlls/jizt-app/commit/abb4c5423615b6f6b0a714c8403af59a84cc64f6."
+                }
+            ]
+        },
+        "802267031": {
+            "title": "[App] Implementar la pantalla de historial de resúmenes",
+            "description": "Esta pantalla contendrá los resúmenes generados previamente, almacenados localmente en el dispositivo.",
+            "labels": [
+                "feature"
+            ],
+            "comments": [
+                {
+                    "774779359": "Implementado en https://github.com/dmlls/jizt-app/commit/b1fd1beb099addc578fe8676d968e3cdbe0d5a76."
+                }
+            ]
+        },
+        "801954498": {
+            "title": "Habilitar CI/CD",
+            "description": "Haremos uso de GitHub Actions para desplegar JIZT de forma automática en GKE cada vez que hagamos un commit en la rama `main`.\r\n\r\n[Más información](https://docs.github.com/en/actions/guides/deploying-to-google-kubernetes-engine).",
+            "labels": [
+                "feature"
+            ],
+            "comments": []
+        },
+        "798120767": {
+            "title": "[Memoria] Escribir Conclusiones y Líneas de trabajo futuras",
+            "description": "",
+            "labels": [
+                "documentation"
+            ],
+            "comments": []
+        },
+        "798120108": {
+            "title": "[Memoria] Escribir Aspectos relevantes",
+            "description": "",
+            "labels": [
+                "documentation"
+            ],
+            "comments": []
+        },
+        "798119082": {
+            "title": "[Memoria] Escribir Trabajos relacionados",
+            "description": "",
+            "labels": [
+                "documentation"
+            ],
+            "comments": []
+        },
+        "798112978": {
+            "title": "[App] Implementar la pantalla principal",
+            "description": "Según nuestros diseños, tendrá un aspecto similar al siguiente:\r\n\r\n<img src=\"https://user-images.githubusercontent.com/22967053/106012870-2709bd80-60bc-11eb-9885-670ce1e0206c.png\" alt=\"drawing\" width=\"400\"/>\r\n",
+            "labels": [
+                "feature"
+            ],
+            "comments": [
+                {
+                    "773661939": "Implementado en https://github.com/dmlls/jizt-app/commit/e4521a281c68b8f222be95a5c2b6614ad3da7b2c."
+                }
+            ]
+        },
+        "798108681": {
+            "title": "[App] Añadir observador BLoC",
+            "description": "El objetivo del patrón BLoC es separar la presentación de la lógica de negocio.\r\n\r\nSe puede encontrar una buena introducción al patrón BLoC en Flutter [aquí](https://vipinvijayannair.medium.com/bloc-pattern-in-flutter-explained-with-real-example-f1af2568d32d).\r\n\r\nPara facilitarnos su implementación, emplearemos el paquete [`bloc`](https://pub.dev/packages/bloc).",
+            "labels": [
+                "feature"
+            ],
+            "comments": [
+                {
+                    "772713026": "Implementado en https://github.com/dmlls/jizt-app/commit/6f08625b3868f20a939e10d8c8d1d94ee8ec45cf."
+                }
+            ]
+        },
+        "797695350": {
+            "title": "[Cliente] Implementar patrón repositorio",
+            "description": "",
+            "labels": [
+                "feature"
+            ],
+            "comments": [
+                {
+                    "770664125": "Implementado en https://github.com/dmlls/jizt-app/commit/94e32d020cab2c1c0346298897538cad58ea633e."
+                }
+            ]
+        },
+        "797562749": {
+            "title": "[API] Publicar documentación ",
+            "description": "",
+            "labels": [
+                "documentation"
+            ],
+            "comments": [
+                {
+                    "770662120": "Documentación publicada en [docs.api.jizt.it](https://docs.api.jizt.it/).\r\n\r\nSe hace uso de [GitHub Pages](https://pages.github.com/) para su alojamiento. Se puede acceder al repositorio correspondiente a la documentación [aquí](https://github.com/dmlls/jizt-api-docs).\r\n\r\nPara más información, ver #91."
+                }
+            ]
+        },
+        "796861007": {
+            "title": "[Encoder] Optimización del algoritmo de división del texto",
+            "description": "Al momento de escribir en la memoria la parte relativa a la codificación de texto, nos hemos dado cuenta de que la forma en la que dividíamos el texto se puede mejorar.\r\n\r\nAnteriormente, realizábamos una aproximación del número de _tókenes_ que tendría una frase una vez codificada. Si dicha aproximación había resultado incorrecta, teníamos que corregirla y ejecutar de nuevo el algoritmo, así hasta que fuera correcta. Esto lo hacíamos tratando de conseguir un algoritmo general, válido para cualquier modelo. Sin embargo, con la arquitectura de microservicios actual, cada _encoder_ de cada modelo es un servicio por separado, por lo que podemos escribir dicho algoritmo de forma que se ajuste al funcionamiento concreto del modelo que estamos utilizando.\r\n\r\nPor ello, dado que usamos el modelo T5, ajustaremos el algoritmo a la forma en la que dicho modelo codifica el texto. Esto nos permite calcular exactamente (es decir, sin aproximaciones, como sucedía anteriormente) el número de _tókenes_ que le corresponderán a cada frase.\r\n\r\nAdemás, dado que prácticamente hay que reescribir el código completo, intentaremos optimizarlo, ya de paso. Una mejora clara puede ser utilizar solo los índices de las frases (enteros) en vez de trabajar directamente con estas (_strings_).",
+            "labels": [
+                "enhancement"
+            ],
+            "comments": [
+                {
+                    "770075748": "Hemos utilizado el siguiente _script_ para comparar los rendimientos de la versión antigua y la nueva:\r\n\r\n```Python\r\nimport timeit\r\nfrom text_encoding import SplitterEncoder as old\r\nfrom text_encoding_new import SplitterEncoder as new\r\n\r\ndef wrapper(func, *args, **kwargs):\r\n    def wrapped():\r\n        return func(*args, **kwargs)\r\n    return wrapped\r\n\r\nif __name__ == \"__main__\":\r\n    with open(\"article_6.txt\", \"r\") as file:\r\n        text = \" \".join(file.readlines())\r\n    print(\"Longitud del texto:\", len(text), \"caracteres.\")\r\n\r\n    tk_old = old()\r\n    tk_new = new()\r\n\r\n    wrapped = wrapper(tk_old.encode, text)\r\n    print(\"Encoder antiguo:\", timeit.timeit(wrapped, number=20), \"segundos.\")\r\n\r\n    wrapped = wrapper(tk_new.encode, text)\r\n    print(\"Encoder nuevo:  \", timeit.timeit(wrapped, number=20), \"segundos.\")\r\n```\r\n\r\nLa mejora es clara:\r\n```\r\nLongitud del texto:   119298 caracteres.\r\nEncoder antiguo:      25.57345193799847 segundos.\r\nEncoder nuevo:        7.182184395998775 segundos.\r\n```\r\n\r\n"
+                }
+            ]
+        },
+        "795211570": {
+            "title": "[Memoria] Escribir técnicas y herramientas",
+            "description": "",
+            "labels": [
+                "documentation"
+            ],
+            "comments": []
+        },
+        "795209360": {
+            "title": "[App] Implementar la consumición de la API REST",
+            "description": "",
+            "labels": [
+                "feature"
+            ],
+            "comments": [
+                {
+                    "769958977": "Implementado en https://github.com/dmlls/jizt-app/commit/bcb2c630141d4a1f5a401c03d03f478f651c8ea0."
+                }
+            ]
+        },
+        "794126537": {
+            "title": "[Memoria] Escribir conceptos teóricos",
+            "description": "",
+            "labels": [
+                "documentation"
+            ],
+            "comments": []
+        },
+        "794126066": {
+            "title": "[Memoria] Escribir objetivos del proyecto",
+            "description": "",
+            "labels": [
+                "documentation"
+            ],
+            "comments": []
+        },
+        "794122736": {
+            "title": "[Memoria] Escribir Introducción",
+            "description": "",
+            "labels": [
+                "documentation"
+            ],
+            "comments": []
+        },
+        "792788502": {
+            "title": "[Documentación] REST API",
+            "description": "Para documentar la REST API se empleará [Swagger](https://swagger.io/) y [ReDoc](https://github.com/Redocly/redoc), los cuales permiten crear de manera sencilla documentación siguiendo la especificación [OpenAI](https://swagger.io/docs/specification/about/).",
+            "labels": [
+                "documentation"
+            ],
+            "comments": []
+        },
+        "792636317": {
+            "title": "[Truecase] Posición incorrecta de símbolos",
+            "description": "JIZT emplea el módulo [`truecase`](https://github.com/daltonfury42/truecase) para recomponer las mayúsculas en el texto resumido (dado que el modelo T5 devuelve el texto en minúsculas).\r\n\r\nEste módulo presenta un _bug_ ya reportado en el [repositorio del proyecto](https://github.com/daltonfury42/truecase/issues/5), que causa que los símbolos que aparecen en el texto no sean colocados correctamente una vez ejecutado el programa. Por ejemplo, el siguiente texto:\r\n```\r\n\"mark wouldn't pay $10 for that.\"\r\n```\r\nse procesa como:\r\n```\r\n\"Mark wouldn't pay$ 10 for that.\"\r\n```\r\nYa que el _bug_ lleva más de un año reportado y nadie parece haberse puesto a solucionarlo, tendremos que intentar resolverlo nosotros.",
+            "labels": [
+                "bug"
+            ],
+            "comments": [
+                {
+                    "766172175": "Este _bug_ afecta a todo tipo de símbolos, también a las comillas:\r\n```\r\nthe president said \"we will bring confrontation to an end\"\r\n```\r\nla primera comlla se coloca erróneamente:\r\n```\r\nThe President said\" we will bring confrontation to an end\"\r\n```"
+                }
+            ]
+        },
+        "792582760": {
+            "title": "[App] Diseño UI/UX",
+            "description": "",
+            "labels": [
+                "feature"
+            ],
+            "comments": [
+                {
+                    "768367452": "Se han creado unos diseños preliminares. La implementación intentará seguir dichos diseños, adaptando aquellos aspectos que resulten más complicados de llevar a código.\r\n\r\n<img src=\"https://user-images.githubusercontent.com/22967053/106012870-2709bd80-60bc-11eb-9885-670ce1e0206c.png\" alt=\"drawing\" width=\"400\"/>\r\n\r\n<img src=\"https://user-images.githubusercontent.com/22967053/106012926-3ab52400-60bc-11eb-842b-6a96f5fc4c68.png\" alt=\"drawing\" width=\"400\"/>\r\n\r\n"
+                }
+            ]
+        },
+        "792582196": {
+            "title": "[App] Diseño de la Arquitectura",
+            "description": "",
+            "labels": [
+                "feature"
+            ],
+            "comments": [
+                {
+                    "774778853": "![jizt-app-arch](https://user-images.githubusercontent.com/22967053/107161143-f6b6fe80-699a-11eb-816d-271ca9d818df.png)\r\n\r\nSe puede encontrar la explicación de este diagrama en la [memoria](https://raw.githubusercontent.com/dmlls/jizt/doc/tex/docs/latex/memoria.pdf), en la sección 5.2, apartado \"Desarrollo de la aplicación\"."
+                }
+            ]
+        },
+        "792511610": {
+            "title": "[App] Crear repositorio",
+            "description": "Crear repositorio para alojar el primer cliente oficial de JIZT.\r\n\r\nLas historias de usuario correspondientes tanto al actual repositorio, como al nuevo repositorio a ser creado, seguirán publicándose en este espacio, a fin de mantener un punto centralizado de documentación.",
+            "labels": [
+                "feature"
+            ],
+            "comments": [
+                {
+                    "766336173": "Repositorio disponible [aquí](https://github.com/dmlls/jizt-client)."
+                }
+            ]
+        },
+        "792381962": {
+            "title": "[Postgres] Values larger than 1/3 of a buffer page cannot be indexed",
+            "description": "**Describe el error:**\r\nPostgreSQL devuelve el siguiente mensaje de error:\r\n\r\n```\r\n22/01/2021 08:21:17 PM SummaryDAOPostgresql ERROR    index row size 4592 exceeds btree version 4 maximum 2704 for index \"source_content_key\"\r\nDETAIL:  Index row references tuple (0,1) in relation \"source\".\r\nHINT:  Values larger than 1/3 of a buffer page cannot be indexed.\r\nConsider a function index of an MD5 hash of the value, or use full text indexing.\r\n```\r\n\r\nEl mensaje es lo suficiente descriptivo por sí mismo: el campo `content` de la tabla `source` (es decir, el texto a resumir) es demasiado largo para ser indexado. Esto ocurre porque lo hemos definido como `UNIQUE`.\r\n\r\n**Pasos para reproduccir:**\r\nTratar de resumir un texto muy largo.\r\n\r\n**Información adicional:**\r\nPara solucionarlo, podeoms proceder de modo similar a como lo hacemos con la tabla de resúmenes; aplicado a este caso, calcular un _hash_ SHA-2 del texto a resumir, y utilizar ese valor como `PRIMARY KEY` de la tabla.\r\n\r\n",
+            "labels": [
+                "bug"
+            ],
+            "comments": []
+        },
+        "790366689": {
+            "title": "[API] Incluir todos los parámetros de resumen",
+            "description": "Esta historia de usuario tiene como objetivo ampliar la especificación de la API para que los clientes puedan especificar todos los parámetros con los que quieren realizar el resumen.",
+            "labels": [
+                "enhancement"
+            ],
+            "comments": []
+        },
+        "787699248": {
+            "title": "Crear clúster PostgreSQL y proveer schemas iniciales",
+            "description": "Una vez instalado el operador de PostgreSQL, se creará un nuevo [clúster PostgreSQL](https://crunchydata.github.io/postgres-operator/latest/pgo-client/reference/pgo_create_cluster/).\r\n\r\nA continuación, se proveerán las tablas iniciales haciendo uso del script [ `schemas.sql`](https://github.com/dmlls/jizt/blob/main/src/services/postgres/schemas.sql).",
+            "labels": [
+                "feature"
+            ],
+            "comments": []
+        },
+        "787698673": {
+            "title": "Desplegar postgresql-operator en GKE",
+            "description": "Instalar y desplegar [postgresql-operator](https://crunchydata.github.io/postgres-operator/latest/tutorial/connect-cluster/). Dicho operador facilita las labores de escalado, balanceo, _backup_, _failover_, etc., de nuestra base de datos PostgreSQL, ofreciendo lo que se conoce como \"PostgreSQL como servicio\".",
+            "labels": [
+                "feature"
+            ],
+            "comments": []
+        },
+        "787434557": {
+            "title": "[Dispatcher] Diseño E/R de la BD",
+            "description": "Como se indica en #67, el Dispatcher hará uso de una base de datos con dos objetivos fundamentales:\r\n\r\n- Detectar cuándo un resumen ya ha sido generado, a fin de no volver a generarlo de nuevo, lo cual es un proceso que puede dilatarse en el tiempo (varios segundos). En caso de que el resumen de un determinado texto ya exista, se recuperará de la base de datos, siendo la respuesta instantánea.\r\n- Almacenar información valiosa con el fin de llevar a cabo futuras evaluaciones de los resúmenes. Por ejemplo, se podría evaluar y comparar la calidad de los resúmenes generados por los diferentes modelos.\r\n\r\nComo SGBD hemos escogido [PostgreSQL](https://www.postgresql.org/), debido a su relativamente sencillo despliegue en Kubernetes a través de [postgres-operator](https://github.com/CrunchyData/postgres-operator), y a su reconocido prestigio como SGBD.\r\n\r\nEl modelo E/R para nuestra base de datos es simple por el momento. No obstante, existe un detalle que da lugar a varias posibles implementaciones. Se trata de los parámetros del resumen, los cuales no son fijos: podrían variar entre los diferentes modelos, familias de modelos, o simplemente de quién lo implemente.\r\n\r\nEsto da lugar principalmente a tres posibles diseños.\r\n\r\n### 1. Parámetros separados en otra tabla\r\n\r\nEste enfoque consistiría en extraer los parámetros en una tabla diferente a la tabla de los resúmenes. Esta tabla externa contendría los parámetros concretos de una determinada implementación. Por ejemplo, en nuestro caso, por el momento únicamente tendríamos la tabla  `hugging_face_params`:\r\n\r\n![dispatcher-db-0 0 7](https://user-images.githubusercontent.com/22967053/104958694-c51cca00-59d0-11eb-88da-528916ba420e.png)\r\n\r\nEn cuanto a la explicación de algunos de los campos/tablas que aparecen en el diagrama:\r\n- `source`: es la tabla que almacena el texto fuente de los resúmenes, es decir, el texto a resumir. Este texto puede ser arbitrariamente largo, por lo que tiene sentido recogerlo en una tabla aparte, para evitar duplicaciones en el caso de que se generen varios resúmenes de él con diferentes modelos/parámetros.\r\n- Los diferentes modelos, recogidos en la tabla `model`, se agrupan en familias, `model_family`. Ejemplos de familias serían T5 o BART, cada una de ellas agrupando diferentes modelos: `t5-small`, `t5-base`, `t5-large`..., y `bart-base`, `bart-large`, `bart-large-cnn`..., respectivamente. Las familias de modelos tienen además un autor o autores, es decir, quién las ha inventado. Estos autores puede que formen parte de una organización, universidad o empresa. Por ejemplo, en el caso de T5, los autores serían Colin Raffel et al., y la organización Google.\r\n- La tabla de `vendor` indica de quién procecede la implementación de un determinado modelo. Por ejemplo, Hugging Face.\r\n- Los campos `see` se utilizarán para almacenar _links_ de referencia. Esto podría ser útil a fin de mostrar al usuario mensajes como: \"Para más información, visita la página web de [Hugging Face](https://huggingface.co/)\".\r\n\r\nLa principal desventaja de esta implementación es que el diseño de las tablas de parámetros depende de factores externos, concretamente de la implementación que empleemos. Esto conlleva que si el día de mañana dicha implementación cambiase, tendríamos que adaptar nuestro diseño. Es decir, aumenta la _dependencia_ del mismo\r\n\r\nOtra posible desventaja sería que potencialmente podrían existir un elevado número de tablas de parámetros, lo que dificultaría la mantenibilidad.\r\n\r\n### 2. Todos los parámetros en una tabla, campos no relevantes a _null_\r\n\r\nUna segunda opción sería introducir todos los parámetros de las diferentes implementaciones en la propia tabla `summary`. Los parámetros que no se correspondiesen con el modelo con el que se ha generado el resumen, quedarían a _null_.\r\n\r\nEste diseño sigue estando fuertemente ligado a las implementaciones externas. Además, puede ser más propenso a errores, ya que de toda la lista de parámetros debemos saber cuáles son los relevantes para cada resumen. Asimismo, la mantenibilidad puede ser tediosa por las mismas razones que en el caso anterior.\r\n\r\n### 3. Campo único con tipo de datos JSON\r\n\r\nLa tercera opción pasaría por introducir todos los parámetros en único campo. Los SGBD modernos ofrecen el [tipo de datos JSON](https://www.postgresql.org/docs/9.4/datatype-json.html), que incluso permite realizar consultas basadas en las claves/valores de los propios documentos.\r\n\r\nSiguiendo este diseño, el modelo E/R quedaría:\r\n\r\n![dispatcher-db-0 0 9](https://user-images.githubusercontent.com/22967053/104958714-ccdc6e80-59d0-11eb-89e6-ae88051e5d1c.png)\r\n\r\nEste diseño resuelve, en principio, los principales incovenientes que encontrábamos en las anteriores opciones:\r\n- La dependencia de la implementacion externa es mínima. En el caso de que se produjera un cambio en cualquiera de las implementaciones externas, los resúmenes que hubieran sido generados con la anterior implementación conservarían los anteriores parámetros, y aquellos que se generaran posteriormente contendrían ya los nuevos.\r\n- El diseño se simplifica, facilitando el mantenimiento dado que no tenemos que encargarnos de actualizar las tablas de parámetros.",
+            "labels": [
+                "decision"
+            ],
+            "comments": [
+                {
+                    "761538006": "Una vez consideradas las diferentes opciones, se ha decidido que se seguirá la **opción 3**, por ser la más apropiada en nuestro caso."
+                }
+            ]
+        },
+        "782926022": {
+            "title": "[Formación] Primeros pasos con Flutter y Dart",
+            "description": "Como ejemplo de cliente que consume la API, se implementará un pequeño cliente que permita introducir el texto a resumir, y obtener el resumen del servidor una vez se haya generado.\r\n\r\nPara ello se empleará [Flutter](https://flutter.dev/) un *toolkit* de desarrollo de interfaces gráficas *open-source* creado por Google.\r\n\r\nLa gran ventaja y principal razón por la que se ha escogido Flutter para el desarrollo del cliente es que, con una única base de código, podemos generar la misma versión de nuestra aplicación para móvil, web y escritorio, en plataformas tan diversas como Linux, Windows, Android o iOS. Flutter se encarga de gestionar de manera transparente al desarrollador todas las diferencias tanto estéticas, como técnicas, de las diferentes plataformas.",
+            "labels": [
+                "research"
+            ],
+            "comments": []
+        },
+        "782889191": {
+            "title": "[Formación] Kubernetes & BDs",
+            "description": "Explorar las diferentes posibilidades que existen a la hora de implementar bases de datos en Kubernetes.",
+            "labels": [
+                "research"
+            ],
+            "comments": []
+        },
+        "782430400": {
+            "title": "[Ingress] Habililtar TLS/HTTPS",
+            "description": "",
+            "labels": [
+                "feature"
+            ],
+            "comments": [
+                {
+                    "757058617": "Por simplicidad, se empleará un [certificado SSL gestionado por Google](https://cloud.google.com/kubernetes-engine/docs/how-to/managed-certs)."
+                }
+            ]
+        },
+        "781983102": {
+            "title": "[Dispatcher] Implementar BD",
+            "description": "Actualmente, los *jobs ids* se almacenan en una variable como medida temporal antes de implementar una base de datos que almacene estos *ids*.\r\n\r\nSe implementará una base de datos PostgreSQL a través de un [*StatefulSet*](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/) de Kubernetes. Esta base de datos será accedida por todos los *pods* correspondientes al *Dispatcher*, de forma que compartan una misma fuente de datos.",
+            "labels": [
+                "feature"
+            ],
+            "comments": [
+                {
+                    "761840265": "Pasos seguidos:\r\n\r\n1. [Instalar y desplegar](https://crunchydata.github.io/postgres-operator/latest/installation/postgres-operator/) el operador PostgreSQL de Crunchy (#83).\r\n2. A través del operador, [crear un clúster](https://crunchydata.github.io/postgres-operator/latest/pgo-client/reference/pgo_create_cluster/) PostgreSQL con _autofail_ y [_backrest_](https://pgbackrest.org/) activados (#84).\r\n3. Ya dentro de PostgreSQL crear una base de datos llamada `jizt-db`.\r\n4. [Crear un rol](https://aws.amazon.com/blogs/database/managing-postgresql-users-and-roles/) no privilegiado llamado `dispatcher` con permisos de lectura y escritura, pero sin permisos de creación de tablas. Este será el rol que utilice el microservicio Dispatcher para conectarse a la base de datos.\r\n5. Crear un nuevo `schema` llamado `jizt` y proveerlo con las tablas iniciales (#84).\r\n6. Crear un [`Secret`](https://kubernetes.io/docs/concepts/configuration/secret/) almacenando el nombre de usuario y la contraseña del rol `dispatcher`. Estos datos, por tanto, NO aparecerán en el código fuente.\r\n7. Modificar la especificación del `Pod` correspondiente al Dispatcher para que [consuma](https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets-as-files-from-a-pod) el `Secret` creado en el paso anterior."
+                }
+            ]
+        },
+        "778995162": {
+            "title": "Desplegar la arquitectura completa en GKE",
+            "description": "Desplegar la arquitectura con todos los microservicios implementados (Dispatcher, Pre-procesador, Codificador, Motor de Resumen y Post-procesador) en Google Kubernetes Engine (GKE).",
+            "labels": [
+                "feature"
+            ],
+            "comments": []
+        },
+        "778991492": {
+            "title": "[Dispatcher] Hashes no inmutables",
+            "description": "**Describe el error:**\r\nActualmente, el Dispatcher emplea la función `hash` de Python para obtener un *id* único a partir de cada texto, de forma que dos textos idénticos tendrán el mismo *id*. Esto permite evitar repetir todo el proceso de resumen para textos que ya han sido procesados previamente.\r\n\r\nSin embargo, la función `hash`, a partir de Python 3.3, devuelve valores diferentes para el mismo objeto *hasheado* en distintas ejecuciones de Python. Esto significa que un mismo texto podría obtener dos *ids* diferentes.\r\n\r\n**Pasos para reproduccir:**\r\nEjecutar varias veces la función `hash` pasándole el mismo valor. Se obtendrán valores diferentes en cada ejecución (solo con Python 3.3+).\r\n\r\n**Resultados esperados:**\r\nUn mismo texto debería tener siempre el mismo *id*.\r\n\r\n**Resultados obtenidos:**\r\nUn mismo texto podría tener diferentes *ids*.\r\n\r\n**Información adicional:**\r\nUna solución podría ser emplear funciones de *hash* criptográficas, como SHA-2. Python incluye esta familia de funciones en el módulo `hashlib`. Estas funciones siempre devuelven el mismo *hash* para un mismo valor.\r\n",
+            "labels": [
+                "bug"
+            ],
+            "comments": []
+        },
+        "778751890": {
+            "title": "[Motor de resumen] Implementar servicio",
+            "description": "Implementar la codificación del texto, la lógica del productor y el consumidor de Kafka, y dockerizar el servicio.",
+            "labels": [
+                "feature"
+            ],
+            "comments": []
+        },
+        "778750565": {
+            "title": "[Motor de resumen] Implementar Helm templates",
+            "description": "Implementar los *Helm templates* para el *deployment*, *service* y Kafka *topic*. En el caso del *deployment*, el *template* difiere un poco del resto ya que tiene que configurar correctamente la conexión con el [GCE PersistentDisk](https://cloud.google.com/persistent-disk/) que aloja los modelos.",
+            "labels": [
+                "feature"
+            ],
+            "comments": []
+        },
+        "778749601": {
+            "title": "[Encoder] Implementar servicio",
+            "description": "Implementar la codificación del texto, la lógica del productor y el consumidor de Kafka, y dockerizar el servicio.",
+            "labels": [
+                "feature"
+            ],
+            "comments": []
+        },
+        "778748404": {
+            "title": "[Encoder] Implementar Helm templates",
+            "description": "Implementar los *Helm templates* para el *deployment*, *service* y Kafka *topic*. En el caso del *deployment*, el *template* difiere un poco del resto ya que tiene que configurar correctamente la conexión con el [GCE PersistentDisk](https://cloud.google.com/persistent-disk/) que aloja los modelos.",
+            "labels": [
+                "feature"
+            ],
+            "comments": []
+        },
+        "778464432": {
+            "title": "[Post-procesador] Implementar Helm templates",
+            "description": "Implementar los *Helm templates* para el *deployment*, *service* y Kafka *topic*.",
+            "labels": [
+                "feature"
+            ],
+            "comments": []
+        },
+        "777429764": {
+            "title": "[Bug] Kafka Consumer no se puede subscribir a topic",
+            "description": "**Describe el error:**\r\nAl instalar jizt con el [script de instalación](https://github.com/dmlls/jizt/blob/main/src/helm/install_jizt.sh) los *deployment* de los microservicios se inician antes que los *topics* de Kafka. Por ello, cuando los consumidores quieren subscribirse a un topic, no pueden hacerlo porque aún no existen, y fallan.\r\n\r\n**Pasos para reproduccir:**\r\n1. Ejecutar el [script de instalación](https://github.com/dmlls/jizt/blob/main/src/helm/install_jizt.sh).\r\n2. Esperar a que todos los componentes estén listos.\r\n3. Ejecutar `kubectl logs [nombre del pod del Dispatcher]` y ver los logs del pod. En ellos aparecerá el `KafkaError UNKNOWN_TOPIC_OR_PART`, clarificando que el consumidor no se ha podido subscribir al *topic* `ready-topic`.\r\n\r\n**Resultados esperados:**\r\nLos consumidores deberían subscribirse correctamente a los *topics*. Para ello, es necesario que los *topics* se inicialicen antes que los microservicios.\r\n\r\n**Resultados obtenidos:**\r\nLos consumidores intentan subscribirse a *topics* que aún no han sido creados, y fallan.\r\n\r\n**Información adicional:**\r\nUna posible solución podría ser emplear [*chart hooks* de Helm](https://helm.sh/docs/topics/charts_hooks/), que permiten especificar cuándo se debe instalar un componente, p. ej., `post-install` espera a que el resto de componentes hayan sido cargados en Kubernetes para instalar un determinado componente.\r\n",
+            "labels": [
+                "bug"
+            ],
+            "comments": [
+                {
+                    "753532808": "Helm dispone de la opción [`--wait`](https://helm.sh/docs/helm/helm_install/#options) a la hora de ejecutar el comando `helm install`. Con esta opción, Helm espera a que todos los componentes hayan sido cargados en el *cluster* y que además estén listos.\r\n\r\nSin embargo, esta opción no funciona correctamente junto con los CDR ([*CustomResourceDefinitions*](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/) de Strimzi. Debido a esto, los microservicios de JIZT, más ligeros que `strimzi-operator`, se cargan e inician antes, lo cual es algo indeseado puesto que dichos microservicios requieren que `strimzi-operator` esté listo.\r\n\r\nAl no funcionar `--wait`, el uso de los [*chart hooks* de Helm](https://helm.sh/docs/topics/charts_hooks/) no tiene efecto. Por lo tanto no los podemos utilizar.\r\n\r\nComo *workaround*, se ha modificado el  [script de instalación](https://github.com/dmlls/jizt/blob/main/src/helm/install_jizt.sh), de forma que, antes de instalar `strimzi-operator` oculta los ficheros de los componentes propios de JIZT. Una vez instalado `strimzi-operator`, vuelve a restablecer dichos ficheros y actualiza la instalación. De esta forma, conseguimos instalar los componentes en el orden correcto."
+                }
+            ]
+        },
+        "777084006": {
+            "title": "[GKE] Desplegar versión reducida de la arquitectura",
+            "description": "Como se ha mencionado en otras Issues, por el momento nuestra versión reducida de la arquitectura ha sido probada en local.\r\n\r\nEl siguente paso es desplegarla en \"la nube\", haciendo uso de [Google Kubernetes Engine (GKE)](https://cloud.google.com/kubernetes-engine/).",
+            "labels": [
+                "feature"
+            ],
+            "comments": []
+        },
+        "777080728": {
+            "title": "[Formación] Google Kubernetes Engine (GKE)",
+            "description": "Dado a que desplegaremos nuestra aplicación en Google Cloud, este *cloud provider* nos ofrece una solución, [Google Kubernetes Engine (GKE)](https://cloud.google.com/kubernetes-engine/), que facilita la labor de gestión de los diferentes componentes de Kubernetes.\r\n\r\nPor el momento, el despliegue parcial que ya hemos implementado (incluyendo Ingress, el *Dispatcher* y el Pre-procesador de textos) solo ha sido ejecutado de manera local, haciendo uso de [minikube](https://minikube.sigs.k8s.io/docs/). El siguiente paso es instalarlo en \"la nube\", como decíamos, con ayuda de GKE.",
+            "labels": [
+                "research"
+            ],
+            "comments": []
+        },
+        "776622745": {
+            "title": "Diseño de la Arquitectura de JIZT",
+            "description": "[JIZT](https://www.jizt.it/) empleará una arquitectura basada en microservicios ([*microservices architecture*](https://docs.microsoft.com/en-us/dotnet/architecture/microservices/architect-microservice-container-applications/microservices-architecture), en inglés). Este tipo de arquitectura se contrapone a las arquitecturas monolíticas, en las cuales los diferentes componentes están estrechamente interrelacionados.\r\n\r\nEn nuestro caso, requerimos de una arquitectura en la que las dependencias entre los diferentes componentes sean lo más flexibles posibles. Esto se debe a que existen numerosos modelos de generación de resúmenes, y queremos poder darle la opción al usuario de elegir qué modelo emplear.\r\n\r\nAdemás, el campo del Procesamiento de Lenguaje Natural (NLP, por sus siglas en inglés) es un área bajo activo desarrollo, en el que aparecen modelos más y más potentes cada pocos meses. Por ello, nuestra arquitectura debe ser capaz de adaptarse a estos cambios de manera local, de forma que el reemplazo de un componente sea transparente al resto.\r\n\r\nEn un principio existirán los siguientes microservicios:\r\n\r\n- ***Dispatcher***: se encargará de dar comienzo al procesado del texto, gestionando el asincronismo de la API REST (explicado más adelante). En un principio, redigirá todas las peticiones entrantes hacia el *Pre-procesador de textos*. No obstante, en un futuro podría añadirse otro microservicio, por ejemplo, un *Pre-procesador de hilos de Twitter*, que se encargaría de extraer el texto de un *thread* de Twitter y pre-procesarlo adecuadamente. En este caso, el *Dispatcher* debería ser capaz de detectar que la petición contiene un *link* a una conversación de Twitter, y la redirigiría hacia el *Pre-procesador de hilos de Twitter*, y no hacia el *Pre-procesador de textos*.\r\n- ***Pre-procesador de textos (Text Pre-processor)***: este microservicio se encarga de pre-procesar textos \"planos\" en formato UTF-8, a fin de adecuarlos para su posterior resumen por parte del motor de resumen.\r\n- ***Codificador de textos (Text Encoder)***: una vez el texto ha sido pre-procesado, es necesario \"codificarlo\". Este proceso consiste en, dicho de manera informal y simplificada, \"traducir\" las palabras del texto a vectores de números. Con estos vectores son los que trabaja a continuación por el motor de resumen, para generar, valga la redundancia, los resúmenes. Existen diferentes modelos que se pueden emplear en la codificación del texto, por lo que este microservicio, en un futuro, podría dividirse en varios. Por ahora solo se empleará el codificador [`t5-large`](https://huggingface.co/t5-large) de [Hugging Face](https://huggingface.co).\r\n- ***Motor de resumen (Text Summarizer)***: aquí es donde se genera el resumen en sí. De nuevo, al igual que para la codificación del texto, se pueden encontrar una gran variedad de modelos para la generación de resúmenes, por lo que este microservicio también se podría dividir en varios. De momento, solo se empleará el modelo [`t5-large`](https://huggingface.co/t5-large) de [Hugging Face](https://huggingface.co).\r\n- ***Post-procesador (Text post-processor)***: el texto de salida del motor de resumen puede no ser completamente adecuado para entregar al cliente como resultado final. Por ejemplo, el ya mencionado modelo `t5-large` genera los resúmenes en minúsculas, por lo que una de las tareas de post-procesado ha de consistir en poner mayúsculas allá donde se requiera.\r\n\r\nLos anteriores microservicios se ejecutarán dentro de contenedores [Docker](https://www.docker.com/) orquestrados mediante [Kubernetes](https://kubernetes.io/), de forma que el número de contenedores en ejecución se pueda escalar de manera automatizada para adaptarse a las demandas de los clientes.\r\n\r\nExisten dos cuestiones fundamentales a abordar a la hora de emplear este tipo de arquitectura:\r\n\r\n1. La generación de resúmenes es una tarea que se puede dilatar varios segundos en el tiempo, dependiendo de factores como la longitud del texto o de los parámetros con los que se quiera generar el resumen. Por lo tanto, realizar peticiones HTTP síncronas queda descartado, puesto que estas no se pueden mantener activas durante periodos de tiempo tan prolongados. La pregunta es: ¿cómo se gestionará el asincronismo?\r\n\r\n2. El proceso de resumen de los textos es principalmente secuencial, de forma que las salidas de unos microservicios será las entradas de los siguientes. Por tanto, la siguiente pregunta es: ¿cómo se llevará a cabo la comunicación entre ellos? Y, ¿cómo sabrá un microservicio a que otro microservicio debe enviarle su *output*?\r\n\r\n### 1. Asincronismo\r\nLa solución para evitar llevar a cabo peticiones HTTP demasiado largas es simplemente no tener que hacerlas. Nuestra API proporcionará un mecanismo para ello. Veamos como funciona.\r\n\r\n#### 1.1 Petición HTTP POST\r\nEl cliente comienza realizando una petición POST incluyendo en el cuerpo de la petición el texto que quiere resumir. La API le responde con un identificador único del resumen, el `summary_id`:\r\n\r\n![0 0 6_logic_1](https://user-images.githubusercontent.com/22967053/107127564-34daf200-68b7-11eb-97c4-eaf4195b4562.png)\r\n\r\n#### 1.2 Peticiones HTTP GET sucesivas\r\nEn ese momento, el cliente puede llevar a cabo peticiones HTTP GET con el *id*del resumen de manera periódica a fin de consultar el estado del mismo. Los diferentes estados en los que un resumen puede estar son:\r\n- `pre-processing`: el texto está siendo pre-procesado.\r\n- `encoding`:  el texto está siendo codificado.\r\n- `summarizing`: se está generando el resumen.\r\n- `post-processing`: el texto está siendo post-procesado.\r\n- `completed`: el resumen ha sido completado.\r\n\r\n![0 0 6_logic_2](https://user-images.githubusercontent.com/22967053/107127752-7d46df80-68b8-11eb-8142-10564e781d31.png)\r\n\r\nUna de las principales ventajas de poder consultar el estado del resumen es poder ofrecerle al usuario retroalimentación acerca del proceso de resumen, ya que de lo contrario no podría saber si el sistema se ha quedado \"colgado\" o sigue trabajando.\r\n\r\n#### 1.3 Petición HTTP GET final\r\nEn algún momento, el estado del resumen pasará a ser `completed` y la respuesta contendrá el resumen generado:\r\n\r\n![0 0 6_logic_3](https://user-images.githubusercontent.com/22967053/107127585-5805a180-68b7-11eb-9ae0-8a2b9903a81e.png)\r\n\r\nLos diferentes resúmenes  se almacenarán en una base de datos gestionada por el *Dispatcher*, de manera que:\r\n1. Cuando el *Dispatcher* recibe una petición POST, lo primero que hace es calcular un `summary_id` y ver si este ya existe en la base de datos. El `summary_id` se genera de tal forma que dos textos idénticos tendrán el mismo `summary_id`. Por tanto, si un texto ya hubiera sido resumido anteriormente, no se volvería a generar su resumen, si no que se recuperaría de la base de datos.\r\n2. Si el texto no hubiera sido resumido previamente, el *Dispatcher* pasaría el texto a resumir al Pre-procesador de textos. Además, almacenaría el resumen en la base de datos. El estado de dicho resumen sería `preprocessing`, y su `output` (es decir, el resumen) `null`.\r\n3. El *Dispatcher* iría actualizando el estado del resumen a medida que va pasando por las diferentes etapas (codificación, resumen, etc.).\r\n4. Cada vez el cliente realizara una petición GET con el *id* del resumen, consultaría su estado en la base de datos, y respondería en consecuencia.\r\n\r\n### 2. Arquitectura dirigida por eventos: Apache Kafka\r\nPara resolver el segundo punto, es decir, cómo implementar la comunicación entre microservicios, emplearemos una [Arquitectura dirigida por eventos](https://es.wikipedia.org/wiki/Arquitectura_dirigida_por_eventos) (o *Event-driven architecture*, EDA, en inglés). En nuestro caso se considerará como un evento cada vez que un microservicio acabe su trabajo,\r\n\r\nPara implementar este paradigma arquitectónico, haremos uso de [Apache Kafka](https://kafka.apache.org/), una solución *software* que, si bien requiere cierta labor de configuración, facilita enormemente el despliegue y escalado de este tipo de arquitectura.\r\n\r\nKafka introduce el concepto de *topic*, que vendría a ser el lugar en el que se recogen los diferentes eventos. Existirán una serie de productores y de consumidores. Los productores se encargarán de publicar mensajes en los *topics* apropiados, y los consumidores de recoger dichos mensajes.\r\n\r\nLa figura incluida a continuación puede ayudar a comprender mejor estos conceptos:\r\n\r\n![0 0 5_jizt_architecture](https://user-images.githubusercontent.com/22967053/103377216-0b23f380-4adf-11eb-8093-2700d0f1d173.png)\r\n\r\nEn el anterior diagrama, los *topics* serían aquellos que aparecen incluidos dentro del *Kafka Broker* (que es el componente encargado de gestionarlos):\r\n- ***Text pre-processing***: *topic* al cual produce el *Dispatcher* comenzando el procesado del texto, y del cual consume el *Pre-procesador de textos*. Los mensajes publicados en este *topic* incluyen el texto del usuario a resumir.\r\n- ***Text encoding***: *topic* al cual produce el *Pre-procesador de textos*, y del cual consume el *Codificador*. Los mensajes publicados en este *topic* incluyen el texto pre-procesado, preparado para su codificación.\r\n- ***Text summarization***: *topic* al cual produce el *Codificador*, y del cual consume el *Motor de resumen*. Los mensajes publicados en este *topic* incluyen el texto codificado, preparado para su resumen.\r\n- ***Text post-processing***: *topic* al cual produce el *Motor de resumen*, y del cual consume el *Post-procesador de textos*. Los mensajes publicados en este *topic* incluyen el texto resumido, preparado para su post-procesado.\r\n- ***Ready***: *topic* al cual produce el *Post-procesador de textos*.  Los mensajes publicados en este *topic* incluyen el texto resumido y post-procesado, preparado para entregárselo al usuario.\r\n\r\nEl *Dispatcher*, por su parte, consume de todos los anteriores *topics* a fin de actualizar el estado del resumen en cuestión.",
+            "labels": [
+                "decision"
+            ],
+            "comments": [
+                {
+                    "753838641": "Una descripción muy precisa, muy bien explicada , presentada y justificada. La implementación de la computación dirigida por eventos con kafka  es muy innovadora.\r\nMe parece  un diseño arquitectónico perfecto."
+                }
+            ]
+        },
+        "775351325": {
+            "title": "Script de instalación",
+            "description": "El despliegue de todos los componentes de jizt en Kubernetes es un proceso que conlleva numerosos pasos que deben ser llevados a cabo en un orden determinado. Debido a ello, el despliegue manual de toda la aplicación es un proceso propenso a errores.\r\n\r\nPor consiguiente, se escribirá un pequeño *script* que automatice la instalación y el despliegue de jizt, tanto de los componentes propios de la aplicación, como otras dependencias como pueden ser [Strimzi](https://strimzi.io/) o [Kafka](https://kafka.apache.org).",
+            "labels": [
+                "feature"
+            ],
+            "comments": []
+        },
+        "774737614": {
+            "title": "[MVP] Implementar Productores y Consumidores",
+            "description": "La lógica para los productores y consumidores se debe integrar dentro de los propios microservicios.\r\n\r\nExisten varios clientes para Apache Kafka en Python, como:\r\n- [Kafka-Python](https://kafka-python.readthedocs.io/en/master/): concebido con la idea de mantenerse alineado con el cliente oficial para Java, pero integrando las particularidades de Python.\r\n- [PyKafka](https://pykafka.readthedocs.io/en/latest/): mantenido por [Parse.ly](https://www.parse.ly/).\r\n- [Confluent Python Kafka](https://docs.confluent.io/clients-confluent-kafka-python/current/index.html): se trata de la implementación de [Confluent](https://www.confluent.io/) (los propios desarrolladores de Apache Kafka), cuyo rendimiento es superior al de los dos anteriores clientes.\r\n\r\nSi bien todos ellos ofrecen una funcionalidad bastante parecida, en nuestro emplearemos el último de estos clientes.\r\n\r\nPara más información, ver la Issue #67, donde se explica detalladamente la arquitectura completa.",
+            "labels": [
+                "feature"
+            ],
+            "comments": []
+        },
+        "774702862": {
+            "title": "[MVP] Implementar Kafka Topics",
+            "description": "Como se indica en la Issue #67, en la que se describe la arquitectura *event-driven* de [jizt](www.jizt.it), dentro del *framework* de [Kafka](kafka.apache.org/) existen los *topics* a donde los productores envían sus mensajes, y de los cuales los consumidores los consumen.\r\n\r\nSe puede encontrar más información sobre los *topics* de Kafka en su [sitio web](https://kafka.apache.org/intro).\r\n\r\nRecordando, nuestra arquitectura tiene el siguiente aspecto:\r\n\r\n![0 0 5_jizt_architecture](https://user-images.githubusercontent.com/22967053/103372606-bda18980-4ad2-11eb-922a-01a1105799b1.png)\r\n\r\nEn el anterior diagrama, los *topics* estarían incluidos dentro del *Kafka Broker*:\r\n- ***Text pre-processing***: *topic* al cual produce el *Dispatcher* comenzando el procesado del texto, y del cual consume el *Pre-procesador de textos*.\r\n- ***Text encoding***: *topic* al cual produce el *Pre-procesador de textos*, y del cual consume el *Codificador*.\r\n- ***Text summarization***: *topic* al cual produce el *Codificador*, y del cual consume el *Motor de resumen*.\r\n- ***Text post-processing***: *topic* al cual produce el *Motor de resumen*, y del cual consume el *Post-procesador de textos*.\r\n- ***Ready***: *topic* al cual produce el *Post-procesador de textos*.\r\n\r\nEl *Dispatcher*, por su parte, consumiría de todos los anteriores *topics* a fin de actualizar el estado del *job* en cuestión.",
+            "labels": [
+                "feature"
+            ],
+            "comments": []
+        },
+        "774339882": {
+            "title": "[MVP] Event-driven architecture y Asincronismo",
+            "description": "El objetivo de esta historia de usuario es implementar una primera versión reducida de la arquitectura dirijida por eventos (*event-driven architecture*), junto con la funcionalidad de asincronismo.\r\n\r\nPara implementar la arquitectura *event-driven*, se empleará [Kafka](https://kafka.apache.org) y [Strimzi](https://strimzi.io).\r\n\r\nEn esta arquitectura reducida solo se emplearán los microservicios *Dispatcher* y *Pre-procesador*. La figura incluida a continuación muestra qué parte de la arquitectura se va a implementar.\r\n\r\n![0 0 5_jizt_mvp_architecture](https://user-images.githubusercontent.com/22967053/103372172-9a2a0f00-4ad1-11eb-946d-5c7ad264e0a8.png)\r\n\r\nEn un primer momento, no se utilizará una base de datos real, si no que se almacenarán los datos en memoria. La implementación de la base de datos queda pendiente para futuros *epics*.\r\n\r\nPara más información, ver la Issue #67, donde se explica detalladamente la arquitectura completa.",
+            "labels": [
+                "feature"
+            ],
+            "comments": []
+        },
+        "774254415": {
+            "title": "[Formación] Apache Kafka y Strimzi",
+            "description": "A la hora de hablar de arquitectura *event-driven*, una de las plataformas más populares es [Apache Kafka](https://kafka.apache.org/). En nuestro caso lo emplearemos para poder implementar el asíncronismo en nuestra arquitectura, de forma que los diferentes microservicios se comuniquen mediante la publicación de mesajes.\r\n\r\nPor otra parte, [Strimzi](https://strimzi.io/) simplifica la tarea de configuración y gestión de Apache Kafka en Kubernetes, por lo que también emplearemos este *framework*.",
+            "labels": [
+                "research"
+            ],
+            "comments": []
+        },
+        "773920383": {
+            "title": "[Google Cloud] Crear un Persistent Disk y cargar modelos",
+            "description": "Los Persistent Disks de Google Cloud proporcionan almacenamiento en bloque fiable y de alto rendimiento para instancias de máquinas virtuales. Nuestros modelos serán almacenados en este componente, y serán accedidos a través de volúmenes persistentes desde los microservicios de *codificación* y *motor de resumen* orquestrados por Kubernetes.\r\n\r\nPor el momento, se empleará el modelo [`T5-large`](https://huggingface.co/t5-large) tanto como para la codificación del texto, como para su resumen. Este modelo consta de 770 millones de parámetros con 24 capas.\r\n\r\n",
+            "labels": [
+                "feature"
+            ],
+            "comments": [
+                {
+                    "750382843": "La [documentación oficial](https://cloud.google.com/compute/docs/disks/add-persistent-disk) de Google Cloud indica cómo crear un nuevo Persistent Disk."
+                }
+            ]
+        },
+        "770254551": {
+            "title": "[Hugging Face] Guardado y carga de los modelos",
+            "description": "Investigar cómo llevar a cabo el guardado y la carga de los [modelos preentrenados](https://huggingface.co/transformers/pretrained_models.html) de Hugging Face.",
+            "labels": [
+                "research"
+            ],
+            "comments": [
+                {
+                    "747655054": "La descarga y guardado de los modelos es muy sencilla, gracias a los métodos `from_pretrained` de la clase `PreTrainedModel`, de la cual heredan todos los modelos preentrenados de Hugging Face. Esa misma clase también ofrece el método `save_pretrained` con el objetivo de guardar el modelo descargado.\r\n\r\nEl código para la descarga y guardado de un modelo, por ejemplo el modelo [`t5-small`](https://huggingface.co/t5-small) sería el siguiente:\r\n\r\n```python\r\nfrom transformers import T5Tokenizer, T5PreTrainedModel\r\nfrom pathlib import Path\r\n\r\nMODEL = 't5-base'\r\nSAVED_TOKENIZER_PATH = Path(./tokenizer)  # this directory must exist\r\nSAVED_MODEL_PATH = Path(./model)          # this directory must exist\r\n\r\nt5_tokenizer = T5Tokenizer.from_pretrained(MODEL)\r\nt5_model = T5ForConditionalGeneration.from_pretrained(MODEL)\r\n\r\nt5_tokenizer.save_pretrained(SAVED_TOKENIZER_PATH)\r\nt5_model.save_pretrained(SAVED_MODEL_PATH)\r\n```\r\n\r\nCabe recordar que el `tokenizer` se emplea para la codificación del texto, con la cual se \"alimenta\" al `model` quien se encarga propiamente de la generación del resúmen.\r\n\r\nLos ficheros generados en el paso anterior se almacenarían en nuestro volúmen de Kubernetes. Para cargarlos desde un *pod* simplemente tendríamos que usar el método `from_pretrained` de nuevo, solo que ahora específicando el directorio dónde está guardado el modelo, en vez de su nombre. La diferencia reside en que si específicamos el nombre, Hugging Face se encarga de descargar el modelo automáticamente, y lo guarda en la caché local de nuestro dispositivo.\r\n\r\nPara más información, se puede consultar la documentación oficial para los métodos [`from_pretrained`](https://huggingface.co/transformers/main_classes/model.html#transformers.PreTrainedModel.from_pretrained) y [`save_pretrained`](https://huggingface.co/transformers/main_classes/model.html#transformers.PreTrainedModel.save_pretrained)."
+                }
+            ]
+        },
+        "769873767": {
+            "title": "[Kubernetes] Gestión de los modelos de generación de resúmenes",
+            "description": "Los modelos de codificación y resumen de texto pueden llegar a tener un gran tamaño (del orden de GBs). Dado que los diferentes [*pods*](https://kubernetes.io/docs/concepts/workloads/pods/) correspondientes a un modelo, p. ej. `T5-large`, van a utilizar todos ese mismo modelo, parece contraproducente que cada *pod* tenga su propia copia del mismo.\r\n\r\nUna posible opción a explorar son los [volúmenes](https://kubernetes.io/docs/concepts/storage/volumes/) de Kubernetes, que permiten establecer un espacio de memoria externo a los contenedores (p. ej., en el propio disco del servidor) al que pueden acceder de forma compartida (requiere una correcta configuración).",
+            "labels": [
+                "decision"
+            ],
+            "comments": [
+                {
+                    "747410330": "Tras un análisis detenido de la [documentación de Kubernetes](https://kubernetes.io/docs/concepts/storage/volumes/) correspondiente a los volúmenes, las opciones que mejor se ajustan a nuestro caso parecen ser:\r\n- `gcePersistentDisk`: este tipo de volumen monta un Google Compute Engine (GCE) *persistent disk* (PD) en los *pods* especificados. Este volumen se ajusta a nuestras necesidades, dado que alojaremos nuestra arquitectura en Google Cloud, y esta clase de volumen está pensada para permitir accesos concurrentes de solo lectura. No obstante, presenta la desventaja de que \"casa\" nuestra arquitectura con este *cloud provider* (algo que queremos evitar a toda costa a fin de facilitar posibles futuras migraciones a otros *cloud providers*).\r\n- `glusterfs`: monta un volumen [Glusterfs](https://www.gluster.org/) (sistema de ficheros en red *open-source*). Presenta la ventaja de disminuir el acople con un *cloud provider* específico, pero la desventaja de tener que gestionar la instalación y configuración de `glusterfs`.\r\n- `local`: monta un volumen en un dispositivo de almacenamiento local, como un disco, partición o directorio. De nuevo, es independiente del *cloud provider*, pero existe el incoveniente de estar asociado a un nodo específico. Si ese nodo dejara de funcionar correctamente, los *pods* no podrían acceder a este volumen, comprometiendo a toda la infraestructura.\r\n- `persistentVolumeClaim`: monta un [volumen persistente](https://kubernetes.io/docs/concepts/storage/volumes/#persistentvolumeclaim) sin necesidad de conocer los detalles de un *cloud environment* específico. El ciclo de vida de los volúmenes persistentes va más allá del ciclo de vida de los *pods*, el cual es efímero. Por tanto, independientemente de la creación o destrucción de *pods*, el volumen va a persistir, lo cual se ajusta perfectamente a lo que necesitamos. Estos volúmenes persistentes pueden ir montados, a su vez, sobre una implementación específica de un *cloud provider*, por ejemplo, GCE PersistentDisk (ver primer punto).\r\n\r\nTras considerar las ventajas e inconvenientes de cada una de estas opciones, se ha decidido que la opción más adecuada es almacenar los modelos a través de un `persistentVolumeClaim` por los siguientes dos motivos principales:\r\n- Abstrae los detalles específicos del *cloud environment*, proporcionando una solución desacoplada del mismo.\r\n- Puede proveerse de manera estática, de forma que carguemos nuestros modelos *una sola vez*, y a partir de entonces puedan ser utilizados por los diferentes *pods*."
+                }
+            ]
+        },
+        "767455665": {
+            "title": "[Kubernetes] Plugin CoreDNS",
+            "description": "Para facilitar el descubrimiento de los de los servicios dentro del nodo Kubernetes, se va emplear el plugin CoreDNS. Este plugin facilita la labor de *lookup* en la tabla DNS, de forma que podemos saber la IP de un servicio específico a través de su nombre (el cual sabemos de antemano porque lo configuramos nosotros).\r\n\r\nLa tabla DNS tendría, por ejemplo, el siguiente aspecto:\r\n\r\n| Nombre del servicio | IP |\r\n|:------------------------- | :-: |\r\n| dispatcher-service    | 10.102.219.82 |\r\n| text-preprocessor-service | 10.103.134.72 |\r\n| encoder-service | 10.104.202.94 |\r\n| summarizer-service | 10.104.204.15 |\r\n| post-processor-service | 10.105.120.11 |\r\n| ... | ... |\r\n\r\nPor lo tanto, si quisiéramos enviar una petición HTTP al servicio `text-preprocessor-service`, podríamos obtener su IP con el siguiente código (Python):\r\n```python\r\nimport socket\r\nip_txt_preprocessor_svc = socket.gethostbyname('text-preprocessor-service')\r\n```\r\ny enviar la petición a dicha IP.",
+            "labels": [
+                "feature"
+            ],
+            "comments": [
+                {
+                    "746522769": "Al parecer, CoreDNS fue adoptado como servidor DNS por defecto en [Kubernetes v1.13](https://v1-16.docs.kubernetes.io/blog/2018/12/03/kubernetes-1-13-release-announcement/#container-storage-interface-csi-goes-ga).\r\n\r\nPor lo tanto, no hay pasos adicionales que tengamos que llevar a cabo."
+                }
+            ]
+        },
+        "765678274": {
+            "title": "[Kubernetes] Helm",
+            "description": "Helm es un popular *package manager* para Kubernetes. Una de sus principales puntos fuertes son los llamados  \"Charts\", los cuales permiten definir plantillas que configuran el despliegue de los diferentes componentes de Kubernetes.\r\n\r\nEn nuestro caso, el uso de Helm Charts es ventajoso no solo porque permite \"encapsular\" toda nuestra arquitectura en un único paquete, de forma que cualquier usuario podría desplegarla con tan solo un comando, sino también por el hecho de que los diferentes microservicios que componen jizt tienen una configuración muy parecida. A través de los Helm Charts, podemos definir una plantilla base para todos los microservicios, de forma que reducimos la duplicación de código y facilitamos la mantenibilidad del código.\r\n\r\nMás información en la [documentación oficial de Helm](https://helm.sh/docs/).",
+            "labels": [
+                "feature"
+            ],
+            "comments": []
+        },
+        "758643939": {
+            "title": "[MVP] Arquitectura básica",
+            "description": "A fin de \"atacar\" el desafío de montar la arquitectura de microservicios completa, se comenzará por implementar una arquitectura muy básica, que únicamente lleve a cabo la tarea de pre-procesado del texto. La siguiente ilustración muestra la implementación concreta de esta arquitectura básica.\r\n\r\n---\r\n\r\n![MPV_preprocessor](https://user-images.githubusercontent.com/22967053/101465200-ef925680-393f-11eb-9845-80ffa5e3a6a0.png)\r\n\r\n---\r\n\r\nEl objetivo de esta historia de usuario es conseguir implementar un [Producto Mínimo Viable](https://es.wikipedia.org/wiki/Producto_viable_m%C3%ADnimo) (MVP) que funcione bajo unas condiciones lo más parecidas a las de la arquitectura final, especialmente en lo que respecta a los siguientes puntos:\r\n- Cada microservicio deberá implementar una API REST que permita la comunicación con otros microservicios.\r\n- Cada microservicio deberá estar \"contenedorizado\". Se emplearán contenedores Docker.\r\n- La orquestración de los diferentes contenedores se llevará a cabo mediante Kubernetes.\r\n\r\nEl objetivo es conseguir implementar el MPV de manera rápida, adquiriendo durante dicha implementación experiencia y lecciones valiosas, a través de un fuerte enfoque ensayo-error, para el futuro desarrollo final de la arquitectura completa.",
+            "labels": [
+                "feature"
+            ],
+            "comments": []
+        },
+        "758375785": {
+            "title": "[REST API] Dispatcher y Pre-procesador de textos",
+            "description": "Implementar la API REST para el *dispatcher* y el pre-procesador de textos con Flask y Flask_RESTful.",
+            "labels": [
+                "feature"
+            ],
+            "comments": []
+        },
+        "758372346": {
+            "title": "[REST API] API Gateway",
+            "description": "Implementar la API Gateway con Flask y Flask-RESTful.",
+            "labels": [
+                "feature"
+            ],
+            "comments": [
+                {
+                    "744078947": "Tras conocer más acerca de Kubernetes, se ha determinado que Kubernetes ya cuenta con un componente que realiza exactamente lo que esta historia de usuario tenía como objetivo implementar. Dicho componente se denomina \"Ingress\", y actúa como punto de entrada único al clúster de Kubernetes, permitiendo establecer reglas de redirección en función del *path* de la petición (en nuestro caso el *path* se corresponde con los diferentes *endpoint* de nuestra API pública).\r\n\r\nMás información acerca de Ingress en la [documentación oficial](https://kubernetes.io/docs/concepts/services-networking/ingress/)."
+                }
+            ]
+        },
+        "756379334": {
+            "title": "[Formación básica] Flask + Docker",
+            "description": "Formación básica sobre la integración de Flask en Docker.",
+            "labels": [
+                "research"
+            ],
+            "comments": []
+        },
+        "753408069": {
+            "title": "Primeros planteamientos de la Arquitectura de Microservicios",
+            "description": "Generar un diseño preliminar de cómo se organizarán los diferentes microservicios que componen el sistema.",
+            "labels": [
+                "decision"
+            ],
+            "comments": [
+                {
+                    "735739632": "Se ha decidido que se seguirá el patrón de *API Gateway*, en el que para el cliente existe un único punto de conexión, Ese punto de conexión, por detrás, realiza las peticiones necesarias a los diferentes microservicios de manera transparente al cliente.\r\n\r\n![API Gateway pattern](https://microservices.io/i/apigateway.jpg)\r\n[Fuente de la imagen.](https://microservices.io/patterns/apigateway.html)\r\n\r\nEn nuestro caso, el cliente realizaría una petición al API Gateway incluyendo el texto a traducir. El API Gateway se comunicaría con los distintos microservicios (pre-procesador, motor de resumen, post-procesador, etc.) a fin de confeccionar el resumen, y finalmente respondería al cliente con el resumen generado.\r\n\r\nEste patrón, además, ofrece la ventaja de que se puede llevar la adición, eliminación o refactorización de los microservicios, sin que el cliente tenga que preocuparse de estos cambios."
+                }
+            ]
+        },
+        "748356668": {
+            "title": "[Formación básica] API REST con Flask",
+            "description": "Los distintos microservicios se comunicarán mediante peticiones REST. Una buena herramienta para implementar APIs REST en Python es [Flask](https://flask.palletsprojects.com/en/1.1.x/).",
+            "labels": [
+                "research"
+            ],
+            "comments": [
+                {
+                    "732087876": "A fin de simplificar el código y mejorar su mantenibilidad, así como incoporar buenas prácticas en el desarrollo de las API REST, se empleará la extensión para Flask llamada [Flask-RESTful](https://flask-restful.readthedocs.io/en/latest/)."
+                }
+            ]
+        },
+        "747976454": {
+            "title": "[Doc] Ajustar los docstrings a Sphinx",
+            "description": "Más inforamación sobre [Sphinx](https://www.sphinx-doc.org/en/master/).",
+            "labels": [
+                "documentation"
+            ],
+            "comments": []
+        },
+        "745635833": {
+            "title": "[Encoder] Refactorizar constructor",
+            "description": "**Sección de código actual que debería ser refactorizado:**\r\nActualmente, el constructor de la clase `SplitterTokenizer`\r\nhttps://github.com/dmlls/jizt/blob/77daf04459ae8a00b9de30535beb9234fa9d5db2/src/text_summarization.py#L58\r\ntoma directamente el tokenizador como parámetro.\r\n\r\n**Propuesta de refactorización:**\r\nSe propone, en vez de pasar el tokenizador como objeto, pasar únicamente una `str` indicando el modelo a emplear.\r\n\r\nPor ejemplo: `SplitterTokenizer(\"bart-base\")`.\r\n\r\nEl modelo pasado como `str` debe estar incluido dentro de los [modelos implementeados por Hugging Face](https://huggingface.co/transformers/pretrained_models.html), concretamente los modelos [Bart](https://huggingface.co/transformers/model_doc/bart.html) y [T5](https://huggingface.co/transformers/model_doc/t5.html).\r\n\r\n**Motivos para la refactorización:**\r\nDe esta forma, se descarga al código exterior a la clase de la responsabilidad de instanciar el tokenizador, logrando una mayor simplicidad y abstracción.",
+            "labels": [
+                "enhancement"
+            ],
+            "comments": []
+        },
+        "743709383": {
+            "title": "[Motor de Resumen] Refactorizar Motor de Resumen",
+            "description": "Actualmente, el Motor de Resumen lleva a cabo las tareas de *codificación* y *resumen* del texto. Se ha considerado que estos dos procesos pueden independizarse para conformar dos microservicios separados dentro de la arquitectura del sistema, a fin de conseguir una mayor modularidad.",
+            "labels": [
+                "enhancement"
+            ],
+            "comments": []
+        },
+        "743046335": {
+            "title": "[MVP] Desplegar Kubernetes",
+            "description": "Configurar la orquestración de los contenedores Docker mediante Kubernetes.",
+            "labels": [
+                "feature"
+            ],
+            "comments": []
+        },
+        "741800487": {
+            "title": "[Pre-procesador] Siglas con puntos",
+            "description": "**Describe el error:**\r\nCuando la cadena de entrada contiene siglas con puntos (p. ej. \"U.K. o \"U.S.A.\", \"B.C.\", etc.), el texto procesado contiene un espacio entre las letras de la sigla (i.e., \"U. K.\", \"U. S. A\", \"B. C.\", etc.).\r\n\r\n**Pasos para reproduccir:**\r\nIntroducir una cadena de entrada con una sigla que contenga puntos.\r\n\r\n**Resultados esperados:**\r\nLas sigla en la cadena de salida deberían mantenerse intactas.\r\n\r\n**Resultados obtenidos:**\r\nLas siglas en la cadena de salida contienen espacios entre las letras.\r\n\r\n**Información adicional:**\r\nEl error no aparece si las siglas están en minúsculas (p. ej. \"u.k.\", \"u.s.a.\", etc.).",
+            "labels": [
+                "bug"
+            ],
+            "comments": []
+        },
+        "741709242": {
+            "title": "Añadir versionado",
+            "description": "Añadir la versión a los scripts existentes. Versión inicial: v0.1.",
+            "labels": [
+                "enhancement"
+            ],
+            "comments": []
+        },
+        "740629605": {
+            "title": "[Post-procesador] Entrenar truecase con volcado de Wikipedia",
+            "description": "El modelo incluido por defecto en la librería [truecase](https://github.com/daltonfury42/truecase) está entrenado con el corpus en inglés de NLTK. Entrenándolo con un volcado reciente de Wikipedia, se podría mejorar su precisión, especialmente en el caso de las entidades nombradas.",
+            "labels": [
+                "enhancement"
+            ],
+            "comments": [
+                {
+                    "766368433": "Lo primero de todo es descargar el volcado. Emplearemos el volcado del proyecto [Plain Text Wikipedia 2020-2011](https://www.kaggle.com/ltcmdrdata/plain-text-wikipedia-202011), ya que nos ofrece el texto extraído en formato `json`.\r\n\r\nNo obstante, aún tenemos que realizar cierto pre-procesado de este volcado antes de poder entrenar nuestro modelo, dado que el volcado tiene la siguiente estructura:\r\n\r\n```json\r\n[\r\n {\r\n  \"id\": \"62580990\",\r\n  \"text\": \"John Gläser (12 June 1888 – 27 May 1968) was a German operatic tenor [...].\",\r\n  \"title\": \"John Gläser\"\r\n },\r\n {\r\n  \"id\": \"62581004\",\r\n  \"text\": \"Goertz is a surname. Notable people with the surname include: *Allie Goertz (born 1991) [...].\",\r\n  \"title\": \"Goertz\"\r\n },\r\n \"...\"\r\n]\r\n```\r\ny de lo anterior solo nos interesa el campo `text`.\r\n\r\nPara ello, hemos escrito el siguiente _script_:\r\n```Python\r\nimport sys\r\nimport json\r\nfrom os import listdir\r\nfrom blingfire import text_to_sentences\r\nfrom pathlib import Path\r\n\r\nOUTPUT_PREFIX = \"processed_dumps/tokenized_\"\r\n\r\nif len(sys.argv) < 2:\r\n    print(\"ERROR: Specify directory containing the dumps.\")\r\n    exit(1)\r\n\r\nprint(\"Processing...\")\r\nfor dump_file in listdir(sys.argv[1]):\r\n    output_filename = f\"{OUTPUT_PREFIX}{dump_file[:-4]}txt\"\r\n    with open(Path(sys.argv[1]) / dump_file, 'r') as dump:\r\n        with open(Path(output_filename), \"w+\") as output:\r\n            dict_dump = json.loads(dump.read())\r\n            for entry in dict_dump:\r\n                sentences = text_to_sentences(entry['text'])\r\n                output.write(sentences)\r\n            output.write(\"\\n\")\r\n    print(f\"Tokenized dump saved to {output_filename}.\")\r\n```\r\nEste pequeño _script_ además de parsear el JSON para quedarnos solo con el campo `text`, _tokeniza_ el texto en frases, de forma que las frases quedan separadas por un salto de línea (`\\n`). Para ello se emplea el módulo [blingfire](https://github.com/microsoft/BlingFire) de Microsoft. Cada fichero procesado se guarda en uno nuevo, conteniendo estas frases ya separadas.\r\n\r\nA la hora de entrenar el modelo, dividiremos a su vez estas frases en palabras. No obstante, debemos mantener la separación entre frases, dado que el modelo, a fin de \"aprender\" cuando una palabra lleva mayúscula o no, se fija en su contexto (las palabras que tiene alrededor), pero este contexto se limita a su frase.\r\n\r\nEs decir, si tenemos la siguiente frase:\r\n\r\n`\"The Tama Lakes are two crater lakes in New Zealand's Tongariro National Park.\"`,\r\n\r\nseguida de\r\n\r\n`\"They fill two (Upper and Lower Tama) of a series of explosion craters on the Tama Saddle.\"`,\r\n\r\npara aprender si la palabra `Lakes` de la primera frase debería llevar mayúscula, se fijará en las palabras `Tama`, `are` (bigramas) y las palabras `The` y `two` (trigramas), de manera que si en otro texto la palabra `Lakes` aparece rodeada de estas palabras, entonces tendrá altas probabilidades de llevar mayúscula.\r\n\r\nNo obstante, para última palabra de la primera frase, `Park`, no podemos fijarnos en las primeras palabras de la siguiente frase (`They` y `fill`). Con esto es a lo que nos referimos cuando decíamos anteriormente que aunque separemos las frases en palabras, aún debemos recordar dónde empieza y acaba cada frase para poder entrenar correctamente al modelo."
+                }
+            ]
+        },
+        "740624845": {
+            "title": "[Pre-procesador] Cambio de NLTK a blingfire",
+            "description": "Tras un pequeño test, se ha comprobado que la función `text_to_sentences` incluido en la librería [blingfire](https://github.com/microsoft/BlingFire) de Microsoft obtiene mejores resultados que `sent_tokenize` de NLTK.\r\n\r\nTareas:\r\n- Cambiar el algoritmo de división de frases.\r\n- Evaluar las diferencias de tiempo entre blingfire y NLTK.",
+            "labels": [
+                "enhancement"
+            ],
+            "comments": [
+                {
+                    "726244600": "Cambio realizado en commit https://github.com/dmlls/jizt/commit/f39762d2b1f5866c0cee848b408b30fa0a08e47e."
+                }
+            ]
+        },
+        "740093670": {
+            "title": "Añadir en readme logo Ministerio",
+            "description": "Añadir al final del Readme el logo del[ Ministerio de Educación y Formación Profesional](https://www.pap.hacienda.gob.es/bdnstrans/GE/es/convocatoria/714150/document/425421\r\n) por la concesión de la Beca de colaboración con el Departamento de Ingeniería Informática de la UBU.",
+            "labels": [
+                "funding"
+            ],
+            "comments": [
+                {
+                    "724844836": "Diego adjunta a esta issue la solicitud de propuesta de proyecto de firmada que se hizo y la resolución."
+                }
+            ]
+        },
+        "739235767": {
+            "title": "[Bug] Pre-procesador: punto final",
+            "description": "Si la última frase del texto no acaba en punto \".\", el preprocesador lo añade automáticamente. Sin embargo, la útlima frase podría acabar en \"!\" o \"?\" y ser correcta. En estos casos, el preprocesador seguiría añadiendo el punto, de forma que la útlima frase acabaría en \"!.\" o \"?.\", lo cual no cumple con las reglas gramaticales.",
+            "labels": [
+                "bug"
+            ],
+            "comments": []
+        },
+        "739095329": {
+            "title": "Pruebas unitarias Post-procesador de Textos",
+            "description": "",
+            "labels": [
+                "test"
+            ],
+            "comments": []
+        },
+        "739093752": {
+            "title": "Pruebas unitarias Pre-procesador de Textos",
+            "description": "",
+            "labels": [
+                "test"
+            ],
+            "comments": []
+        },
+        "738951956": {
+            "title": "Pruebas unitarias Motor de Resumen",
+            "description": "",
+            "labels": [
+                "test"
+            ],
+            "comments": []
+        },
+        "737694387": {
+            "title": "[Post-procesador de Textos] Implementar servicio",
+            "description": "Implementar el post-procesado del texto, la lógica del productor y el consumidor de Kafka, y dockerizar el servicio.",
+            "labels": [
+                "feature"
+            ],
+            "comments": []
+        },
+        "737693096": {
+            "title": "Dockerizar Dispatcher y Pre-procesador de Textos",
+            "description": "",
+            "labels": [
+                "feature"
+            ],
+            "comments": []
+        },
+        "736231530": {
+            "title": "Implementar Post-procesador de Textos",
+            "description": "Gestionar el post-procesado del texto generado por el motor de resumen con el fin de mejorar la presentación final del mismo al usuario. Esto puede incluir tareas como formatear correctamente el texto (p. ej. eliminando espacios innecesarios), eliminar frases inacabadas, recuperar las URLs del texto original, etc.",
+            "labels": [
+                "feature"
+            ],
+            "comments": []
+        },
+        "736228044": {
+            "title": "Implementar Pre-procesador de Textos",
+            "description": "Gestionar el preprocesado de los textos para adaptar la entrada al motor de resúmenes con el fin de conseguir mejores resultados.",
+            "labels": [
+                "feature"
+            ],
+            "comments": []
+        },
+        "736226946": {
+            "title": "Implementar Motor de Resumen",
+            "description": "Haciendo uso de la librería `transformers` de Hugging Face. En un principio, se emplearán los modelos [T5](https://arxiv.org/abs/1910.10683) de Google, y [Bart](https://arxiv.org/abs/1910.13461) de Facebook.\r\n\r\nMás información acerca de la librería `transformers` [aquí](https://huggingface.co/transformers/).",
+            "labels": [
+                "feature"
+            ],
+            "comments": []
+        },
+        "736221163": {
+            "title": "Formación Básica Amazon EC2, S3 y RDS.",
+            "description": "Conocer más acerca de estos servicios proporcionados por Amazon Web Services (AWS).",
+            "labels": [
+                "research"
+            ],
+            "comments": [
+                {
+                    "724078225": "Como ejercicio práctico, se migró Kanboard de Heroku, donde se desplegó inicialmente, a AWS. En Heroku disponíamos de nuestro Kanboard desplegado en un Dyno conectado con una base de datos PostgreSQL. Kanboard se migró a un servidor EC2 de AWS con Ubuntu instalado, y la base de datos se migró a RDS con PostgreSQL. Se configuró Apache con SSL para poder acceder al Kanboard desde el exterior, y se asignó al servidor una Elastic IP (servicio AWS) para otorgarle una IP permanente.\r\n\r\nHa sido un ejercicio práctico interesante y ha servido para profundizar en los servicios EC2 y RDS de AWS. Aunque no hemos trabajado con S3, su configuración no es muy diferente a lo ya visto.\r\n\r\nSe puede acceder al Kanban público del proyecto a través de [kanban.jizt.it](kanban.jizt.it)."
+                }
+            ]
+        },
+        "736202396": {
+            "title": "Formación Básica Microservicios, Docker y Kubernetes",
+            "description": "",
+            "labels": [
+                "research"
+            ],
+            "comments": [
+                {
+                    "723260740": "Visualizados dos tutoriales prácticos:\r\n- [Introduction to Microservices, Docker, and Kubernetes](https://www.youtube.com/watch?v=1xo-0gCVhTU&t=509s), de 55 minutos.\r\n- [Docker and Kubernetes Tutorial | Full Course [2020]](https://www.youtube.com/watch?v=bhBSlnQcq2k&t=13188s), de 4 horas 17 minutos de duración.\r\n\r\nSe ha empleado el doble del tiempo estimado (6 horas 20 min. frente a las 3 horas estimadas), pero se ha adquirido un conocimiento más amplio acerca de estas tecnologías."
+                }
+            ]
+        },
+        "736187187": {
+            "title": "Formación Básica acerca de Arquitectura de Microservicios",
+            "description": "",
+            "labels": [
+                "research"
+            ],
+            "comments": [
+                {
+                    "721888773": "Visualizados dos vídeos introductorios."
+                }
+            ]
+        },
+        "736060522": {
+            "title": "Elegir framework de testing para Python",
+            "description": "",
+            "labels": [
+                "decision"
+            ],
+            "comments": [
+                {
+                    "721744440": "Se han considerado varios *frameworks* de prueba, como Robot, Pytest, PyUnit/Unittest, Lettuce, Nose2, etc. Finalmente, nos hemos decantado por Pytest.\r\n\r\nPytest es un framework *open-source* de pruebas unitarias ampliamente extendido, fácil de aprender y de utilizar. Es de propósito general, pero está especialmente indicado para llevar a cabo pruebas funcionales y de API, lo cual nos interesa en nuestro caso. Además, cuenta con una extensa arquitectura de *plug-ins* para ampliar su funcionalidad en caso de que fuera necesario."
+                }
+            ]
+        },
+        "734080270": {
+            "title": "Crear una landing page para el proyecto",
+            "description": "",
+            "labels": [
+                "feature"
+            ],
+            "comments": [
+                {
+                    "721889379": "Resultado: [jizt.it](https://www.jizt.it/).\r\n\r\n![Landing_page](https://user-images.githubusercontent.com/22967053/98151963-489a4500-1ed1-11eb-8de6-bd4379781d7a.jpg)\r\n"
+                }
+            ]
+        },
+        "734044161": {
+            "title": "Escoger un cloud provider para alojar la arquitectura",
+            "description": "Realizar una pequeña búsqueda de servicios de computación en la nube y contratar el más apropiado para alojar nuestro modelo generador de resúmenes, así como el resto de componentes necesarios (pre y post-pocesador de texto, *driver* para Twitter, etc.).",
+            "labels": [
+                "decision"
+            ],
+            "comments": [
+                {
+                    "721808188": "Hemos valorado las principales opciones del mercado, como Azure, Amazon Web Services (AWS) o Google Cloud.\r\n\r\nFinalmente, hemos escogido AWS debido principalmente a que ofrecen un periodo de prueba de 12 meses en el que podemos hacer uso gratuito de servicios como:\r\n- Elastic Computer Cloud (EC2): pone a nuestra disposición servidores virtuales. Gratis 750 horas mensuales.\r\n- Simple Storage Service (S3): para almacenamiento de objetos. Gratis 5 GB de almacenamiento estándar.\r\n- Relational Database Service (RDS): Bases de Datos Relacionales como MySQL, PostgreSQL, MariaDB, etc.  Gratis 750 horas mensuales."
+                }
+            ]
+        },
+        "733987954": {
+            "title": "Elección de licencia para el proyecto",
+            "description": "",
+            "labels": [
+                "decision"
+            ],
+            "comments": [
+                {
+                    "720103614": "Desde un primer momento nuestra intencción era licenciar el proyecto bajo una licencia de Software Libre. Dentro de este entorno, se han considerado las tres licencias más extendidas: Apache-2.0, MIT, y GPLv3.\r\n\r\nTras una lectura exhaustiva de las cláusulas de cada una de ellas, así como de opiniones en blogs, charlas, foros, etc. y tras una profunda reflexión, considerando especialmente la licencia MIT y la GPLv3, hemos tomado la decisión de que nuestro software estará licenciado bajo **GNU GPLv3**.\r\n\r\nLas principales razones de nuestra elección son (*nota: estas conclusiones personales carecen de valided como consejo legal*):\r\n- Pese a que la licencia MIT pueda parecer más permisiva en un primer lugar, ya que no obliga a que el código fuente se mantenga abierto en un futuro, creemos que a largo plazo esta \"permisividad\" paradójicamente puede resultar en una limitación de sí misma. Esto es, el hecho de que ese supuesto software \"libre\" se pueda volver software \"cerrado\", lo excluye en primer lugar de esa definición de \"libre\", en nuestra opinión.\r\n- Este proyecto no podría existir sin contribuciones de software libre anteriores. Por ello, queremos asegurar que este proyecto siempre se mantenga abierto para poder ayudar a otros y retroalimentarse con los aportes de la comunidad.\r\n- El simple hecho de elegir una licencia, conlleva un sinnúmero de implicaciones morales, económicas, sociales, etc., pero es algo [necesario](https://blog.codinghorror.com/pick-a-license-any-license/), ya que el software sin licencia explícita se toma por defecto como copyright. Como no podíamos licenciar nuestro proyecto bajo las dos licencias simultáneamente (MIT y GPLv3), hemos tenido que escoger una. Y ha sido GPLv3.\r\n\r\nPor último, para aquellos interesados, [aquí](https://github.com/dmlls/jizt/issues/8#issuecomment-717219573) se puede encontrar un buen resumen visual de las principales licencias *open-source*.\r\n\r\n**Nota**: esta decisión estará en último lugar limitada por las licencias de los componentes y librerías ajenos al proyecto que utilicemos. En caso de que surja algún tipo de incompatibilidad, se estudiará el caso en concreto."
+                }
+            ]
+        },
+        "733085855": {
+            "title": "Curso \"Stanford CS224N: NLP with Deep Learning\"",
+            "description": "Visualizar la [serie de vídeos](https://www.youtube.com/watch?v=8rXD5-xhemo&list=PLoROMvodv4rOhcuXMZkNm7j3fVwBBY42z) correspondiente al curso \"Stanford CS224N: NLP with Deep Learning\".\r\n\r\nTiempo estimado: 25 horas.",
+            "labels": [
+                "research"
+            ],
+            "comments": []
+        },
+        "733084142": {
+            "title": "Formación básica acerca de Flask",
+            "description": "Pequeña introducción a Flask: ¿qué es?, ¿cómo funciona?, instalación, uso básico, etc.",
+            "labels": [
+                "research"
+            ],
+            "comments": [
+                {
+                    "721690510": "Visualizado [tutorial práctico](https://www.youtube.com/watch?v=Z1RJmh_OqeA) de 45 minutos."
+                }
+            ]
+        },
+        "733083466": {
+            "title": "Formación básica acerca de Docker",
+            "description": "Pequeña introducción a Docker: ¿qué es?, ¿cómo funciona?, instalación, uso básico, etc.",
+            "labels": [
+                "research"
+            ],
+            "comments": [
+                {
+                    "720141314": "Visualizado [mini-curso](https://www.youtube.com/watch?v=fqMOX6JJhGo&t=6801s) de 2 horas de duración con ejercicios prácticos para seguir las lecciones. En total, ha llevado unas 3 horas y ha sido una buena primera toma de contacto con Docker."
+                }
+            ]
+        },
+        "729955714": {
+            "title": "Diseñar la estructura del tablero Kanban",
+            "description": "Establecer las columnas de las que dispondrá nuestro tablero Kanban.",
+            "labels": [
+                "decision"
+            ],
+            "comments": [
+                {
+                    "720123337": "Nuestro tablero Kanban contendrá 5 columnas:\r\n\r\n| Backlog | Ready | Work in progress | Testing | Done\r\n| :---: | :---: | :---: | :---: | :---: |\r\n| Futuras tareas a ser ejecutadas. | Tareas listas para ser ejecutadas. | Tareas en ejecución | Tareas que están siendo testeadas.  | Tareas finalizadas. |\r\n\r\nConsideraciones:\r\n- Cada columna, excepto las columnas *Backlog* y *Done*, podrá contener un máximo de 4 tareas (límite WIP).\r\n- Cada tarea estará marcada con una prioridad del 0 al 3, siendo 3 la prioridad máxima. Los colores de las tareas indican su prioridad (0: gris, 1: amarillo, 2: naranja, 3: rojo).\r\n- El inicio de una tarea se considerará el momento en el que se mueva a la columna de *Work in progress*. Una tarea se considerará como finalizada cuando sea cerrada. Adicionalmente, se moverá a la columna de *Done*.\r\n"
+                }
+            ]
+        },
+        "729518329": {
+            "title": "Elección de nombre para el proyecto",
+            "description": "",
+            "labels": [
+                "decision"
+            ],
+            "comments": [
+                {
+                    "720106892": "Para la elección del nombre bajo el cual se englobe todo el servicio de resumen de textos en la nube, se consideraron numerosas opciones, de las cuales, las más relevantes fueron:\r\n- **Summit**: acrónimo procedente de *Summarize it*. Además, *summit* tiene el significado de \"cumbre\" o \"cima\" en inglés, sugiriendo el alto rendimiento y potencia del servicio, alcanzando los más *altos* resultados.\r\n- **Jizt**: esta palabra, pronunciada en inglés, suena casi idénticamente a *gist*, la cual se puede traducir como \"esencia\" o \"quid de la cuestión\".\r\n- **Halb**: al revés se lee blah (de *blah, blah, blah*, en inglés) y en alemán significa \"mitad\", evocando a la idea de resumen. Además se podrı́a ver como una referencia al supercomputador HAL 9000 de la pelı́cula y posterior novela *2001: Una Odisea del Espacio*.\r\n\r\nDe estas tres, se juzgaron más interesantes las dos últimas; la primera resulta menos original debido a que ya existen numerosas empresas, productos y proyectos con este nombre.\r\n\r\nEn ese momento, se llevó a cabo una pequeña encuesta para determinar el nombre final. Dado que el proyecto aspira a tener un carácter internacional, el objetivo de la encuesta no era llegar a una población muy grande, sino muy variada: en total **se preguntó a 22 personas de 15 nacionalidades diferentes**. En la siguiente tabla, se incluyen los resultados de la votación:\r\n\r\n|                      |       jizt     |      halb     |\r\n|  :------------ | :----------: | :-----------: |\r\n| España       |       2        |        3          |\r\n| Alemania   |       3        |        0         |\r\n| México        |       1        |        1          |\r\n| Taiwán        |       1        |        0         |\r\n| Japón          |       0       |        1          |\r\n| Escocia       |       0        |        1         |\r\n| China          |       0        |        1         |\r\n| Francia       |       0        |        1         |\r\n| Turquía      |       0        |        1         |\r\n| Vietnam     |       1        |        0        |\r\n| Hungría     |       1        |        0        |\r\n| Bielorrusia |       1        |        0        |\r\n|Corea del S.|       1        |        0        |\r\n| Malasia       |       1        |        0        |\r\n| Serbia         |       1        |        0        |"
+                }
+            ]
+        },
+        "729517845": {
+            "title": "Diseñar logo e imagen del proyecto",
+            "description": "Diseño de un logo e imagen (colores, fuentes, etc.) para el proyecto. Se trata de una tarea preliminar y la idea es que la imagen del proyecto vaya creciendo junto a este, por lo cual esta tarea se trata de una primera aproximación, sujeta a futuros cambios.",
+            "labels": [
+                "decision"
+            ],
+            "comments": [
+                {
+                    "721708058": "\r\n![JIZT-logo-variations](https://user-images.githubusercontent.com/22967053/98112793-ff330100-1ea2-11eb-9dfe-25805156a706.png)\r\n\r\n\r\n"
+                }
+            ]
+        },
+        "729514157": {
+            "title": "Elegir herramienta de gestión de proyectos",
+            "description": "",
+            "labels": [
+                "decision"
+            ],
+            "comments": [
+                {
+                    "717112451": "Para el tablero Kanabn, se han estudiadio varias alternativas como ZenHub, Trello, Taiga, Wekan o Kanboard. Tras un análisis de la características y funcionalidades ofrecidas por cada una de estas opciones, nos hemos decidido por Kanboard, debido a que está diseñado especialmente para trabajar dentro de la metodología Kanban y por tanto se ajusta más a nuestros propósitos.\r\n\r\nKanban, incluye funcionalidades como:\r\n- Permite sincronización con *Issues* de GitHub.\r\n- Herramientas de visualización:\r\n  - Gráficos de Distribución de Tareas.\r\n  - Diagramas de Flujo Acumulado (CFD).\r\n  - Tiempo empleado en cada columna.\r\n  - Cycle y Lead Time.\r\n- *Swimlanes*, es decir, separaciones horizontales de las columnas.\r\n- *Time tracking*, para registrar automáticamente el tiempo empleado en cada tarea.\r\n- Cuenta con un gran número de *plugins* para ampliar su funcionalidad y ajustarse a los requerimientos de cada proyecto.\r\n\r\nAdemás, se trata de Software Libre respaldado por una [activa comunidad](https://github.com/kanboard/kanboard)."
+                }
+            ]
+        },
+        "729513691": {
+            "title": "Elegir metodología de desarrollo software",
+            "description": "",
+            "labels": [
+                "decision"
+            ],
+            "comments": [
+                {
+                    "716860299": "El contexto y características en los que se enmarca nuestro proyecto son las siguientesfi:\r\n- **Tiempo limitado**: no hay posibilidad de alargar los plazos, y existen importantes restricciones de tiempo (disponemos de aproximadamente tres meses para la compleción del proyecto).\r\n- **Eficiencia y velocidad**: debido a las ya mencionadas restricciones temporales, la implementación del proyecto ha de ser rápida y eficiente, asegurando siempre la calidad del trabajo realizado.\r\n- **Motivación e implicación del equipo de desarrollo**: necesitamos de la motivación e implicación del equipo para sacar el proyecto adelante.\r\n- **Satisfacción de los usuarios**: nuestros usuarios son la razón por la que hacemos esto en primer lugar.\r\n\r\nAtendiendo a los puntos descritos anteriormente hemos decidido adoptar un enfoque ágil para el desarrollo de nuestro proyecto. Dentro de las metodologías ágiles, se han considerado las siguientes:\r\n- **Scrum**: desarrollo iterativo e incremental centrado en la idea de *sprints*, es decir, iteraciones con una duración fija prefijada, al final de las cuales se produce una entrega parcial del producto.\r\n- **Kanban**: esta metodología se centra en mantener un flujo constante de trabajo, maximizando la eficencia del equipo de forma que cada tarea sea completada lo más rápido posible.\r\n- **Programación Extrema (XP)**: se centra en producir software de la mejor calidad posible, siendo una de las metodologías ágiles que más profundiza en los aspectos de buenas prácticas de ingeniería para el desarrollo de software.\r\n\r\nTras una valoración de las ventajas y desventajas de cada una de estas metodologías, **se ha decidido adoptar una metodología mixta entre Kanban y Scrum** (a veces referida como \"**Scrumban**\"). Más concretamente, los detalles de la metodología que seguiremos son:\r\n- La base de la misma será esencialmente Kanban. Se trabajará con un tablero Kanban, y se hará uso de instrumentos como los límites WIP (Work In Progress) y de herramientas como los Diagramas de Flujo Acumulado (CFD, por sus siglas en inglés).\r\n- Se trabajará con *historias de usuario*.\r\n- Se hará uso de los *epics* para agrupar historias de usuario que conformen una misma *feature*.\r\n- Debido a la naturaleza de Kanban y del propio equipo, no habrá *sprints* como tal: el flujo de trabajo será continuo. Sin embargo, sí que se añadirán tiempos estimados para completar cada tarea (sin emplear puntos de historia, los tiempos se expresarán en número de horas empleadas).\r\n- Cada tarea tendrá asociada una complejidad, que irá desde 0 (mínima complejidad), hasta 10 (máxima complejidad).\r\n- Cada tarea tendrá asociada una prioridad. Los niveles de prioridad van desde 0 hasta 3, siendo esta última la prioridad máxima.\r\n- Existirá un *product backlog*.\r\n- Periódicamente, se llevarán a cabo *revisiones* y *retrospectivas*.\r\n- Existirán *daily meetings* o *daily stand-ups*.\r\n- Existirá la figura de *Scrum Master* o *Agile Coach*. Nostros lo llamaremos *Agile Master*.\r\n\r\n![Kanban](https://user-images.githubusercontent.com/22967053/98151507-9498ba00-1ed0-11eb-9695-db572a644f76.jpg)\r\n\r\nEsta metodología queda sujeta a pequeños cambios, si así se juzga necesario por las circunstancias del proyecto o del equipo de desarrollo."
+                }
+            ]
+        },
+        "729512707": {
+            "title": "Actualizar README",
+            "description": "",
+            "labels": [
+                "enhancement"
+            ],
+            "comments": [
+                {
+                    "717141632": "README actualizado con una pequeña descripción del proyecto. Se añadirá más información según vaya creciendo el proyecto."
+                }
+            ]
+        },
+        "729512170": {
+            "title": "Escribir el \"About\" del repositorio",
+            "description": "",
+            "labels": [
+                "enhancement"
+            ],
+            "comments": [
+                {
+                    "717141784": "Actualizado."
+                }
+            ]
+        },
+        "729511490": {
+            "title": "Organizar Labels",
+            "description": "Añadir, eliminar o editar Labels para ajustarlas a las necesidades del proyecto.",
+            "labels": [
+                "organization"
+            ],
+            "comments": [
+                {
+                    "716837051": "Eliminadas, añadidas y editadas las Labels pertinentes. En cualquier caso, quedan sujetas a posibles cambios futuros, dependiendo de las necesidades del proyecto."
+                }
+            ]
+        }
+    }
+}

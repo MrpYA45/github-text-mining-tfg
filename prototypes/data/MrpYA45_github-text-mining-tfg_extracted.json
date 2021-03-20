@@ -1,0 +1,41 @@
+{
+    "url": "https://github.com/MrpYA45/github-text-mining-tfg",
+    "issues": {
+        "836830336": {
+            "title": "Testear las limitaciones de la API de GitHub",
+            "description": "La API de GitHub posee un límite de [5000 peticiones por hora](https://docs.github.com/en/developers/apps/rate-limits-for-github-apps#:~:text=User%2Dto%2Dserver%20requests%20are,per%20hour%20for%20that%20user.). Es necesario ofrecer un tratamiento de excepciones que permita tener estas limitaciones en cuenta. Por lo tanto se requiere:\r\n\r\n- [x] Comprobar la descarga de issues en repositorios de un tamaño pequeño.\r\n- [ ] Comprobar la obtención de issues desde repositorios de gran tamaño.\r\n- [ ]  Decidir como se va a proceder cuando se supere el límite.",
+            "labels": [
+                "test"
+            ],
+            "comments": []
+        },
+        "836005588": {
+            "title": "Prototipar la descarga de issues mediante PyGithub",
+            "description": "A partir de un notebook generar un `prototipo` que a partir de la dirección de un repositorio extraiga los siguientes datos de las issues:\r\n\r\n- Título.\r\n- Descripción.\r\n- Etiquetas.\r\n- Comentarios.\r\n\r\nInicialmente estos datos se guardarán en ficheros `.json` dentro de la carpeta `data` para su posterior procesado. El token de acceso de GitHub se almacenará en `config/config.json` dentro de la carpeta prototipos. Tener en cuenta que se requiere de la existencia de este fichero para la ejecución y que no se incluirá en el repositorio por motivos de seguridad.",
+            "labels": [
+                "feature"
+            ],
+            "comments": []
+        },
+        "831769010": {
+            "title": "Explorar la organización de la arquitectura de microservicios",
+            "description": "Será necesario: recibir la dirección del repositorio, establecer la conexión con GitHub, extraer la información de las incidencias, procesar la información recibida, establecer una conexión con un servicio de terceros (JIZT), enviar la información procesada, recibir el resultado proveniente de un tercero y mostrar los resultados en la web.\r\n\r\n- [ ] Investigar sobre los servicios necesarios para la llevar a cabo el proyecto.\r\n\r\n- [ ] Estudiar su despliegue mediante Docker.\r\n\r\n- [ ] Investigar la API de JIZT ",
+            "labels": [
+                "investigating"
+            ],
+            "comments": []
+        },
+        "831250862": {
+            "title": "Investigar sobre la conexión con GitHub",
+            "description": "El objetivo de esta incidencia es investigar como descargar el contenido de las issues de un repositorio mediante la API de GitHub utilizando Python.",
+            "labels": [
+                "investigating"
+            ],
+            "comments": [
+                {
+                    "799201497": "Recuerda que la guía de referencia es https://docs.github.com/en/rest/reference/issues\r\n@Kencho ¿puedes dejar a Pablo el código de extracción de issues y almacenamiento en BD?"
+                }
+            ]
+        }
+    }
+}
