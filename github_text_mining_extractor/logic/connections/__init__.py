@@ -1,5 +1,5 @@
 """ Extractor connections modules.
 """
 
-from .githubconection import GitHubConnection
+from .githubconnection import GitHubConnection
 from .githubmanager import GitHubManager

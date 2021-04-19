@@ -1,5 +1,7 @@
 """ Extractor database modules.
 """
 
+
 from .schema import Schema
-from .taskstypes import TaskTypes
+from .dbmanager import DBManager
+from .taskstate import TaskState

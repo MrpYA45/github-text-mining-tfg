@@ -2,7 +2,10 @@
 """
 import json
 from datetime import datetime
-from sqlalchemy import Table, MetaData, Column, ForeignKey, Integer, String, JSON  # type: ignore
+
+from sqlalchemy import (JSON, Column, ForeignKey, Integer,  # type: ignore
+                        MetaData, String, Table)
+
 from .resultbase import ResultBase
 
 
@@ -11,12 +14,27 @@ class Repository(ResultBase):
     """
 
     def __init__(self, repo_dir: str, title: str, description: str):
+        """ Creates instances of repository.
+
+        Args:
+            repo_dir (str): The repository direction.
+            title (str): The repository title.
+            description (str): The repository description.
+        """
         self.repo_dir: str = repo_dir
         self.title: str = title
         self.description: str = description
 
     @staticmethod
     def _table_definition(metadata: MetaData) -> Table:
+        """ Gets the definition of the repositories table.
+
+        Args:
+            metadata (MetaData): The database schema metadata.
+
+        Returns:
+            Table: Table following the repositories table definition.
+        """
         return Table(
             "repositories",
             metadata,

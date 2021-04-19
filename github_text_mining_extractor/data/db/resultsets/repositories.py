@@ -2,9 +2,14 @@
 """
 
 from typing import List, Optional
-from sqlalchemy.exc import IntegrityError  # type: ignore
+
+from data.db.err.repositoryalreadyexistserror import \
+    RepositoryAlreadyExistError
+from data.db.err.repositorynotexistserror import RepositoryNotExistsError
+from data.db.results.repository import Repository
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm.query import Query  # type: ignore
 from sqlalchemy.orm.session import Session  # type: ignore
-from ..results.repository import Repository
 
 
 class Repositories():
@@ -12,26 +17,61 @@ class Repositories():
     """
     @staticmethod
     def create(session: Session, repo_dir: str, title: str, description: str) -> Repository:
+        """ Creates a new Repository record.
+
+        Args:
+            session (Session): The database session.
+            repo_dir (str): The repository direction.
+            title (str): The repository title.
+            description (str): The repository description.
+
+        Raises:
+            ValueError: Thrown when missing repo_dir, title or description.
+            RepositoryAlreadyExistError: Thrown when already exist a repository with the same repo_dir.
+
+        Returns:
+            Repository: The repository.
+        """
         if not repo_dir or not title or not description:
             raise ValueError(
-                "You cannot create a repository without an repo_dir, a title and a description.")
+                "You cannot create a repository without a repo_dir, a title and a description.")
         try:
-            repo = Repository(repo_dir, title, description)
+            repo: Repository = Repository(repo_dir, title, description)
             session.add(repo)
             session.commit()
             return repo
         except IntegrityError:
-            raise NotImplementedError
+            raise RepositoryAlreadyExistError
 
     @staticmethod
     def get_repository(session: Session, repo_dir: str) -> Repository:
-        query = session.query(Repository).filter_by(repo_dir=repo_dir)
+        """ Gets the repository record.
+
+        Args:
+            session (Session): The database session.
+            repo_dir (str): The repository direction.
+
+        Raises:
+            RepositoryNotExistsError: Thrown when there isn't any repository with that repo_dir in the database records.
+
+        Returns:
+            Repository: The repository.
+        """
+        query: Query = session.query(Repository).filter_by(repo_dir=repo_dir)
         repo: Optional[Repository] = query.first()
         if repo is None:
-            raise NotImplementedError
+            raise RepositoryNotExistsError
         return repo
 
     @staticmethod
     def get_repositories(session: Session) -> List[Repository]:
-        query = session.query(Repository)
+        """Gets all the repositories.
+
+        Args:
+            session (Session): The database session.
+
+        Returns:
+            List[Repository]: List with all the repositories.
+        """
+        query: Query = session.query(Repository)
         return query.all()
