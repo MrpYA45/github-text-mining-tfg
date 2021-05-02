@@ -1,7 +1,7 @@
 """Connections Configuration class module.
 """
-import os
 import json
+import os
 
 
 class ConnConfiguration():

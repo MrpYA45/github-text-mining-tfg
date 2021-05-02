@@ -1,14 +1,16 @@
 """ Schema class module.
 """
 
+from github_text_mining.github_text_mining.data.config.dbconfiguration import \
+    DBConfiguration
+from github_text_mining.github_text_mining.data.db.results import (Issue,
+                                                                   Repository,
+                                                                   Task)
 from sqlalchemy import create_engine, event  # type: ignore
 from sqlalchemy.engine import Engine  # type: ignore
 from sqlalchemy.ext.declarative import declarative_base  # type: ignore
 from sqlalchemy.orm import sessionmaker  # type: ignore
 from sqlalchemy.orm.session import Session  # type: ignore
-
-from data.config.dbconfiguration import DBConfiguration
-from .results import Issue, Repository, Task
 
 
 @event.listens_for(Engine, "connect")
@@ -24,8 +26,7 @@ class Schema():
         self.__declarative_base = declarative_base()
 
         self.__engine = create_engine(
-            DBConfiguration.get_engine_str(),
-            echo=DBConfiguration.get_debug_state())
+            DBConfiguration.get_engine_str(), echo=False)
         self.__session_maker = sessionmaker(bind=self.__engine)
 
         Issue.map(self.__declarative_base.metadata)

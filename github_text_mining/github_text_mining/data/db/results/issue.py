@@ -13,7 +13,7 @@ class Issue(ResultBase):
     """ Definition and storage of issue ORM records.
     """
 
-    def __init__(self, repo_dir: str, issue_id: int, title: str, description: str, labels: list, comments: list, isPullRequest: bool):
+    def __init__(self, repo_dir: str, issue_id: int, title: str, description: str, labels: str, comments: str, isPullRequest: bool):
         """ Creates instances of issue.
 
         Args:
@@ -29,8 +29,8 @@ class Issue(ResultBase):
         self.issue_id: int = issue_id
         self.title: str = title
         self.description: str = description
-        self.labels: List[str] = labels
-        self.comments: List[str] = comments
+        self.labels: str = labels
+        self.comments: str = comments
         self.isPullRequest: bool = isPullRequest
 
     @staticmethod

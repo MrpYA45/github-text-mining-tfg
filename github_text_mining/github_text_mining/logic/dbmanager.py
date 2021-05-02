@@ -1,11 +1,12 @@
 from datetime import datetime
 from typing import List, Optional
 
-from data.db.results import Issue, Repository, Task
-from data.db.resultsets import Issues, Repositories, Tasks
-
-from .schema import Schema
-from .taskstate import TaskState
+from github_text_mining.github_text_mining.data.db import Schema, TaskState
+from github_text_mining.github_text_mining.data.db.results import (Issue,
+                                                                   Repository,
+                                                                   Task)
+from github_text_mining.github_text_mining.data.db.resultsets import (
+    Issues, Repositories, Tasks)
 
 
 class DBManager():
@@ -55,7 +56,8 @@ class DBManager():
             Repository: The repository.
         """
         if not repo_dir or not title or not description:
-            raise ValueError("You cannot create a repository without a repo_dir, a title and a description.")
+            raise ValueError(
+                "You cannot create a repository without a repo_dir, a title and a description.")
         session = self.get_schema()
         return Repositories.create(session, repo_dir, title, description)
 
@@ -78,11 +80,19 @@ class DBManager():
             Issue: The issue.
         """
         if not issue_id or not repo_dir or not title or not description:
-            raise ValueError("You cannot create an issue without a repo_dir, an issue_id, a title and a description.")
+            raise ValueError(
+                "You cannot create an issue without a repo_dir, an issue_id, a title and a description.")
         session = self.get_schema()
         return Issues.create(session, repo_dir, issue_id, title, description, labels, comments, isPullRequest)
 
-    def get_task(self, repo_dir: int) -> Task:
+    def set_task_state(self, repo_dir: str, state: TaskState) -> None:
+        if not repo_dir or not state:
+            raise ValueError(
+                "You cannot set the state of an issue without a repo_dir and a state.")
+        session = self.get_schema()
+        return Tasks.set_task_state(session, repo_dir, state)
+
+    def get_task(self, repo_dir: str) -> Task:
         """ Gets the lastest task record with that repo_dir.
 
         Args:
@@ -98,9 +108,14 @@ class DBManager():
         if not repo_dir:
             raise ValueError("You cannot get a task without a repo_dir.")
         session = self.get_schema()
-        return Tasks.get_task(session, id)
+        return Tasks.get_task(session, repo_dir)
 
-    def get_tasks(self, repo_dir = None, state: TaskState = None) -> List[Task]:
+    @staticmethod
+    def get_next_queued_task(self) -> Task:
+        session = self.get_schema()
+        return Tasks.get_next_queued_task(session)
+
+    def get_tasks(self, repo_dir: str = None, state: TaskState = None) -> List[Task]:
         """ Gets a list of tasks.
 
         Args:
@@ -155,11 +170,12 @@ class DBManager():
             Issue: The issue.
         """
         if not repo_dir or not issue_id:
-            raise ValueError("You cannot get an issue without a repo_dir and an issue_id.")
+            raise ValueError(
+                "You cannot get an issue without a repo_dir and an issue_id.")
         session = self.get_schema()
         return Issues.get_issue(session, repo_dir, issue_id)
 
-    def get_issues(self, repo_dir: str = None, pull_requests = True) -> List[Issue]:
+    def get_issues(self, repo_dir: str = None, pull_requests=True) -> List[Issue]:
         """ Gets a list of issues.
 
         Args:

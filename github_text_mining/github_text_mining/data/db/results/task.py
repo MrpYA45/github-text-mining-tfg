@@ -46,7 +46,6 @@ class Task(ResultBase):
 
     def __str__(self) -> str:
         return json.dumps({
-            "task_id": self.task_id,
             "state": self.state,
             "timestamp": self.timestamp.strftime("%d-%m-%Y %H:%M:%S %Z"),
             "repo_dir": self.repo_dir

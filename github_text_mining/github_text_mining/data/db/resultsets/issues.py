@@ -4,10 +4,10 @@
 import json
 from typing import List, Optional
 
-from data.db.err.issuealreadyexistserror import IssueAlreadyExistsError
-from data.db.err.issuenotexistserror import IssueNotExistsError
-from data.db.results.issue import Issue
-from sqlalchemy.exc import IntegrityError
+from github_text_mining.github_text_mining.data.db.err import (
+    IssueAlreadyExistsError, IssueNotExistsError)
+from github_text_mining.github_text_mining.data.db.results.issue import Issue
+from sqlalchemy.exc import IntegrityError  # type: ignore
 from sqlalchemy.orm.query import Query  # type: ignore
 from sqlalchemy.orm.session import Session  # type: ignore
 
@@ -40,8 +40,10 @@ class Issues():
             raise ValueError(
                 "You cannot create an issue without a repo_dir, an issue_id, a title and a description.")
         try:
+            labels_1: str = json.dumps(labels)
+            comments_1: str = json.dumps(comments)
             issue: Issue = Issue(repo_dir, issue_id, title, description,
-                                 json.dumps(labels), json.dumps(comments), isPullRequest)
+                                 labels_1, comments_1, isPullRequest)
             session.add(issue)
             session.commit()
             return issue

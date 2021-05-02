@@ -9,6 +9,7 @@ class TaskState(Enum):
     """
     Queued = 0
     CapturingData = 1
-    InProgress = 2
-    Done = 3
-    OutDated = 4
+    Waiting = 2
+    InProgress = 3
+    Done = 4
+    OutDated = -1

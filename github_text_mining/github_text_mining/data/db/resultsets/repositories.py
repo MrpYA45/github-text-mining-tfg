@@ -3,11 +3,11 @@
 
 from typing import List, Optional
 
-from data.db.err.repositoryalreadyexistserror import \
-    RepositoryAlreadyExistError
-from data.db.err.repositorynotexistserror import RepositoryNotExistsError
-from data.db.results.repository import Repository
-from sqlalchemy.exc import IntegrityError
+from github_text_mining.github_text_mining.data.db.err import (
+    RepositoryAlreadyExistError, RepositoryNotExistsError)
+from github_text_mining.github_text_mining.data.db.results.repository import \
+    Repository
+from sqlalchemy.exc import IntegrityError  # type: ignore
 from sqlalchemy.orm.query import Query  # type: ignore
 from sqlalchemy.orm.session import Session  # type: ignore
 

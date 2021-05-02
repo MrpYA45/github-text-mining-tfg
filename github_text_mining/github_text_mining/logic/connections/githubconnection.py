@@ -3,9 +3,9 @@ from datetime import datetime
 from typing import List, Optional
 
 import github as gh
-from github import Repository, Issue, Label, Github
-
-from logic.connections.config import ConnConfiguration
+from github import Github, Issue, Label, Repository
+from github_text_mining.github_text_mining.logic.connections.config import \
+    ConnConfiguration
 
 
 class GitHubConnection():

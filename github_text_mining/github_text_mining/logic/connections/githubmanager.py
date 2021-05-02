@@ -1,11 +1,11 @@
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import List, Tuple
 from urllib.parse import urlparse
 
-from data.db import DBManager
-from github import Issue, RateLimitExceededException
+from github import RateLimitExceededException
 from github.GithubException import BadCredentialsException
+from github_text_mining.github_text_mining.logic.dbmanager import DBManager
 
 from .githubconnection import GitHubConnection
 
@@ -13,18 +13,20 @@ from .githubconnection import GitHubConnection
 class GitHubManager():
 
     def __init__(self, gh_conn: GitHubConnection, manager: DBManager) -> None:
-        self.session = gh_conn.get_session()
+        self.gh_conn = gh_conn
         self.manager = manager
 
     def get_repo_info(self, repo_dir: str) -> Tuple:
         try:
-            repo = self.session.get_repo(repo_dir)
+            session = self.gh_conn.get_session()
+            repo = session.get_repo(repo_dir)
             return (repo.full_name, repo.description)
         except BadCredentialsException:
             raise ValueError("Invalid GitHub Access Token.")
 
     def get_repo_issues(self, repo_dir: str) -> List[dict]:
-        repo = self.session.get_repo(repo_dir)
+        session = self.gh_conn.get_session()
+        repo = session.get_repo(repo_dir)
         issues = repo.get_issues(state="all")
         iter_issues = iter(issues)
         issues_data = []
@@ -36,21 +38,21 @@ class GitHubManager():
                 isPullRequest = issue.pull_request is not None
                 issue_data = {
                     "id": issue.id,
-                    "title": issue.title, 
+                    "title": issue.title,
                     "description": issue.body,
-                    "labels": labels, 
-                    "comments": comments, 
+                    "labels": labels,
+                    "comments": comments,
                     "isPullRequest": isPullRequest
-                    }
+                }
                 issues_data.append(issue_data)
             except StopIteration:
                 return issues_data
             except RateLimitExceededException:
-                sleep_time = self.session.get_rate_limit_reset() - datetime.utcnow() + \
-                    datetime.timedelta(0, 20)
+                sleep_time = (self.gh_conn.get_rate_limit_reset() - datetime.utcnow() +
+                              timedelta(0, 20)).total_seconds()
                 time.sleep(sleep_time)
 
-    def __get_labels_from_issue(self, issue: Issue) -> List[str]:
+    def __get_labels_from_issue(self, issue) -> List[str]:
         labels = []
         iter_labels = iter(issue.labels)
         while True:
@@ -60,11 +62,11 @@ class GitHubManager():
             except StopIteration:
                 return labels
             except RateLimitExceededException:
-                sleep_time = self.session.get_rate_limit_reset() - datetime.utcnow() + \
-                    datetime.timedelta(0, 20)
+                sleep_time = (self.gh_conn.get_rate_limit_reset() - datetime.utcnow() +
+                              timedelta(0, 20)).total_seconds()
                 time.sleep(sleep_time)
 
-    def __get_comments_from_issue(self, issue: Issue) -> List[str]:
+    def __get_comments_from_issue(self, issue) -> List[str]:
         comments = []
         iter_labels = iter(issue.get_comments())
         while True:
@@ -74,8 +76,8 @@ class GitHubManager():
             except StopIteration:
                 return comments
             except RateLimitExceededException:
-                sleep_time = self.session.get_rate_limit_reset() - datetime.utcnow() + \
-                    datetime.timedelta(0, 20)
+                sleep_time = (self.gh_conn.get_rate_limit_reset() - datetime.utcnow() +
+                              timedelta(0, 20)).total_seconds()
                 time.sleep(sleep_time)
 
     @staticmethod

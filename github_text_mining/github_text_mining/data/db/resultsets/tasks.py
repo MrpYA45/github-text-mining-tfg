@@ -4,13 +4,15 @@
 from datetime import datetime
 from typing import List, Optional
 
-from data.db.err.taskalreadyexistserror import TaskAlreadyExistsError
-from data.db.err.tasknotexistserror import TaskNotExistsError
-from data.db.results.task import Task
-from data.db.taskstate import TaskState
-from sqlalchemy.exc import IntegrityError
+from github_text_mining.github_text_mining.data.db.err.taskalreadyexistserror import \
+    TaskAlreadyExistsError
+from github_text_mining.github_text_mining.data.db.err.tasknotexistserror import \
+    TaskNotExistsError
+from github_text_mining.github_text_mining.data.db.results.task import Task
+from github_text_mining.github_text_mining.data.db.taskstate import TaskState
+from sqlalchemy.exc import IntegrityError  # type: ignore
 from sqlalchemy.orm.query import Query  # type: ignore
-from sqlalchemy.orm.session import Session
+from sqlalchemy.orm.session import Session  # type: ignore
 from sqlalchemy.sql.schema import Sequence  # type: ignore
 
 
@@ -46,6 +48,15 @@ class Tasks():
             raise TaskAlreadyExistsError
 
     @staticmethod
+    def set_task_state(session: Session, repo_dir: str, state: TaskState) -> None:
+        try:
+            task: Task = Tasks.get_task(session, repo_dir)
+            task.state = state.value
+            session.commit()
+        except IntegrityError:
+            raise TaskNotExistsError
+
+    @staticmethod
     def get_task(session: Session, repo_dir: str) -> Task:
         """ Gets the lastest task record with that repo_dir.
 
@@ -66,7 +77,14 @@ class Tasks():
         return task
 
     @staticmethod
-    def get_tasks(session: Task, repo_dir: str = None, state: TaskState = None) -> List[Task]:
+    def get_next_queued_task(session: Session) -> Task:
+        query: Query = session.query(Task).filter_by(
+            state=TaskState.Queued.value).order_by(Task.timestamp)
+        task = query.first()
+        return task
+
+    @staticmethod
+    def get_tasks(session: Session, repo_dir: str = None, state: TaskState = None) -> List[Task]:
         """ Gets a list of tasks.
 
         Args:
