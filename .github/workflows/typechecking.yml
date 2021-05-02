@@ -1,0 +1,31 @@
+name: mypy typechecking
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  typechecking:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.9.2
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9.2
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install mypy sqlalchemy flask github
+      - name: Run typechecking
+        run: |
+          scripts/typechecking.bat > typechecking.txt
+      - name: Archive typechecking report
+        uses: actions/upload-artifact@v2
+        with:
+          name: typechecking-report
+          path: |
+            typechecking.txt
