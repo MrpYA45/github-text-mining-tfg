@@ -22,7 +22,7 @@ jobs:
           pip install mypy sqlalchemy flask github
       - name: Run typechecking
         run: |
-          scripts/typechecking.bat > typechecking.txt
+          scripts/type_checking.bat > typechecking.txt
       - name: Archive typechecking report
         uses: actions/upload-artifact@v2
         with:
