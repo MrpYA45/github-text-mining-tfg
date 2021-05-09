@@ -27,7 +27,8 @@ class Schema():
 
         self.__engine = create_engine(
             DBConfiguration.get_engine_str(), echo=False)
-        self.__session_maker = sessionmaker(bind=self.__engine)
+        self.__session_maker = sessionmaker(
+            bind=self.__engine, autoflush=True, autocommit=False)
 
         Issue.map(self.__declarative_base.metadata)
         Repository.map(self.__declarative_base.metadata)
@@ -36,3 +37,6 @@ class Schema():
 
     def new_session(self) -> Session:
         return self.__session_maker()
+
+    def dispose_engine(self) -> None:
+        self.__engine.dispose()
