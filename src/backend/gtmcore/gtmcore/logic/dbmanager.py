@@ -2,7 +2,7 @@
 """
 
 from datetime import datetime
-from typing import List
+from typing import List, Optional
 
 from gtmcore.data.db import Schema, TaskState
 from gtmcore.data.db.err.tasknotexistserror import TaskNotExistsError
@@ -122,7 +122,7 @@ class DBManager():
         session = self.get_schema()
         return Tasks.get_task(session, repo_dir)
 
-    def get_next_queued_task(self) -> Task:
+    def get_next_queued_task(self) -> Optional[Task]:
         session = self.get_schema()
         try:
             return Tasks.get_next_queued_task(session)
