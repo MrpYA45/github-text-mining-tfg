@@ -9,7 +9,7 @@ on:
 
 jobs:
     stylechecking:
-        runs-on: windows-latest
+        runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
             - name: Set up Python 3.9.2
@@ -22,7 +22,7 @@ jobs:
                   pip install pylint sqlalchemy flask pygithub
             - name: Run linting
               run: |
-                  scripts/style_checking.bat > linting.txt
+                  bash scripts/linux/style_checking.sh > linting.txt
             - name: Archive linting report
               uses: actions/upload-artifact@v2
               with:
