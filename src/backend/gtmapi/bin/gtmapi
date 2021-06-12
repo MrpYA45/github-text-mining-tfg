@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 import logging
-from multiprocessing.context import Process
 
 from flask import Flask, json, jsonify, render_template, request
 from flask.logging import default_handler
-from gtmapi.presentation.rest.taskmanager import TaskManager
 from gtmcore.data.db.schema import Schema
 from gtmcore.logic.dbmanager import DBManager
 from gtmextraction.logic.connections import GitHubConnection, GitHubManager
@@ -20,7 +18,6 @@ schema: Schema = Schema()
 db_manager: DBManager = DBManager(schema)
 gh_conn: GitHubConnection = GitHubConnection()
 gh_manager: GitHubManager = GitHubManager(gh_conn, db_manager)
-task_manager: TaskManager = TaskManager(db_manager)
 
 
 @app.route("/", methods=["GET"])
@@ -31,7 +28,7 @@ def is_running():
 
 @app.route("/tasks/", methods=["GET"])
 def get_all_tasks():
-    tasks = task_manager.get_tasks()
+    tasks = db_manager.get_tasks()
     return jsonify(eqtls=[str(task) for task in tasks])
 
 
@@ -42,28 +39,28 @@ def create_task():
         gh_repo: str = request.form.get("gh_repo")
         repo_dir: str = gh_user + "/" + gh_repo
         if request.method == "POST":
-            task_added = task_manager.add_task(repo_dir)
+            task_added = db_manager.create_task(repo_dir)
             response = app.response_class(
-                response=json.dumps({"Añadido": task_added}),
+                response=json.dumps({"Añadido": task_added is not None}),
                 status=200,
                 mimetype='application/json'
             )
         else:
             repo_dir = GitHubManager.get_repo_dir(repo_dir)
-            task = task_manager.get_task(repo_dir)
+            task = db_manager.get_task(repo_dir)
             response = app.response_class(
                 response=jsonify(str(task)),
                 status=200,
                 mimetype='application/json'
             )
         return response
-    except:
-        return "False"
+    except ValueError:
+        return False
 
 
 @app.route("/test/", methods=["POST"])
 def test_task():
-    res = task_manager.add_task("MrpYA45/github-text-mining-tfg")
+    res = db_manager.create_task("MrpYA45/github-text-mining-tfg")
     response = app.response_class(
         response=json.dumps({"Test": res}),
         status=200,

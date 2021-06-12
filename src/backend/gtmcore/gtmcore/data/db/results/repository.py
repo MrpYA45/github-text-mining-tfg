@@ -3,6 +3,7 @@
 import json
 
 from sqlalchemy import Column, MetaData, String, Table  # type: ignore
+from sqlalchemy.orm import relationship  # type: ignore
 
 from .resultbase import ResultBase
 
@@ -33,13 +34,16 @@ class Repository(ResultBase):
         Returns:
             Table: Table following the repositories table definition.
         """
-        return Table(
+        __table__ = Table(
             "repositories",
             metadata,
             Column("repo_dir", String(128), primary_key=True),
             Column("title", String(60), nullable=False),
-            Column("description", String, nullable=False)
+            Column("description", String, nullable=False),
         )
+        issues = relationship(  # pylint: disable=unused-variable
+            "Issue", foreign_keys=[__table__.c.repo_dir], backref="repository", passive_deletes=True)
+        return __table__
 
     def __str__(self) -> str:
         return json.dumps({

@@ -49,7 +49,7 @@ class Issues():
             session.commit()
             return issue
         except IntegrityError as err:
-            raise IssueAlreadyExistsError() from err
+            raise IssueAlreadyExistsError from err
 
     @staticmethod
     def get_issue(session: Session, repo_dir: str, issue_id: int) -> Issue:
@@ -72,7 +72,7 @@ class Issues():
             repo_dir=repo_dir, issue_id=issue_id)
         issue: Optional[Issue] = query.first()
         if issue is None:
-            raise IssueNotExistsError()
+            raise IssueNotExistsError
         return issue
 
     @staticmethod

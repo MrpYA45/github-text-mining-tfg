@@ -44,32 +44,12 @@ class Tasks():
             raise TaskAlreadyExistsError from err
 
     @staticmethod
-    def set_task_state(session: Session, repo_dir: str, state: TaskState) -> None:
-        """ Updates the state of a task.
+    def get_task(session: Session, task_id: int) -> Task:
+        """ Gets the task record with that repo_dir.
 
         Args:
             session (Session): The database session.
-            repo_dir (str): The task repository.
-            state (TaskState): The task state.
-
-        Raises:
-            TaskNotExistsError:
-                Thrown when there isn't any task with that repo_dir in the database records.
-        """
-        try:
-            task: Task = Tasks.get_task(session, repo_dir)
-            task.state = state.value
-            session.commit()
-        except IntegrityError as err:
-            raise TaskNotExistsError from err
-
-    @staticmethod
-    def get_task(session: Session, repo_dir: str) -> Task:
-        """ Gets the lastest task record with that repo_dir.
-
-        Args:
-            session (Session): The database session.
-            repo_dir (str): The task repository.
+            task_id (str): The task id.
 
         Raises:
             TaskNotExistsError:
@@ -78,31 +58,10 @@ class Tasks():
         Returns:
             Task: The task.
         """
-        query: Query = session.query(Task).filter_by(repo_dir=repo_dir)
+        query: Query = session.query(Task).filter_by(task_id=task_id)
         task: Optional[Task] = query.first()
         if task is None:
             raise TaskNotExistsError
-        return task
-
-    @staticmethod
-    def get_next_queued_task(session: Session) -> Task:
-        """ Gets the oldest queued task record.
-
-        Args:
-            session (Session): The database session.
-
-        Raises:
-            TaskNotExistsError:
-                Thrown when there isn't any queued task in the database records.
-
-        Returns:
-            Task: The oldest queued task.
-        """
-        query: Query = session.query(Task).filter_by(
-            state=TaskState.QUEUED.value).order_by("timestamp")
-        task = query.first()
-        if task is None:
-            raise TaskNotExistsError()
         return task
 
     @staticmethod
@@ -123,3 +82,71 @@ class Tasks():
         if state is not None:
             query = query.filter_by(state=state.value)
         return query.all()
+
+    @staticmethod
+    def get_lastest_task_from_repo(
+            session: Session, repo_dir: str, state: TaskState = None) -> Task:
+        """ Gets the lastest task record with that repo_dir.
+
+        Args:
+            session (Session): The database session.
+            repo_dir (str): The task repository. Defaults to None.
+            state (TaskState, optional): The task state. Defaults to None.
+
+        Raises:
+            TaskNotExistsError:
+                Thrown when there isn't any task with that repo_dir in the database records.
+
+        Returns:
+            List[Task]: List of tasks.
+        """
+        query: Query = session.query(Task).filter_by(repo_dir=repo_dir)
+        if state is not None:
+            query = query.filter_by(state=state.value)
+        task: Optional[Task] = query.order_by(
+            getattr(Task, "timestamp").desc()).first()
+        if task is None:
+            raise TaskNotExistsError
+        return task
+
+    @staticmethod
+    def get_oldest_task_with_state(session: Session, state: TaskState) -> Task:
+        """ Gets the oldest queued task record.
+
+        Args:
+            session (Session): The database session.
+            state (TaskState): The task state.
+
+        Raises:
+            TaskNotExistsError:
+                Thrown when there isn't any task with that state in the database records.
+
+        Returns:
+            Task: The oldest queued task.
+        """
+        query: Query = session.query(Task).filter_by(
+            state=state.value).order_by("timestamp")
+        task: Optional[Task] = query.first()
+        if task is None:
+            raise TaskNotExistsError
+        return task
+
+    @staticmethod
+    def set_task_state(session: Session, task_id: int, state: TaskState) -> None:
+        """ Updates the state of a task.
+
+        Args:
+            session (Session): The database session.
+            task_id (str): The task id.
+            state (TaskState): The task state.
+
+        Raises:
+            TaskNotExistsError:
+                Thrown when there isn't any task with that task_id in the database records.
+        """
+        try:
+            task: Task = Tasks.get_task(session, task_id)
+            task.state = state.value
+            session.commit()
+        except IntegrityError as err:
+            raise TaskNotExistsError from err

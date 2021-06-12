@@ -21,6 +21,7 @@ class Task(ResultBase):
             timestamp (datetime): Task creation timestamp.
             repo_dir (str): The task repository.
         """
+        self.task_id: int
         self.state: int = state
         self.timestamp: datetime = timestamp
         self.repo_dir: str = repo_dir
@@ -46,6 +47,7 @@ class Task(ResultBase):
 
     def __str__(self) -> str:
         return json.dumps({
+            "task_id": self.task_id,
             "state": self.state,
             "timestamp": self.timestamp.strftime("%d-%m-%Y %H:%M:%S %Z"),
             "repo_dir": self.repo_dir
