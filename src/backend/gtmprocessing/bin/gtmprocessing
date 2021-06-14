@@ -1,0 +1,52 @@
+#!/usr/bin/env python3
+import logging
+import time
+from concurrent.futures import ThreadPoolExecutor
+
+from gtmcore.data.db import Schema, TaskState
+from gtmcore.data.db.err.tasknotexistserror import TaskNotExistsError
+from gtmcore.data.db.results.task import Task
+from gtmcore.logic.dbmanager import DBManager
+from gtmprocessing.logic.processingmanager import ProcessingManager
+
+
+class GTMProcessing():
+
+    def __init__(self):
+        schema: Schema = Schema()
+        self.__db_manager: DBManager = DBManager(schema)
+        self.__processing_manager = ProcessingManager(self.__db_manager)
+        self.__thread_pool = ThreadPoolExecutor(max_workers=4)
+
+    def run(self):
+        logging.info("[GTMProcessing] Running...")
+        while True:
+            task = self.get_next_queued_task()
+            if task:
+                logging.debug(
+                    "[GTMProcessing] NEW TASK FOUND. TASK_ID: %d | TASK_REPO: %s | CREATED AT: %s",
+                    task.task_id, task.repo_dir, task.timestamp)
+                self.__db_manager.set_task_state(
+                    task.task_id, TaskState.IN_PROGRESS)
+
+                self.__thread_pool.submit(
+                    self.__processing_manager.process_task, task)
+
+                self.__db_manager.set_task_state(task.task_id, TaskState.DONE)
+
+            time.sleep(10)
+
+    def get_next_queued_task(self) -> Task:
+        try:
+            return self.__db_manager.get_oldest_task_with_state(TaskState.WAITING)
+        except TaskNotExistsError:
+            return None
+
+
+if __name__ == "__main__":
+    logging.basicConfig(filename="gtmextraction.log",
+                        format="[%(levelname)s] %(asctime)s %(message)s",
+                        datefmt="%m/%d/%Y %I:%M:%S %p", level=logging.DEBUG)
+    logging.info("[GTMProcessing] INITIALIZING PROCESSING MODULE... ")
+    processing = GTMProcessing()
+    processing.run()
