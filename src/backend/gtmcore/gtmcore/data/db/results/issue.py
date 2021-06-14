@@ -62,7 +62,7 @@ class Issue(ResultBase):
             "issue_id": self.issue_id,
             "title": self.title,
             "description": self.description,
-            "labels": self.labels,
-            "comments": self.comments,
+            "labels": json.loads(self.labels),
+            "comments": json.loads(self.comments),
             "is_pull_request": self.is_pull_request
         })

@@ -26,13 +26,15 @@ class DBManager():
         """
         return self.__schema.new_session()
 
-    def create_repository(self, repo_dir: str, title: str, description: str) -> Repository:
+    def create_repository(self, repo_dir: str, title: str,
+                          description: str, labels: list) -> Repository:
         """ Creates a new repository.
 
         Args:
             repo_dir (str): The repository direction.
             title (str): The repository title
             description (str): The repository description.
+            labels (list): The repository labels.
 
         Raises:
             ValueError: Thrown when missing repo_dir, title or description.
@@ -46,10 +48,11 @@ class DBManager():
         session: Schema = self.get_schema()
         try:
             repo: Repository = Repositories.create(
-                session, repo_dir, title, description)
+                session, repo_dir, title, description, labels)
         except RepositoryAlreadyExistError:
             Repositories.delete(session, repo_dir)
-            repo = Repositories.create(session, repo_dir, title, description)
+            repo = Repositories.create(
+                session, repo_dir, title, description, labels)
         return repo
 
     def delete(self, repo_dir: str) -> None:

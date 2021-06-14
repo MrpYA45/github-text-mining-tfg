@@ -1,6 +1,7 @@
 """ Repositories class module.
 """
 
+import json
 from typing import List, Optional
 
 from gtmcore.data.db.err import (RepositoryAlreadyExistError,
@@ -15,7 +16,7 @@ class Repositories():
     """ Class responsible of table-level repositories operations for Repositories.
     """
     @staticmethod
-    def create(session: Session, repo_dir: str, title: str, description: str) -> Repository:
+    def create(session: Session, repo_dir: str, title: str, description: str, labels: list) -> Repository:
         """ Creates a new Repository record.
 
         Args:
@@ -23,6 +24,7 @@ class Repositories():
             repo_dir (str): The repository direction.
             title (str): The repository title.
             description (str): The repository description.
+            labels (str): The repository labels.
 
         Raises:
             ValueError: Thrown when missing repo_dir, title or description.
@@ -36,7 +38,9 @@ class Repositories():
             raise ValueError(
                 "You cannot create a repository without a repo_dir, a title and a description.")
         try:
-            repo: Repository = Repository(repo_dir, title, description)
+            labels_1: str = json.dumps(labels)
+            repo: Repository = Repository(
+                repo_dir, title, description, labels_1)
             session.add(repo)
             session.commit()
             return repo
