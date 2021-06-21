@@ -1,0 +1,66 @@
+version: "3"
+services:
+    db:
+        container_name: gtmdb
+        env_file:
+            - ../services/.env
+        image: mariadb:latest
+        networks:
+            app_net:
+                ipv4_address: 172.16.0.10
+        ports:
+            - "3306:3306"
+
+    api:
+        build:
+            context: ../services
+        container_name: gtmapi
+        depends_on:
+            - db
+        image: gtmapi
+        networks:
+            app_net:
+                ipv4_address: 172.16.0.11
+        ports:
+            - "6060:6060"
+        volumes:
+            - ../../src/backend/gtmcore:/app/core:ro
+            - ../../src/backend/gtmapi:/app/src
+        working_dir: /app
+
+    extraction:
+        build:
+            context: ../services
+        container_name: gtmextraction
+        depends_on:
+            - db
+        image: gtmextraction
+        networks:
+            app_net:
+                ipv4_address: 172.16.0.12
+        volumes:
+            - ../../src/backend/gtmcore:/app/core:ro
+            - ../../src/backend/gtmextraction:/app/src
+        working_dir: /app
+
+    processing:
+        build:
+            context: ../services
+        container_name: gtmprocessing
+        depends_on:
+            - db
+        image: gtmprocessing
+        networks:
+            app_net:
+                ipv4_address: 172.16.0.13
+        volumes:
+            - ../../src/backend/gtmcore:/app/core:ro
+            - ../../src/backend/gtmprocessing:/app/src
+        working_dir: /app
+
+networks:
+    app_net:
+        ipam:
+            driver: default
+            config:
+                - subnet: "172.16.0.0/24"
