@@ -357,3 +357,10 @@ TSWLatexianTemp*s
 
 # Database
 *.db
+
+# Logs
+*.log
+
+# Models
+
+**/data/models
