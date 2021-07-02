@@ -16,4 +16,8 @@ echo "[GTMEXTRACTION]"
 mypy src/backend/gtmextraction/gtmextraction src/backend/gtmcore/gtmcore
 SUCCESS=$((${SUCCESS}+$?))
 
+echo "[GTMPROCESSING]"
+mypy src/backend/gtmprocessing/gtmprocessing src/backend/gtmcore/gtmcore
+SUCCESS=$((${SUCCESS}+$?))
+
 exit ${SUCCESS}

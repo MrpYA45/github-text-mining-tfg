@@ -16,4 +16,8 @@ ECHO [GTMEXTRACTION]
 mypy src\backend\gtmextraction\gtmextraction src\backend\gtmcore\gtmcore
 SET /A SUCCESS=%SUCCESS%+%errorlevel%
 
+ECHO [GTMPROCESSING]
+mypy src\backend\gtmprocessing\gtmprocessing src\backend\gtmcore\gtmcore
+SET /A SUCCESS=%SUCCESS%+%errorlevel%
+
 exit ${SUCCESS}
