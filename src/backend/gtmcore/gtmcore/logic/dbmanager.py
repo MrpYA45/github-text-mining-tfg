@@ -5,6 +5,7 @@ from datetime import datetime
 from typing import List
 
 from gtmcore.data.db import Schema, TaskState
+from gtmcore.data.db.enums.tasktype import TaskType
 from gtmcore.data.db.err.repositoryalreadyexistserror import \
     RepositoryAlreadyExistError
 from gtmcore.data.db.results import Issue, Repository, Task
@@ -170,7 +171,8 @@ class DBManager():
         if not repo_dir:
             raise ValueError("You cannot create a task without a repo_dir.")
         session: Schema = self.get_schema()
-        return Tasks.create(session, TaskState.QUEUED, datetime.utcnow(), repo_dir)
+        return Tasks.create(
+            session, TaskState.QUEUED, datetime.utcnow(), repo_dir, TaskType.NOT_SET)
 
     def get_task(self, task_id: int) -> Task:
         """ Gets the task record with that task_id.
@@ -250,3 +252,18 @@ class DBManager():
         """
         session: Schema = self.get_schema()
         return Tasks.set_task_state(session, task_id, state)
+
+    def set_task_type(self, task_id: int, task_type: TaskType, params: dict = None) -> None:
+        """ Updates the type of a task and his parameters if needed.
+
+        Args:
+            task_id (str): The task id.
+            task_type (int): The task type.
+            params (str, optional): The task parameters.
+
+        Raises:
+            TaskNotExistsError:
+                Thrown when there isn't any task with that task_id in the database records.
+        """
+        session: Schema = self.get_schema()
+        return Tasks.set_task_type(session, task_id, task_type, params)

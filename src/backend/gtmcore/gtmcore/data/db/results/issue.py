@@ -3,7 +3,7 @@
 import json
 
 from sqlalchemy import (JSON, Boolean, Column, ForeignKey,  # type: ignore
-                        Integer, MetaData, String, Table)
+                        Integer, MetaData, String, Table, Text)
 
 from .resultbase import ResultBase
 
@@ -46,11 +46,11 @@ class Issue(ResultBase):
         return Table(
             "issues",
             metadata,
-            Column("repo_dir", Integer, ForeignKey(
+            Column("repo_dir", String(140), ForeignKey(
                 "repositories.repo_dir", ondelete="CASCADE"), primary_key=True),
-            Column("issue_id", String(128), primary_key=True),
-            Column("title", String(60), nullable=False),
-            Column("description", String, nullable=False),
+            Column("issue_id", Integer, primary_key=True),
+            Column("title", String(255), nullable=False),
+            Column("description", Text, nullable=False),
             Column("labels", JSON),
             Column("comments", JSON),
             Column("is_pull_request", Boolean, nullable=False)

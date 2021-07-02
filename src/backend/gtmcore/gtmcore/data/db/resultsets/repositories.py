@@ -16,7 +16,8 @@ class Repositories():
     """ Class responsible of table-level repositories operations for Repositories.
     """
     @staticmethod
-    def create(session: Session, repo_dir: str, title: str, description: str, labels: list) -> Repository:
+    def create(session: Session, repo_dir: str, title: str,
+               description: str, labels: list) -> Repository:
         """ Creates a new Repository record.
 
         Args:

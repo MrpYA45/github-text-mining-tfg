@@ -1,9 +1,11 @@
 """ Tasks class module.
 """
 
+import json
 from datetime import datetime
 from typing import List, Optional
 
+from gtmcore.data.db.enums.tasktype import TaskType
 from gtmcore.data.db.err import TaskAlreadyExistsError, TaskNotExistsError
 from gtmcore.data.db.results.task import Task
 from gtmcore.data.db.taskstate import TaskState
@@ -16,7 +18,8 @@ class Tasks():
     """ Class responsible of table-level logs operations for Tasks.
     """
     @staticmethod
-    def create(session: Session, state: TaskState, timestamp: datetime, repo_dir: str) -> Task:
+    def create(session: Session, state: TaskState, timestamp: datetime,
+               repo_dir: str, task_type: TaskType, params: dict = None) -> Task:
         """ Creates a new Task record.
 
         Args:
@@ -24,6 +27,8 @@ class Tasks():
             state (TaskState): The task state.
             timestamp (datetime): The time when the task was created.
             repo_dir (str): The task repository.
+            task_type (TaskType): The task type.
+            params (str, optional): The task parameters.
 
         Raises:
             ValueError: Thrown when missing status, timestamp or repo_dir.
@@ -32,11 +37,13 @@ class Tasks():
         Returns:
             Task: The task.
         """
-        if state is None or not timestamp or not repo_dir:
+        if state is None or not timestamp or not repo_dir or task_type is None:
             raise ValueError(
                 "You cannot create a task without a status, a timestamp and a repo_dir.")
         try:
-            task: Task = Task(state.value, timestamp, repo_dir)
+            params_1: str = json.dumps(params)
+            task: Task = Task(state.value, timestamp,
+                              repo_dir, task_type.value, params_1)
             session.add(task)
             session.commit()
             return task
@@ -58,6 +65,8 @@ class Tasks():
         Returns:
             Task: The task.
         """
+        if task_id is None:
+            raise ValueError("You cannot create a task without a task_id.")
         query: Query = session.query(Task).filter_by(task_id=task_id)
         task: Optional[Task] = query.first()
         if task is None:
@@ -65,13 +74,15 @@ class Tasks():
         return task
 
     @staticmethod
-    def get_tasks(session: Session, repo_dir: str = None, state: TaskState = None) -> List[Task]:
+    def get_tasks(session: Session, repo_dir: str = None,
+                  state: TaskState = None, task_type: TaskType = None) -> List[Task]:
         """ Gets a list of tasks.
 
         Args:
             session (Session): The database session.
             repo_dir (str, optional): The task repository. Defaults to None.
             state (TaskState, optional): The task state. Defaults to None.
+            task_type (TaskType, optional): The task type. Defaults to None.
 
         Returns:
             List[Task]: List of tasks.
@@ -81,6 +92,8 @@ class Tasks():
             query = query.filter_by(repo_dir=repo_dir)
         if state is not None:
             query = query.filter_by(state=state.value)
+        if task_type is not None:
+            query = query.filter_by(task_type=task_type)
         return query.all()
 
     @staticmethod
@@ -147,6 +160,29 @@ class Tasks():
         try:
             task: Task = Tasks.get_task(session, task_id)
             task.state = state.value
+            session.commit()
+        except IntegrityError as err:
+            raise TaskNotExistsError from err
+
+    @staticmethod
+    def set_task_type(session: Session, task_id: int,
+                      task_type: TaskType, params: dict = None) -> None:
+        """ Updates the type of a task and his parameters if needed.
+
+        Args:
+            session (Session): The database session.
+            task_id (str): The task id.
+            task_type (int): The task type.
+            params (str, optional): The task parameters.
+
+        Raises:
+            TaskNotExistsError:
+                Thrown when there isn't any task with that task_id in the database records.
+        """
+        try:
+            task: Task = Tasks.get_task(session, task_id)
+            task.task_type = task_type.value
+            task.params = json.dumps(params)
             session.commit()
         except IntegrityError as err:
             raise TaskNotExistsError from err

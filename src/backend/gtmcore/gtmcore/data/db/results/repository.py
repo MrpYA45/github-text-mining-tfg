@@ -2,7 +2,7 @@
 """
 import json
 
-from sqlalchemy import Column, MetaData, String, Table  # type: ignore
+from sqlalchemy import Column, MetaData, String, Table, Text  # type: ignore
 from sqlalchemy.orm import relationship  # type: ignore
 from sqlalchemy.sql.sqltypes import JSON  # type: ignore
 
@@ -40,9 +40,9 @@ class Repository(ResultBase):
         __table__ = Table(
             "repositories",
             metadata,
-            Column("repo_dir", String(128), primary_key=True),
-            Column("title", String(60), nullable=False),
-            Column("description", String, nullable=False),
+            Column("repo_dir", String(140), primary_key=True),
+            Column("title", String(100), nullable=False),
+            Column("description", Text, nullable=False),
             Column("labels", JSON)
         )
         issues = relationship(  # pylint: disable=unused-variable
