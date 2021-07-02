@@ -1,39 +1,46 @@
 """Connections Configuration class module.
 """
-import json
-import os
 
 
-class ConnConfiguration():
-    """[summary]
+from typing import Dict
+
+from gtmcore.data.config.baseconfiguration import (BaseConfiguration,
+                                                   ConfigValueType)
+
+
+class ConnConfiguration(BaseConfiguration):
+    """ Definition of github connection configuration aspects.
     """
 
-    file_path: str = "app/backend/config/config.json"
-
     def __init__(self) -> None:
-        """[summary]
+        BaseConfiguration.__init__(self)
+
+    def get_config_template(self) -> Dict[str, ConfigValueType]:
+        """ Gets the template of the configuration file.
+
+        Returns:
+            Dict[str, ConfigValueType]: Dictionary with the configuration file format.
         """
-        try:
-            os.makedirs(os.path.dirname(
-                ConnConfiguration.file_path), exist_ok=False)
-            config_template: dict = self.get_config_template()
-            with open(ConnConfiguration.file_path, "w") as config_file:
-                json.dump(config_template, config_file, indent=4)
-        except OSError:
-            pass
-
-    @ staticmethod
-    def get_github_token() -> str:
-        with open(ConnConfiguration.file_path) as config_file:
-            loaded_config = json.load(config_file)
-        return loaded_config["GITHUB_TOKEN"]
-
-    @ staticmethod
-    def get_config_template() -> dict:
-        config_template = {}
+        config_template: Dict[str, ConfigValueType] = {}
         config_template["GITHUB_TOKEN"] = ""
         return config_template
 
+    def get_github_token(self) -> str:
+        """ Gets the github token string.
+
+        Returns:
+            str: The github token string.
+        """
+        return str(self.get_value("GITHUB_TOKEN"))
+
+    def get_config_module_str(self) -> str:
+        """ Gets the configuration module name string.
+
+        Returns:
+            str: The configuration module name string.
+        """
+        return "gtmcore_configuration"
+
 
 if __name__ == "__main__":
-    config = ConnConfiguration()
+    config: BaseConfiguration = ConnConfiguration()

@@ -12,20 +12,22 @@ from sqlalchemy.orm.session import Session  # type: ignore
 
 @event.listens_for(Engine, "connect")
 def set_sqlite_pragma(dbapi_connection, connection_record):  # pylint: disable=unused-argument
-    cursor = dbapi_connection.cursor()
-    cursor.execute("PRAGMA foreign_keys = ON;")
-    cursor.close()
+    pass
 
 
 class Schema():
-    """ Schema
+    """ Database Schema.
     """
 
     def __init__(self):
         self.__declarative_base = declarative_base()
 
+        self.__db_config: DBConfiguration = DBConfiguration()
+
         self.__engine = create_engine(
-            DBConfiguration.get_engine_str(), echo=False, connect_args={"check_same_thread": False})
+            self.get_engine_str(), pool_pre_ping=True,
+            echo=self.__db_config.get_value("DEBUG"), max_overflow=-1)
+
         self.__session_maker = sessionmaker(
             bind=self.__engine, autoflush=True, autocommit=False)
 
@@ -39,3 +41,16 @@ class Schema():
 
     def dispose_engine(self) -> None:
         self.__engine.dispose()
+
+    def get_engine_str(self) -> str:
+        """ Gets the engine connection string.
+
+        Returns:
+            str: The engine connection string.
+        """
+        mdb_user: str = self.__db_config.get_username()
+        mdb_pd: str = self.__db_config.get_password()
+        mdb_host: str = self.__db_config.get_host()
+        mdb_port: str = str(self.__db_config.get_port())
+        db_name: str = self.__db_config.get_dbname()
+        return f"mariadb+mariadbconnector://{mdb_user}:{mdb_pd}@{mdb_host}:{mdb_port}:{db_name}"

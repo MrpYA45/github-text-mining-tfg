@@ -24,7 +24,7 @@ services:
         ports:
             - "6060:6060"
         volumes:
-            - ../../src/backend/gtmcore:/app/core:ro
+            - ../../src/backend/gtmcore:/app/core
             - ../../src/backend/gtmapi:/app/src
         working_dir: /app
 
@@ -39,7 +39,7 @@ services:
             app_net:
                 ipv4_address: 172.16.0.12
         volumes:
-            - ../../src/backend/gtmcore:/app/core:ro
+            - ../../src/backend/gtmcore:/app/core
             - ../../src/backend/gtmextraction:/app/src
         working_dir: /app
 
@@ -54,7 +54,7 @@ services:
             app_net:
                 ipv4_address: 172.16.0.13
         volumes:
-            - ../../src/backend/gtmcore:/app/core:ro
+            - ../../src/backend/gtmcore:/app/core
             - ../../src/backend/gtmprocessing:/app/src
         working_dir: /app
 
