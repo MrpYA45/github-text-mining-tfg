@@ -350,6 +350,7 @@ TSWLatexianTemp*s
 
 # Config files
 **/config.json
+**/settings.json
 
 # Visual Studio Code
 .vscode

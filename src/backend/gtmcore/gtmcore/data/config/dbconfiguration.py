@@ -12,9 +12,6 @@ class DBConfiguration(BaseConfiguration):
     """ Definition of database configuration aspects.
     """
 
-    def __init__(self) -> None:
-        BaseConfiguration.__init__(self)
-
     def get_config_template(self) -> Dict[str, ConfigValueType]:
         """ Gets the template of the configuration file.
 
@@ -27,7 +24,7 @@ class DBConfiguration(BaseConfiguration):
         config_template["MARIADB_HOST"] = "172.16.0.10"
         config_template["MARIADB_PORT"] = 3306
         config_template["DATABASE_NAME"] = "gtm_database"
-        config_template["DEBUG"] = True
+        config_template["DEBUG"] = False
         return config_template
 
     def get_username(self) -> str:
@@ -60,6 +57,7 @@ class DBConfiguration(BaseConfiguration):
         Returns:
             int: The port.
         """
+        print("DICT: ", self.get_config())
         return int(str(self.get_value("MARIADB_PORT")))
 
     def get_dbname(self) -> str:
@@ -84,8 +82,8 @@ class DBConfiguration(BaseConfiguration):
         Returns:
             str: The configuration module name string.
         """
-        return "gtmcore_configuration"
+        return "gtmcore"
 
 
 if __name__ == "__main__":
-    config: BaseConfiguration = DBConfiguration()
+    config: DBConfiguration = DBConfiguration()

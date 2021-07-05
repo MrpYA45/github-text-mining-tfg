@@ -15,7 +15,6 @@ from gtmextraction.logic.connections.config.connconfiguration import \
 class GTMExtraction():
 
     def __init__(self):
-        config: ConnConfiguration = ConnConfiguration()
         schema: Schema = Schema()
         self.__db_manager: DBManager = DBManager(schema)
         self.__gh_conn: GitHubConnection = GitHubConnection()
@@ -25,11 +24,11 @@ class GTMExtraction():
         self.current_task: Task = None
 
     def run(self):
-        logging.info("[GTMExtraction] Running...")
+        logger.info("[GTMExtraction] Running...")
         while True:
             task = self.get_next_queued_task()
             if task and self.current_task is None:
-                logging.debug(
+                logger.debug(
                     "[GTMExtraction] NEW TASK FOUND. TASK_ID: %d | TASK_REPO: %s | CREATED AT: %s",
                     task.task_id, task.repo_dir, task.timestamp)
 
@@ -45,7 +44,7 @@ class GTMExtraction():
             time.sleep(10)
 
     def capture_repo_data(self, task: Task) -> bool:
-        logging.debug(
+        logger.debug(
             "[GTMExtraction] STARTING DATA EXTRACTION FROM REPO: %s", task.repo_dir)
 
         title, description, labels = self.__gh_manager.get_repo_info(
@@ -68,7 +67,7 @@ class GTMExtraction():
                     issue_data["is_pull_request"])
 
         self.current_task = None
-        logging.debug(
+        logger.debug(
             "[GTMExtraction] ENDING DATA EXTRACTION FROM REPO: %s", task.repo_dir)
         return True
 
@@ -85,9 +84,10 @@ class GTMExtraction():
 
 
 if __name__ == "__main__":
+    logger = logging.getLogger("gtmextraction")
     logging.basicConfig(filename="gtmextraction.log",
                         format="[%(levelname)s] %(asctime)s %(message)s",
                         datefmt="%m/%d/%Y %I:%M:%S %p", level=logging.DEBUG)
-    logging.info("[GTMExtraction] INITIALIZING EXTRACTION MODULE... ")
+    logger.info("[GTMExtraction] INITIALIZING EXTRACTION MODULE... ")
     extractor = GTMExtraction()
     extractor.run()

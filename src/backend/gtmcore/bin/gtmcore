@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
+from gtmcore.data.config.dbconfiguration import DBConfiguration
 from gtmcore.data.db.schema import Schema
 
 if __name__ == "__main__":
+    db_config: DBConfiguration = DBConfiguration()
     schema: Schema = Schema()

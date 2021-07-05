@@ -2,6 +2,7 @@
 """
 
 import json
+import logging
 from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Union
@@ -17,10 +18,13 @@ class BaseConfiguration(ABC):
     """
 
     def __init__(self) -> None:
-        self.config_path: Path = Path("config/config.json").absolute()
+        self.config_path: Path = Path(
+            "config/" + self.get_config_module_str() + "/settings.json").absolute()
         self.__config: Dict[str, ConfigValueType] = {}
         if not self.check_config_file_exists():
-            self.recreate_config_file()
+            self.create_config_file()
+            logging.info("[GTMCORE] The configuration file for module '%s' has been created.",
+                         self.get_config_module_str())
         self.load_config()
 
     def check_config_file_exists(self) -> bool:
@@ -34,8 +38,8 @@ class BaseConfiguration(ABC):
         except OSError:
             return False
 
-    def recreate_config_file(self) -> None:
-        """ Creates or recreates the config path and his content.
+    def create_config_file(self) -> None:
+        """ Creates or recreates the configuration file with the default template.
 
         Raises:
             ConfigurationFileNotCreated: Thrown when the configuration file could not be created.
@@ -47,7 +51,8 @@ class BaseConfiguration(ABC):
                 json.dump(config_template, config_file, indent=4)
         except OSError as err:
             raise ConfigurationFileNotCreated(
-                f"The configuration file for '{self.get_config_module_str()}' could not be created"
+                f"The configuration file for '{self.get_config_module_str()}'"
+                " could not be created"
             ) from err
 
     def load_config(self):
@@ -55,6 +60,14 @@ class BaseConfiguration(ABC):
         """
         with self.config_path.open("r", encoding="utf-8") as config_file:
             self.__config = json.load(config_file)
+
+    def get_config(self) -> Dict[str, ConfigValueType]:
+        """ Gets the dictionary with all the configuration keys and values.
+
+        Returns:
+            Dict[str, ConfigValueType]: A dictionary with all the configuration keys and values.
+        """
+        return self.__config
 
     def get_value(self, key: str) -> Optional[ConfigValueType]:
         """ Gets the value associated with the key in the configuration file.

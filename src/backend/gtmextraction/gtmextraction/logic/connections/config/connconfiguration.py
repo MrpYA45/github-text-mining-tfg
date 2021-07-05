@@ -12,9 +12,6 @@ class ConnConfiguration(BaseConfiguration):
     """ Definition of github connection configuration aspects.
     """
 
-    def __init__(self) -> None:
-        BaseConfiguration.__init__(self)
-
     def get_config_template(self) -> Dict[str, ConfigValueType]:
         """ Gets the template of the configuration file.
 
@@ -39,7 +36,7 @@ class ConnConfiguration(BaseConfiguration):
         Returns:
             str: The configuration module name string.
         """
-        return "gtmcore_configuration"
+        return "gtmextraction"
 
 
 if __name__ == "__main__":

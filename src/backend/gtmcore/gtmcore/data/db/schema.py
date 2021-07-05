@@ -53,4 +53,4 @@ class Schema():
         mdb_host: str = self.__db_config.get_host()
         mdb_port: str = str(self.__db_config.get_port())
         db_name: str = self.__db_config.get_dbname()
-        return f"mariadb+mariadbconnector://{mdb_user}:{mdb_pd}@{mdb_host}:{mdb_port}:{db_name}"
+        return f"mariadb+mariadbconnector://{mdb_user}:{mdb_pd}@{mdb_host}:{mdb_port}/{db_name}"
