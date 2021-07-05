@@ -19,11 +19,11 @@ class GTMProcessing():
         self.__thread_pool = ThreadPoolExecutor(max_workers=4)
 
     def run(self):
-        logging.info("[GTMProcessing] Running...")
+        logger.info("[GTMProcessing] Running...")
         while True:
             task = self.get_next_queued_task()
             if task:
-                logging.debug(
+                logger.debug(
                     "[GTMProcessing] NEW TASK FOUND. TASK_ID: %d | TASK_REPO: %s | CREATED AT: %s",
                     task.task_id, task.repo_dir, task.timestamp)
                 self.__db_manager.set_task_state(
@@ -44,9 +44,10 @@ class GTMProcessing():
 
 
 if __name__ == "__main__":
-    logging.basicConfig(filename="gtmextraction.log",
+    logger = logging.getLogger("gtmprocessing")
+    logging.basicConfig(filename="gtmprocessing.log",
                         format="[%(levelname)s] %(asctime)s %(message)s",
                         datefmt="%m/%d/%Y %I:%M:%S %p", level=logging.DEBUG)
-    logging.info("[GTMProcessing] INITIALIZING PROCESSING MODULE... ")
+    logger.info("[GTMProcessing] INITIALIZING PROCESSING MODULE... ")
     processing = GTMProcessing()
     processing.run()
