@@ -1,38 +1,34 @@
 #!/usr/bin/env python3
 import logging
+from pathlib import Path
 
 from flask import Flask, json, jsonify, render_template, request
 from flask.logging import default_handler
 from gtmcore.data.db.schema import Schema
 from gtmcore.logic.dbmanager import DBManager
-from gtmextraction.logic.connections import GitHubConnection, GitHubManager
-from gtmextraction.logic.connections.config.connconfiguration import \
-    ConnConfiguration
 
-app = Flask(__name__)
+app_path: Path = Path("gtmapi/presentation/web").absolute()
+app = Flask(__name__, root_path=app_path)
 root_logger = logging.getLogger()
 root_logger.addHandler(default_handler)
 
-config = ConnConfiguration()
 schema: Schema = Schema()
 db_manager: DBManager = DBManager(schema)
-gh_conn: GitHubConnection = GitHubConnection()
-gh_manager: GitHubManager = GitHubManager(gh_conn, db_manager)
 
 
-@app.route("/", methods=["GET"])
+@ app.route("/", methods=["GET"])
 def is_running():
     # ("", 200, {"Content-Type": "text/plain"})
     return render_template("index.html")
 
 
-@app.route("/tasks/", methods=["GET"])
+@ app.route("/tasks/", methods=["GET"])
 def get_all_tasks():
     tasks = db_manager.get_tasks()
     return jsonify(eqtls=[str(task) for task in tasks])
 
 
-@app.route("/task/", methods=["GET", "POST"])
+@ app.route("/task/", methods=["GET", "POST"])
 def create_task():
     try:
         gh_user: str = request.form.get("gh_user")
@@ -46,7 +42,6 @@ def create_task():
                 mimetype='application/json'
             )
         else:
-            repo_dir = GitHubManager.get_repo_dir(repo_dir)
             task = db_manager.get_task(repo_dir)
             response = app.response_class(
                 response=jsonify(str(task)),
@@ -58,16 +53,10 @@ def create_task():
         return False
 
 
-@app.route("/test/", methods=["POST"])
-def test_task():
-    res = db_manager.create_task("MrpYA45/github-text-mining-tfg")
-    response = app.response_class(
-        response=json.dumps({"Test": res}),
-        status=200,
-        mimetype='application/json'
-    )
-    return response
-
-
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=6060, debug=True)
+    logger = logging.getLogger("gtmapi")
+    logging.basicConfig(filename="gtmapi.log",
+                        format="[%(levelname)s] %(asctime)s %(message)s",
+                        datefmt="%m/%d/%Y %I:%M:%S %p", level=logging.DEBUG)
+    logger.info("[GTMApi] INITIALIZING API MODULE... ")
+    app.run(host="172.16.0.11", port=6060, debug=True)
