@@ -13,7 +13,7 @@ services:
 
     api:
         build:
-            context: ../services
+            context: ../services/general
         container_name: gtmapi
         depends_on:
             - db
@@ -30,7 +30,7 @@ services:
 
     extraction:
         build:
-            context: ../services
+            context: ../services/general
         container_name: gtmextraction
         depends_on:
             - db
@@ -45,7 +45,7 @@ services:
 
     processing:
         build:
-            context: ../services
+            context: ../services/processing
         container_name: gtmprocessing
         depends_on:
             - db
