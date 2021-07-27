@@ -1,3 +1,20 @@
+# Copyright (C) 2021 Pablo Fernández Bravo
+#
+# This file is part of github-text-mining-tfg.
+#
+# github-text-mining-tfg is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# github-text-mining-tfg is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with github-text-mining-tfg.  If not, see <http://www.gnu.org/licenses/>.
+
 from pathlib import Path
 from typing import List
 
@@ -11,27 +28,36 @@ class ModelDownloader():
 
     @staticmethod
     def get_zsc() -> Pipeline:
-        filepath: str = ModelDownloader.__model_path / "zero_shot_classification"
-        zsc_pipeline: Pipeline = pipeline("zero-shot-classification",
-                                          model="facebook/bart-large-mnli")
-        zsc_pipeline.save_pretrained(filepath)
-        return zsc_pipeline
+        filepath: Path = ModelDownloader.__model_path / "zero_shot_classification"
+        if not filepath.exists():
+            zsc_pipeline: Pipeline = pipeline(
+                "zero-shot-classification", model="facebook/bart-large-mnli")
+            return zsc_pipeline.save_pretrained(str(filepath))
+        else:
+            return pipeline(
+                task="zero-shot-classification", model=str(filepath), tokenizer=str(filepath))
 
     @ staticmethod
     def get_sa() -> Pipeline:
-        filepath: str = ModelDownloader.__model_path / "sentiment_analysis"
-        sa_pipeline: Pipeline = pipeline(
-            "sentiment-analysis", model="nlptown/bert-base-multilingual-uncased-sentiment")
-        sa_pipeline.save_pretrained(filepath)
-        return sa_pipeline
+        filepath: Path = ModelDownloader.__model_path / "sentiment_analysis"
+        if not filepath.exists():
+            sa_pipeline: Pipeline = pipeline(
+                "sentiment-analysis", model="nlptown/bert-base-multilingual-uncased-sentiment")
+            return sa_pipeline.save_pretrained(str(filepath))
+        else:
+            return pipeline(
+                task="sentiment-analysis", model=str(filepath), tokenizer=str(filepath))
 
     @ staticmethod
     def get_summ() -> Pipeline:
-        filepath: str = ModelDownloader.__model_path / "summarization"
-        summ_pipeline: Pipeline = pipeline(
-            "summarization", model="sshleifer/distilbart-cnn-12-6")
-        summ_pipeline.save_pretrained(filepath)
-        return summ_pipeline
+        filepath: Path = ModelDownloader.__model_path / "summarization"
+        if not filepath.exists():
+            summ_pipeline: Pipeline = pipeline(
+                "summarization", model="sshleifer/distilbart-cnn-12-6")
+            return summ_pipeline.save_pretrained(str(filepath))
+        else:
+            return pipeline(
+                task="summarization", model=str(filepath), tokenizer=str(filepath))
 
 
 if __name__ == "__main__":
