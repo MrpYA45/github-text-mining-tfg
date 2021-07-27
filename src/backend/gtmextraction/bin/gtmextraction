@@ -3,7 +3,8 @@ import logging
 import time
 from threading import Thread
 
-from gtmcore.data.db import Schema, TaskState
+from gtmcore.data.db import Schema
+from gtmcore.data.db.enums import TaskState, TaskType
 from gtmcore.data.db.err.tasknotexistserror import TaskNotExistsError
 from gtmcore.data.db.results.task import Task
 from gtmcore.logic.dbmanager import DBManager
@@ -33,13 +34,13 @@ class GTMExtraction():
                     task.task_id, task.repo_dir, task.timestamp)
 
                 self.__db_manager.set_task_state(
-                    task.task_id, TaskState.CAPTURING_DATA)
+                    task.task_id, TaskState.IN_PROGRESS)
 
                 self.current_task = task
                 Thread(target=self.capture_repo_data, args=(task,)).start()
 
                 self.__db_manager.set_task_state(
-                    task.task_id, TaskState.WAITING)
+                    task.task_id, TaskState.DONE)
 
             time.sleep(10)
 
@@ -47,38 +48,31 @@ class GTMExtraction():
         logger.debug(
             "[GTMExtraction] STARTING DATA EXTRACTION FROM REPO: %s", task.repo_dir)
 
-        title, description, labels = self.__gh_manager.get_repo_info(
-            task.repo_dir)
-        self.__db_manager.create_repository(
-            task.repo_dir, title, description, labels)
-
-        issues_data = self.__gh_manager.get_repo_issues(
-            task, self.check_is_task_outdated)
-
-        if issues_data:
-            for issue_data in issues_data:
-                self.__db_manager.create_issue(
-                    task.repo_dir,
-                    issue_data["id"],
-                    issue_data["title"],
-                    issue_data["description"],
-                    issue_data["labels"],
-                    issue_data["comments"],
-                    issue_data["is_pull_request"])
+        if self.__gh_manager.get_repo_info(task.repo_dir):
+            self.__gh_manager.get_repo_issues(
+                task, self.check_is_task_outdated)
+        else:
+            return False
 
         self.current_task = None
+
         logger.debug(
             "[GTMExtraction] ENDING DATA EXTRACTION FROM REPO: %s", task.repo_dir)
+
         return True
 
     def check_is_task_outdated(self, old_task: Task):
         new_task: Task = self.__db_manager.get_lastest_task_from_repo(
-            old_task.repo_dir)
-        return old_task.timestamp != new_task.timestamp
+            old_task.repo_dir, TaskType.EXTRACTION)
+        if old_task.timestamp != new_task.timestamp:
+            self.__db_manager.set_task_state(old_task.task_id, TaskState.OUTDATED)
+            return True
+        return False
+
 
     def get_next_queued_task(self) -> Task:
         try:
-            return self.__db_manager.get_oldest_task_with_state(TaskState.QUEUED)
+            return self.__db_manager.get_oldest_task_with_state(TaskType.EXTRACTION, TaskState.QUEUED)
         except TaskNotExistsError:
             return None
 
