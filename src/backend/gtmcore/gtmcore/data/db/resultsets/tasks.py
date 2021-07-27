@@ -5,10 +5,9 @@ import json
 from datetime import datetime
 from typing import List, Optional
 
-from gtmcore.data.db.enums.tasktype import TaskType
+from gtmcore.data.db.enums import TaskState, TaskType
 from gtmcore.data.db.err import TaskAlreadyExistsError, TaskNotExistsError
 from gtmcore.data.db.results.task import Task
-from gtmcore.data.db.taskstate import TaskState
 from sqlalchemy.exc import IntegrityError  # type: ignore
 from sqlalchemy.orm.query import Query  # type: ignore
 from sqlalchemy.orm.session import Session  # type: ignore
@@ -28,7 +27,7 @@ class Tasks():
             timestamp (datetime): The time when the task was created.
             repo_dir (str): The task repository.
             task_type (TaskType): The task type.
-            params (str, optional): The task parameters.
+            params (str, optional): The task parameters. Defaults to None.
 
         Raises:
             ValueError: Thrown when missing status, timestamp or repo_dir.
@@ -56,7 +55,7 @@ class Tasks():
 
         Args:
             session (Session): The database session.
-            task_id (str): The task id.
+            task_id (int): The task id.
 
         Raises:
             TaskNotExistsError:
@@ -65,8 +64,6 @@ class Tasks():
         Returns:
             Task: The task.
         """
-        if task_id is None:
-            raise ValueError("You cannot create a task without a task_id.")
         query: Query = session.query(Task).filter_by(task_id=task_id)
         task: Optional[Task] = query.first()
         if task is None:
@@ -93,17 +90,18 @@ class Tasks():
         if state is not None:
             query = query.filter_by(state=state.value)
         if task_type is not None:
-            query = query.filter_by(task_type=task_type)
+            query = query.filter_by(task_type=task_type.value)
         return query.all()
 
     @staticmethod
     def get_lastest_task_from_repo(
-            session: Session, repo_dir: str, state: TaskState = None) -> Task:
+            session: Session, repo_dir: str, task_type: TaskType = None, state: TaskState = None) -> Task:
         """ Gets the lastest task record with that repo_dir.
 
         Args:
             session (Session): The database session.
             repo_dir (str): The task repository. Defaults to None.
+            task_type (TaskType): The task type. Defaults to None.
             state (TaskState, optional): The task state. Defaults to None.
 
         Raises:
@@ -114,6 +112,8 @@ class Tasks():
             List[Task]: List of tasks.
         """
         query: Query = session.query(Task).filter_by(repo_dir=repo_dir)
+        if task_type is not None:
+            query = query.filter_by(task_type=task_type.value)
         if state is not None:
             query = query.filter_by(state=state.value)
         task: Optional[Task] = query.order_by(
@@ -123,11 +123,12 @@ class Tasks():
         return task
 
     @staticmethod
-    def get_oldest_task_with_state(session: Session, state: TaskState) -> Task:
+    def get_oldest_task_with_state(session: Session, task_type: TaskType, state: TaskState) -> Task:
         """ Gets the oldest queued task record.
 
         Args:
             session (Session): The database session.
+            task_type (TaskType): The task type.
             state (TaskState): The task state.
 
         Raises:
@@ -138,7 +139,7 @@ class Tasks():
             Task: The oldest queued task.
         """
         query: Query = session.query(Task).filter_by(
-            state=state.value).order_by("timestamp")
+            state=state.value, task_type=task_type.value).order_by("timestamp")
         task: Optional[Task] = query.first()
         if task is None:
             raise TaskNotExistsError
@@ -150,7 +151,7 @@ class Tasks():
 
         Args:
             session (Session): The database session.
-            task_id (str): The task id.
+            task_id (int): The task id.
             state (TaskState): The task state.
 
         Raises:
@@ -171,7 +172,7 @@ class Tasks():
 
         Args:
             session (Session): The database session.
-            task_id (str): The task id.
+            task_id (int): The task id.
             task_type (int): The task type.
             params (str, optional): The task parameters.
 

@@ -15,11 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with github-text-mining-tfg.  If not, see <http://www.gnu.org/licenses/>.
 
-""" ORM results
+""" OutcomeAlreadyExists Error
 """
 
-from .comment import Comment
-from .issue import Issue
-from .outcome import Outcome
-from .repository import Repository
-from .task import Task
+
+class OutcomeAlreadyExistsError(Exception):
+    """ Exception thrown when trying to create an already existing outcome entry.
+    """

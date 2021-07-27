@@ -1,4 +1,4 @@
-""" Extractor Database Modules.
+""" Core Logic Modules.
 """
 
 from .dbmanager import DBManager

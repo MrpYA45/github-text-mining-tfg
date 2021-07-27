@@ -7,7 +7,5 @@ from enum import Enum
 class TaskType(Enum):
     """ Enumeration with the types of the tasks.
     """
-    ZSC = 0
-    SA = 1
-    SUMM = 2
-    NOT_SET = -1
+    EXTRACTION = 0
+    PROCESSING = 1

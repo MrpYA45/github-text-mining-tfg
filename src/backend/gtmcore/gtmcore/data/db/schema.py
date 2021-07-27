@@ -2,7 +2,7 @@
 """
 
 from gtmcore.data.config.dbconfiguration import DBConfiguration
-from gtmcore.data.db.results import Issue, Repository, Task
+from gtmcore.data.db.results import Comment, Issue, Outcome, Repository, Task
 from sqlalchemy import create_engine, event  # type: ignore
 from sqlalchemy.engine import Engine  # type: ignore
 from sqlalchemy.ext.declarative import declarative_base  # type: ignore
@@ -34,6 +34,8 @@ class Schema():
         Issue.map(self.__declarative_base.metadata)
         Repository.map(self.__declarative_base.metadata)
         Task.map(self.__declarative_base.metadata)
+        Comment.map(self.__declarative_base.metadata)
+        Outcome.map(self.__declarative_base.metadata)
         self.__declarative_base.metadata.create_all(self.__engine)
 
     def new_session(self) -> Session:
