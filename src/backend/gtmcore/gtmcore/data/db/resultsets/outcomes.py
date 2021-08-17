@@ -18,6 +18,7 @@
 """ Outcome class module.
 """
 
+import json
 from typing import List, Optional
 
 from gtmcore.data.db.err import (OutcomeAlreadyExistsError,
@@ -36,7 +37,7 @@ class Outcomes():
                task_id: int,
                repo_dir: str,
                model_type: str,
-               outcome_data: str,
+               outcome_data: dict,
                exec_time: float) -> Outcome:
         """ Creates a new Outcome record.
 
@@ -45,7 +46,7 @@ class Outcomes():
             task_id (int): The task id.
             repo_dir (str): The task repository.
             model_type (str): The model type.
-            outcome_data (str): The task outcome.
+            outcome_data (dict): The task outcome.
             exec_time (float): The task execution time.
 
         Raises:
@@ -60,8 +61,9 @@ class Outcomes():
             raise ValueError(
                 "You cannot create a outcome without a repo_dir, a model_type, an outcome_data or an exec_time.")
         try:
+            outcome_data_str: str = json.dumps(outcome_data)
             outcome: Outcome = Outcome(
-                task_id, repo_dir, model_type, outcome_data, exec_time)
+                task_id, repo_dir, model_type, outcome_data_str, exec_time)
             session.add(outcome)
             session.commit()
             return outcome

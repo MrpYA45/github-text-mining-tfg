@@ -377,7 +377,7 @@ class DBManager():
                        task_id: int,
                        repo_dir: str,
                        model_type: str,
-                       outcome_data: str,
+                       outcome_data: dict,
                        exec_time: float) -> Outcome:
         """ Creates a new Outcome record.
 
@@ -386,7 +386,7 @@ class DBManager():
             task_id (int): The task id.
             repo_dir (str): The task repository.
             model_type (str): The model type.
-            outcome_data (str): The task outcome.
+            outcome_data (dict): The task outcome.
             exec_time (float): The task execution time.
 
         Raises:

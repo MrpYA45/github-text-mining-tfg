@@ -19,7 +19,8 @@
 """
 import json
 
-from sqlalchemy.sql.schema import Column, ForeignKey, MetaData, Table
+from sqlalchemy.sql.schema import (Column, ForeignKey,  # type: ignore
+                                   MetaData, Table)
 from sqlalchemy.sql.sqltypes import (JSON, Boolean, Integer,  # type: ignore
                                      String, Text)
 

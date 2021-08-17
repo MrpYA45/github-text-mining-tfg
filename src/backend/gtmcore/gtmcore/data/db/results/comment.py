@@ -19,8 +19,8 @@
 """
 import json
 
-from sqlalchemy.sql.schema import (Column, ForeignKey, ForeignKeyConstraint,
-                                   MetaData, Table)
+from sqlalchemy.sql.schema import (Column,  # type: ignore
+                                   ForeignKeyConstraint, MetaData, Table)
 from sqlalchemy.sql.sqltypes import Integer, String, Text  # type: ignore
 
 from .resultbase import ResultBase
