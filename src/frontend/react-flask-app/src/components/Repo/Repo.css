@@ -1,0 +1,79 @@
+/**
+ * Copyright (C) 2021 Pablo Fernández Bravo
+ * 
+ * This file is part of github-text-mining-tfg.
+ * 
+ * github-text-mining-tfg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * github-text-mining-tfg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with github-text-mining-tfg.  If not, see <http://www.gnu.org/licenses/>.
+ */
+.Repo {
+	display: grid;
+	grid-template-areas: "title repo_dir"
+    "desc desc"
+    "tags tags";
+	grid-template-rows: auto 20fr auto;
+	grid-template-columns: 2fr 1fr;
+	grid-gap: 0 0;
+	margin: 0.5rem auto;
+	background-color: #000;
+	padding: 1rem 3rem;
+	width: 80%;
+	text-align: justify;
+	color: #e4cb58;
+}
+.Repo h3 {
+	grid-area: title;
+	text-transform: uppercase;
+	font-size: 1.5rem;
+}
+.RepoDir {
+	grid-area: repo_dir;
+	text-align: right;
+}
+.RepoDesc {
+	grid-area: desc;
+	padding: 1rem 0;
+}
+.RepoTags {
+	display: flex;
+	flex-wrap: wrap;
+	grid-area: tags;
+	padding: 2rem auto;
+}
+.RepoTags span {
+	margin: 0.3rem;
+	border: 0.2rem solid #e4cb58;
+	padding: 0.5rem;
+}
+.Repo * {
+	align-self: center;
+	margin: 0;
+}
+@media(max-width: 720px) {
+	.Repo {
+		grid-template-areas: "title"
+        "repo_dir"
+        "desc"
+        "tags";
+		grid-template-columns: 1fr;
+	}
+	.RepoDir {
+		text-align: left;
+	}
+	.RepoTags span {
+		margin: 0.3rem;
+		background-color: #e4cb58;
+		padding: 0.2rem;
+		color: #000;
+	}
+}
