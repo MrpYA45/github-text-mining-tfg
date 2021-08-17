@@ -1,8 +1,8 @@
-from typing import List
+from typing import List, Text
 
 from blingfire import text_to_sentences  # type: ignore
 from bs4 import BeautifulSoup  # type: ignore
-from markdown import markdown
+from markdown import markdown  # type: ignore
 
 
 class DataUtils():
@@ -19,7 +19,7 @@ class DataUtils():
             str: The string without markdown format.
         """
         # Using markdown module (and extensions) we transform markdown to html.
-        html_str = markdown(markdown_str, extensions=[
+        html_str: Text = markdown(markdown_str, extensions=[
             "markdown_checklist.extension", "mdx_gh_links", "fenced_code"])
 
         # BeautifulSoup let's us extract raw text from the html tags.
