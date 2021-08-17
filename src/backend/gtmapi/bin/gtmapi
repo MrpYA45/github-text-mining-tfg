@@ -4,11 +4,14 @@ from pathlib import Path
 
 from flask import Flask, json, jsonify, render_template, request
 from flask.logging import default_handler
+from flask_cors import CORS, cross_origin
+from gtmcore.data.db.enums.tasktype import TaskType
 from gtmcore.data.db.schema import Schema
 from gtmcore.logic.dbmanager import DBManager
 
 app_path: Path = Path("gtmapi/presentation/web").absolute()
 app = Flask(__name__, root_path=app_path)
+CORS(app, support_credentials=True)
 root_logger = logging.getLogger()
 root_logger.addHandler(default_handler)
 
@@ -17,15 +20,59 @@ db_manager: DBManager = DBManager(schema)
 
 
 @ app.route("/", methods=["GET"])
+@cross_origin(supports_credentials=True)
 def is_running():
     # ("", 200, {"Content-Type": "text/plain"})
     return render_template("index.html")
 
 
-@ app.route("/tasks/", methods=["GET"])
+@app.route("/tasks/", methods=["GET"])
+@cross_origin(supports_credentials=True)
 def get_all_tasks():
     tasks = db_manager.get_tasks()
-    return jsonify(eqtls=[str(task) for task in tasks])
+    return jsonify(eqlts=[json.loads(str(task)) for task in tasks])
+
+
+@app.route("/repos/", methods=["GET"])
+@cross_origin(supports_credentials=True)
+def get_all_repos() -> dict:
+    repos = db_manager.get_repositories()
+    return jsonify(eqlts=[json.loads(str(repo)) for repo in repos])
+
+
+@app.route("/issues/", methods=["GET"])
+def get_all_issues() -> dict:
+    issues = db_manager.get_issues()
+    return jsonify(eqlts=[json.loads(str(issue)) for issue in issues])
+
+
+@app.route("/comments/", methods=["GET"])
+def get_all_comments() -> dict:
+    comments = db_manager.get_comments()
+    return jsonify(eqlts=[json.loads(str(comment)) for comment in comments])
+
+
+@app.route("/outcomes/", methods=["GET"])
+def get_all_outcomes() -> dict:
+    outcomes = db_manager.get_outcomes()
+    return jsonify(eqlts=[json.loads(str(outcome)) for outcome in outcomes])
+
+
+"""
+@app.route("/repo/<str:repo_user>/<str:repo_title>/issues/", defaults={"author": None}, methods=["GET"])
+@app.route("/repo/<str:repo_user>/<str:repo_title>/issues/author/<str:author>", methods=["GET"])
+def get_issues_from_repo(repo_user:str, repo_title: str, author: str) -> dict:
+    repo_dir: str = repo_user + "/" + repo_title
+    issues = db_manager.get_issues(repo_dir, author)
+    return jsonify(eqlts=[json.loads(str(issue)) for issue in issues])
+
+@app.route("/repo/<str:repo_user>/<str:repo_title>/issue/<int:issue_id>/comments/", defaults={"author": None}, methods=["GET"])
+@app.route("/repo/<str:repo_user>/<str:repo_title>/issue/<int:issue_id>/comments/<str:author>", methods=["GET"])
+def get_comments_from_issue(repo_user:str, repo_title: str, issue_id: int, author: str) -> dict:
+    repo_dir: str = repo_user + "/" + repo_title
+    comments = db_manager.get_comments(repo_dir, issue_id, author)
+    return jsonify(eqlts=[json.loads(str(comment)) for comment in comments])
+"""
 
 
 @ app.route("/task/", methods=["GET", "POST"])
@@ -35,7 +82,7 @@ def create_task():
         gh_repo: str = request.form.get("gh_repo")
         repo_dir: str = gh_user + "/" + gh_repo
         if request.method == "POST":
-            task_added = db_manager.create_task(repo_dir)
+            task_added = db_manager.create_task(repo_dir, TaskType.EXTRACTION)
             response = app.response_class(
                 response=json.dumps({"Añadido": task_added is not None}),
                 status=200,
@@ -51,6 +98,68 @@ def create_task():
         return response
     except ValueError:
         return False
+
+
+@ app.route("/test_zsc/", methods=["GET", "POST"])
+def test_zsc():
+    params = {
+        "model_type": "zsc",
+        "issue_id": 831250862,
+        "accuracy": 0.0,
+        "use_desc": False,
+        "extra_tags": ["test_tag"]
+    }
+    task_added = db_manager.create_task(
+        "MrpYA45/github-text-mining-tfg", TaskType.PROCESSING, params)
+
+    response = app.response_class(
+        response=json.dumps({"TEST_ZSC_QUEUED": task_added is not None}),
+        status=200,
+        mimetype='application/json'
+    )
+
+    return response
+
+
+@ app.route("/test_sa/", methods=["GET", "POST"])
+def test_sa():
+    params = {
+        "model_type": "sa",
+        "issue_id": 831250862,
+        "author": "MrpYA45",
+        "with_comments": False
+    }
+    task_added = db_manager.create_task(
+        "MrpYA45/github-text-mining-tfg", TaskType.PROCESSING, params)
+
+    response = app.response_class(
+        response=json.dumps({"TEST_SA_QUEUED": task_added is not None}),
+        status=200,
+        mimetype='application/json'
+    )
+
+    return response
+
+
+@ app.route("/test_summ/", methods=["GET", "POST"])
+def test_summ():
+    params = {
+        "model_type": "summ",
+        "issue_id": 831250862,
+        "with_comments": False,
+        "max_length": 150,
+        "min_length": 50
+    }
+    task_added = db_manager.create_task(
+        "MrpYA45/github-text-mining-tfg", TaskType.PROCESSING, params)
+
+    response = app.response_class(
+        response=json.dumps({"TEST_SUMM_QUEUED": task_added is not None}),
+        status=200,
+        mimetype='application/json'
+    )
+
+    return response
 
 
 if __name__ == "__main__":
