@@ -15,55 +15,85 @@
 # You should have received a copy of the GNU General Public License
 # along with github-text-mining-tfg.  If not, see <http://www.gnu.org/licenses/>.
 
+import json
 import time
-from typing import List
+from typing import Any, Dict, List
 
 import numpy as np
+from gtmcore.data.db.results.issue import Issue
+from gtmcore.data.db.results.repository import Repository
+from gtmcore.logic.dbmanager import DBManager
 from gtmprocessing.logic.models.basemodel import BaseModel
-from gtmprocessing.logic.utils.textpreprocessor import \
-    TextPreprocessor  # type: ignore
-from transformers.pipelines.base import Pipeline
+from transformers.pipelines.base import Pipeline  # type: ignore
 
 
 class ZeroShotClassifier(BaseModel):
 
-    def __init__(self) -> None:
+    def __init__(self, dbmanager: DBManager) -> None:
         super().__init__()
+        self.__dbmanager: DBManager = dbmanager
         self.__pipeline: Pipeline = self.get_pipeline()
 
-    def apply(self, data: dict) -> dict:
-        accuracy: float = data.get("accuracy")
-        labels: List[str] = data.get("labels")
-        text: str = data.get("text")
+        self.__accuracy:  float = 0.0
+        self.__use_desc:  bool = False
+        self.__labels:  List[str] = []
 
-        preprocessor = TextPreprocessor(self.__pipeline.tokenizer)
+    def set_params(self, params: Dict[str, Any]) -> None:
+        super().set_params(params)
 
-        sentences: List[str] = preprocessor.preprocess([text])
+        self.__accuracy = float(params.get("accuracy", 0.7))
+        self.__use_desc = bool(params.get("use_desc", False))
+        self.__labels = params.get("extra_labels", [])
 
-        total_ratings: List[List[float]] = []
+    def preprocess(self) -> None:
+        try:
+            repo: Repository = self.__dbmanager.get_repository(self._repo_dir)
+            repo_labels: List[str] = json.loads(repo.labels)
+
+            self.__labels += repo_labels
+
+            issue: Issue = self.__dbmanager.get_issue(
+                self._repo_dir, self._issue_id)
+            inputs: List[str] = [issue.title]
+
+            if self.__use_desc:
+                inputs += (" ", issue.description)
+                inputs += self.chunk_input(inputs, self.__pipeline.tokenizer)
+
+            self._inputs = inputs
+        except ValueError as err:
+            raise ValueError(
+                "Missing, incorrect or damaged model paramethers.") from err
+
+    def apply(self) -> None:
 
         start_time: float = time.time()
 
-        for sentence in sentences:
+        total_ratings: List[List[float]] = []
+
+        for paragraph in self._inputs:
             ratings: List[float] = self.__pipeline(
-                sentence, labels, multi_label=True).get("scores", [0]*len(labels))
+                paragraph,
+                self.__labels,
+                multi_label=True
+            ).get("scores", [])
             total_ratings.append(ratings)
 
-        exec_time: float = time.time() - start_time
+        avg_ratings: np.ndarray = np.average(total_ratings, axis=0)
 
-        avg_ratings: List[float] = np.average(total_ratings, axis=0)
+        threshold_indexes: np.ndarray = np.where(avg_ratings > self.__accuracy)
 
-        threshold_indexes: List[float] = np.argwhere(avg_ratings > accuracy)
+        filtered_labels: np.ndarray = np.array(
+            self.__labels)[threshold_indexes]
+        filtered_ratings: np.ndarray = avg_ratings[threshold_indexes]
 
-        filtered_labels = np.array(labels)[threshold_indexes]
-        filtered_ratings = avg_ratings[threshold_indexes]
+        self._exec_time: float = time.time() - start_time
 
-        outcome_data: dict = {
-            "labels": filtered_labels,
-            "ratings": filtered_ratings
+        self._outcome = {
+            "input_chunks": self._inputs,
+            "labels": filtered_labels.tolist(),
+            "ratings": filtered_ratings.tolist()
         }
 
-        return outcome_data, exec_time
-
     def get_model_str(self) -> str:
-        return "zero_shot_classification"
+        return "zero-shot-classification"

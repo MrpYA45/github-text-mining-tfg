@@ -16,8 +16,7 @@ class GTMProcessing():
     def __init__(self):
         schema: Schema = Schema()
         self.__db_manager: DBManager = DBManager(schema)
-        self.__processing_manager = ProcessingManager(self.__db_manager)
-        self.__thread_pool = ThreadPoolExecutor(max_workers=4)
+        self.__thread_pool = ThreadPoolExecutor(max_workers=1)
 
     def run(self):
         logger.info("[GTMProcessing] Running...")
@@ -30,11 +29,8 @@ class GTMProcessing():
                 self.__db_manager.set_task_state(
                     task.task_id, TaskState.IN_PROGRESS)
 
-                self.__thread_pool.submit(
-                    self.__processing_manager.process_task, task)
-
-                self.__db_manager.set_task_state(
-                    task.task_id, TaskState.DONE)
+                if ProcessingManager(self.__db_manager).process_task(task):
+                    self.__db_manager.set_task_state(task.task_id, TaskState.DONE)
 
             time.sleep(10)
 
@@ -43,6 +39,10 @@ class GTMProcessing():
             return self.__db_manager.get_oldest_task_with_state(TaskType.PROCESSING, TaskState.QUEUED)
         except TaskNotExistsError:
             return None
+
+    def process_task(self, task: Task) -> None:
+        if ProcessingManager(self.__db_manager).process_task(task):
+            self.__db_manager.set_task_state(task.task_id, TaskState.DONE)
 
 
 if __name__ == "__main__":

@@ -16,48 +16,75 @@
 # along with github-text-mining-tfg.  If not, see <http://www.gnu.org/licenses/>.
 
 import time
-from typing import List
+from typing import Any, Dict, List, Optional
 
 import numpy as np
+from gtmcore.data.db.results.comment import Comment
+from gtmcore.data.db.results.issue import Issue
+from gtmcore.logic.dbmanager import DBManager
 from gtmprocessing.logic.models.basemodel import BaseModel
-from gtmprocessing.logic.utils.textpreprocessor import \
-    TextPreprocessor  # type: ignore
-from transformers.pipelines.base import Pipeline
+from transformers.pipelines.base import Pipeline  # type: ignore
 
 
 class SentimentsAnalysis(BaseModel):
 
-    def __init__(self) -> None:
+    def __init__(self, dbmanager: DBManager) -> None:
         super().__init__()
+        self.__dbmanager: DBManager = dbmanager
         self.__pipeline: Pipeline = self.get_pipeline()
 
-    def apply(self, data: dict) -> dict:
-        texts: List[str] = data.get("texts")
+        self.__author: Optional[str] = None
+        self.__with_comments: bool = False
 
-        preprocessor = TextPreprocessor(self.__pipeline.tokenizer)
+    def set_params(self, params: Dict[str, Any]) -> None:
+        super().set_params(params)
 
-        sentences: List[str] = []
+        self.__author = str(params.get("author", None))
+        self.__with_comments = bool(params.get("with_comments", False))
 
-        for text in texts:
-            sentences += preprocessor.preprocess([text])
+    def preprocess(self) -> None:
 
-        sa_scores: List[float] = []
+        inputs: List[str] = []
+
+        if self._issue_id > 0:
+            issue: Issue = self.__dbmanager.get_issue(
+                self._repo_dir, self._issue_id)
+
+            if self.__author == issue.author:
+                inputs = [issue.description]
+
+        else:
+            issues: List[Issue] = self.__dbmanager.get_issues(
+                self._repo_dir, self.__author)
+
+            inputs = [issue.description for issue in issues]
+
+        if self.__with_comments:
+            comments: List[Comment] = self.__dbmanager.get_comments(
+                self._repo_dir, self._issue_id, self.__author)
+            inputs += [comment.body for comment in comments]
+
+        self._inputs = self.chunk_input(inputs, self.__pipeline.tokenizer)
+
+    def apply(self) -> None:
 
         start_time: float = time.time()
 
-        for sentence in sentences:
-            sa_score = self.__pipeline(sentence).get("score", 0)
+        sa_scores: List[float] = []
+
+        for paragraph in self._inputs:
+            sa_score = self.__pipeline(paragraph)[0].get("score", 0)
             sa_scores.append(sa_score)
 
-        exec_time: float = time.time() - start_time
+        self._exec_time: float = time.time() - start_time
 
-        avg_sa_score: float = np.mean(sa_scores)
+        avg_sa_score: float = float(np.mean(sa_scores))
 
-        outcome_data: dict = {
-            "sa_score": avg_sa_score
+        self._outcome = {
+            "input_chunks": len(self._inputs),
+            "sa_scores": sa_scores,
+            "avg_sa_score": avg_sa_score
         }
 
-        return outcome_data, exec_time
-
     def get_model_str(self) -> str:
-        return "sentiment_analysis"
+        return "sentiment-analysis"
