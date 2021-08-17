@@ -4,7 +4,7 @@
 import logging
 import time
 from datetime import datetime, timedelta
-from typing import Callable, Iterator, List, Optional
+from typing import Callable, Iterator
 
 from github import RateLimitExceededException
 from github.GistComment import GistComment
@@ -101,7 +101,7 @@ class GitHubManager():
                 time.sleep(sleep_time)
                 continue
 
-    def get_issue_comments(self, task: Task, issue: Issue) -> Optional[List[dict]]:
+    def get_issue_comments(self, task: Task, issue: Issue) -> bool:
         """ Gets the issues information.
 
         Args:
@@ -146,7 +146,7 @@ class GitHubManager():
         Returns:
             list: A list containing the property value of each object.
         """
-        data = []
+        data: list = []
         while True:
             try:
                 item = next(iterator)
