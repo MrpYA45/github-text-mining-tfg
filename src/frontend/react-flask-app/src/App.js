@@ -1,25 +1,26 @@
-import React from 'react'
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
-import ListOfRepos from './components/ListOfRepos';
+import Home from './pages/Home';
+import { Route } from 'wouter';
 
 export default function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>GitHub Text Mining</h1>
-        <img src={logo} className="App-logo" alt="logo" />
-      </header>
-        <main>
-          <section className="App-add-repo">
-            <h2>Añadir Repositorio</h2>
-          </section>
-          <section className="App-list-repos">
-            <h2>Lista de Repositorios Disponibles</h2>
-            <ListOfRepos />
-          </section>
-        </main>
-
+      <Route
+        component={Home}
+        path="/"
+      />
+      <Route
+        component={Home}
+        path="/user/:user/repo/:repo"
+      />
+      <Route
+        component={Home}
+        path="/test"
+      />
+      <footer className="App-footer">
+      &copy; Created by Pablo Fernández
+      </footer>
     </div>
   );
 }

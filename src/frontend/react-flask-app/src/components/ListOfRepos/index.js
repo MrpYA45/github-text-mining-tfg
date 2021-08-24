@@ -22,13 +22,25 @@ import './ListOfRepos.css'
 
 export default function ListOfRepos () {
 
+    const [loading, setLoading] = useState(false)
     const [repos, setRepos] = useState([])
 
     useEffect(function () {
-        setInterval(() => getRepos().then(repos => setRepos(repos)), 1000)
+        setLoading(true)
+        setInterval(() => getRepos()
+            .then(repos => {
+                setRepos(repos)
+                setLoading(false)
+            }
+            ), 1000)
     }, [])
 
-    return <article>
+    if(loading) return <article className="loader">
+        <div className="spinner"></div>
+        <span>Loading</span>
+        </article>
+
+    return <>
         {
             repos.map(({title, repo_dir, description, labels}) => 
                 <Repo
@@ -39,5 +51,5 @@ export default function ListOfRepos () {
                 />
             )
         }
-    </article>
+    </>
 }

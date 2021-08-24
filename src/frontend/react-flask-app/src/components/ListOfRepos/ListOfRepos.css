@@ -16,3 +16,23 @@
  * You should have received a copy of the GNU General Public License
  * along with github-text-mining-tfg.  If not, see <http://www.gnu.org/licenses/>.
  */
+.spinner {
+	border: 0.5rem solid rgba(0, 0, 0, .2);
+	border-radius: 50%;
+	border-left-color: var(--secondary-color);
+	width: 4rem;
+	height: 4rem;
+	animation: spin 1s linear infinite;
+}
+.loader {
+    font-size: 2rem;
+	pointer-events: none;
+}
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}

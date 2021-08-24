@@ -25,11 +25,11 @@
 	grid-template-columns: 2fr 1fr;
 	grid-gap: 0 0;
 	margin: 0.5rem auto;
-	background-color: #000;
+	background-color: var(--secondary-color);
 	padding: 1rem 3rem;
 	width: 80%;
 	text-align: justify;
-	color: #e4cb58;
+	color: var(--main-color);
 }
 .Repo h3 {
 	grid-area: title;
@@ -52,7 +52,7 @@
 }
 .RepoTags span {
 	margin: 0.3rem;
-	border: 0.2rem solid #e4cb58;
+	border: 0.2rem solid var(--main-color);
 	padding: 0.5rem;
 }
 .Repo * {
@@ -72,8 +72,8 @@
 	}
 	.RepoTags span {
 		margin: 0.3rem;
-		background-color: #e4cb58;
+		background-color: var(--main-color);
 		padding: 0.2rem;
-		color: #000;
+		color: var(--secondary-color);
 	}
 }

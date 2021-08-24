@@ -17,10 +17,11 @@
 
 import React from 'react'
 import './Repo.css'
+import { Link, Route } from "wouter"
 
 export default function Repo ({ title, repo_dir, description, labels }) {
     return (
-        <div className="Repo">
+        <article className="Repo">
             <h3>{title}</h3>
             <p className="RepoDir">{repo_dir}</p>
             <p className="RepoDesc">{description}</p>
@@ -40,7 +41,7 @@ export default function Repo ({ title, repo_dir, description, labels }) {
             <img loading='lazy' alt={title} src={url} />
           </Link>
         */}
-        </div>
+        </article>
     )
     
 }
