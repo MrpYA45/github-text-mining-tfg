@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 import logging
+import sys
 import time
 from threading import Thread
 
+from github.GithubException import BadCredentialsException, GithubException
 from gtmcore.data.db import Schema
 from gtmcore.data.db.enums import TaskState, TaskType
 from gtmcore.data.db.err.tasknotexistserror import TaskNotExistsError
@@ -39,40 +41,58 @@ class GTMExtraction():
                 self.current_task = task
                 Thread(target=self.capture_repo_data, args=(task,)).start()
 
-                self.__db_manager.set_task_state(
-                    task.task_id, TaskState.DONE)
-
             time.sleep(10)
 
     def capture_repo_data(self, task: Task) -> bool:
-        logger.debug(
-            "[GTMExtraction] STARTING DATA EXTRACTION FROM REPO: %s", task.repo_dir)
+        try:
+            logger.debug(
+                "[GTMExtraction] STARTING DATA EXTRACTION FROM REPO: %s", task.repo_dir)
 
-        if self.__gh_manager.get_repo_info(task.repo_dir):
+            self.__gh_manager.get_repo_info(task.repo_dir)
+
             self.__gh_manager.get_repo_issues(
                 task, self.check_is_task_outdated)
-        else:
-            return False
 
-        self.current_task = None
+            self.__db_manager.set_task_state(task.task_id, TaskState.DONE)
 
-        logger.debug(
-            "[GTMExtraction] ENDING DATA EXTRACTION FROM REPO: %s", task.repo_dir)
+            logger.debug(
+                "[GTMExtraction] ENDING DATA EXTRACTION FROM REPO: %s", task.repo_dir)
 
-        return True
+            return True
+
+        except BadCredentialsException:
+            self.__db_manager.set_task_state(task.task_id, TaskState.QUEUED)
+            logger.exception()
+            sys.exit(
+                "[GTMExtraction] INVALID GITHUB CREDENTIALS. CHECK '/config/gtmextraction/settings.json' FILE.")  # pylint: disable=line-too-long
+
+        except GithubException:
+            logger.exception(
+                "[GTMExtraction] INVALID TASK. SET AS INVALID. REASON: GITHUB EXCEPTION.")
+            self.__db_manager.set_task_state(task.task_id, TaskState.FAILED)
+
+        except Exception:  # pylint: disable=broad-except
+            logger.exception(
+                "[GTMExtraction] INVALID TASK. SET AS INVALID. REASON: UNKNOWN EXCEPTION.")
+            self.__db_manager.set_task_state(task.task_id, TaskState.FAILED)
+
+        finally:
+            self.current_task = None
 
     def check_is_task_outdated(self, old_task: Task):
         new_task: Task = self.__db_manager.get_lastest_task_from_repo(
             old_task.repo_dir, TaskType.EXTRACTION)
         if old_task.timestamp != new_task.timestamp:
-            self.__db_manager.set_task_state(old_task.task_id, TaskState.OUTDATED)
+            self.__db_manager.set_task_state(
+                old_task.task_id, TaskState.OUTDATED)
             return True
         return False
 
-
     def get_next_queued_task(self) -> Task:
         try:
-            return self.__db_manager.get_oldest_task_with_state(TaskType.EXTRACTION, TaskState.QUEUED)
+            return self.__db_manager.get_oldest_task_with_state(
+                TaskType.EXTRACTION,
+                TaskState.QUEUED)
         except TaskNotExistsError:
             return None
 

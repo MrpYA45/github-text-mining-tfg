@@ -18,9 +18,11 @@
 import json
 import logging
 from typing import Dict, List, Union
+from gtmcore.data.db.err.repositorynotexistserror import RepositoryNotExistsError
 
 from gtmcore.data.db.results import Task
 from gtmcore.logic.dbmanager import DBManager
+from gtmprocessing.err.invalidnlpmodel import InvalidNLPModel
 from gtmprocessing.logic.models import (SentimentsAnalysis, Summarization,
                                         ZeroShotClassifier)
 from gtmprocessing.logic.models.basemodel import BaseModel
@@ -40,40 +42,46 @@ class ProcessingManager():
         }
 
     def process_task(self, task: Task) -> bool:
-        # pylint: disable=line-too-long
-        logging.debug(
-            "[GTMProcessing] STARTING TASK PROCESSING. TASK ID: %s | REPO: %s | TASK_TYPE: %s | PARAMS: %s",
-            task.task_id, task.repo_dir, task.task_type, json.dumps(task.params))
+        try:
+            # pylint: disable=line-too-long
+            logging.debug(
+                "[GTMProcessing] STARTING TASK PROCESSING. TASK ID: %s | REPO: %s | TASK_TYPE: %s | PARAMS: %s",
+                task.task_id, task.repo_dir, task.task_type, json.dumps(task.params))
+            
+            if self.__dbmanager.get_repository(task.repo_dir):
+                raise RepositoryNotExistsError
 
-        params: Dict[str, TaskArgsType] = json.loads(task.params)
-        model_type: str = str(params.get("model_type", ""))
+            params: Dict[str, TaskArgsType] = json.loads(task.params)
+            model_type: str = str(params.get("model_type", ""))
 
-        nlp_model: BaseModel = self.__models_types[model_type]
+            nlp_model: BaseModel = self.__models_types[model_type]
 
-        params["repo_dir"] = task.repo_dir
+            params["repo_dir"] = task.repo_dir
 
-        nlp_model.set_params(params)
-        logging.debug(
-            "[GTMProcessing] TASK PROCESSING. PARAMETERS SET. TASK ID: %s | REPO: %s | TASK_TYPE: %s | PARAMS: %s",
-            task.task_id, task.repo_dir, task.task_type, json.dumps(task.params))
-        nlp_model.preprocess()
-        logging.debug(
-            "[GTMProcessing] TASK PROCESSING. PREPROCESSING MADE. TASK ID: %s | REPO: %s | TASK_TYPE: %s | PARAMS: %s",
-            task.task_id, task.repo_dir, task.task_type, json.dumps(task.params))
-        nlp_model.apply()
-        logging.debug(
-            "[GTMProcessing] TASK PROCESSING. NLP MODEL APPLIED. TASK ID: %s | REPO: %s | TASK_TYPE: %s | PARAMS: %s",
-            task.task_id, task.repo_dir, task.task_type, json.dumps(task.params))
+            nlp_model.set_params(params)
+            logging.debug(
+                "[GTMProcessing] TASK PROCESSING. PARAMETERS SET. TASK ID: %s | REPO: %s | TASK_TYPE: %s | PARAMS: %s",
+                task.task_id, task.repo_dir, task.task_type, json.dumps(task.params))
+            nlp_model.preprocess()
+            logging.debug(
+                "[GTMProcessing] TASK PROCESSING. PREPROCESSING MADE. TASK ID: %s | REPO: %s | TASK_TYPE: %s | PARAMS: %s",
+                task.task_id, task.repo_dir, task.task_type, json.dumps(task.params))
+            nlp_model.apply()
+            logging.debug(
+                "[GTMProcessing] TASK PROCESSING. NLP MODEL APPLIED. TASK ID: %s | REPO: %s | TASK_TYPE: %s | PARAMS: %s",
+                task.task_id, task.repo_dir, task.task_type, json.dumps(task.params))
 
-        model_outcome: Dict[str, TaskArgsType]
-        exec_time: float
-        model_outcome, exec_time = nlp_model.get_outcome()
+            model_outcome: Dict[str, TaskArgsType]
+            exec_time: float
+            model_outcome, exec_time = nlp_model.get_outcome()
 
-        logging.debug(
-            "[GTMProcessing] ENDING TASK PROCESSING FROM REPO: %s | RESULTS: %s | EXECUTION TIME: %f",
-            task.repo_dir, json.dumps(model_outcome), exec_time)
+            logging.debug(
+                "[GTMProcessing] ENDING TASK PROCESSING FROM REPO: %s | RESULTS: %s | EXECUTION TIME: %f",
+                task.repo_dir, json.dumps(model_outcome), exec_time)
 
-        self.__dbmanager.create_outcome(
-            task.task_id, task.repo_dir, model_type, model_outcome, exec_time)
+            self.__dbmanager.create_outcome(
+                task.task_id, task.repo_dir, model_type, model_outcome, exec_time)
 
-        return True
+            return True
+        except KeyError as err:
+            raise InvalidNLPModel from err

@@ -50,9 +50,9 @@ class GitHubManager():
                 self.__get_basic_iterable_data(iter(repo.get_labels()), "name")
             )
             return True
-        except BadCredentialsException:
-            logging.error("[GTMExtraction] Invalid GitHub Access Token.")
-            return False
+        except BadCredentialsException as err:
+            logging.exception("[GTMExtraction] INVALID GITHUB ACCESS TOKEN.")
+            raise err
 
     def get_repo_issues(self, task: Task, is_outdated: Callable) -> bool:
         """ Gets the issues information.

@@ -10,4 +10,5 @@ class TaskState(Enum):
     QUEUED = 0
     IN_PROGRESS = 1
     DONE = 2
+    FAILED = 3
     OUTDATED = -1
