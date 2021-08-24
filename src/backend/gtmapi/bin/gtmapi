@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
 import logging
 from pathlib import Path
+from typing import List
 
-from flask import Flask, json, jsonify, render_template, request
+from flask import Flask, json, jsonify, request
 from flask.logging import default_handler
 from flask_cors import CORS, cross_origin
+from gtmcore.data.db.enums.taskstate import TaskState
 from gtmcore.data.db.enums.tasktype import TaskType
+from gtmcore.data.db.err import OutcomeNotExistsError, TaskNotExistsError
+from gtmcore.data.db.results import Comment, Issue, Outcome, Repository, Task
 from gtmcore.data.db.schema import Schema
 from gtmcore.logic.dbmanager import DBManager
 
@@ -19,147 +23,330 @@ schema: Schema = Schema()
 db_manager: DBManager = DBManager(schema)
 
 
-@ app.route("/", methods=["GET"])
+@app.route("/", methods=["GET"])
 @cross_origin(supports_credentials=True)
 def is_running():
-    # ("", 200, {"Content-Type": "text/plain"})
-    return render_template("index.html")
+    return ("", 200, {"Content-Type": "text/plain"})
 
 
 @app.route("/tasks/", methods=["GET"])
 @cross_origin(supports_credentials=True)
 def get_all_tasks():
-    tasks = db_manager.get_tasks()
-    return jsonify(eqlts=[json.loads(str(task)) for task in tasks])
+    try:
+        tasks = db_manager.get_tasks()
+        return jsonify(eqlts=[json.loads(str(task)) for task in tasks])
+    except Exception:  # pylint: disable=broad-except
+        return ("Internal Server Error", 500)
 
 
 @app.route("/repos/", methods=["GET"])
 @cross_origin(supports_credentials=True)
 def get_all_repos() -> dict:
-    repos = db_manager.get_repositories()
-    return jsonify(eqlts=[json.loads(str(repo)) for repo in repos])
+    try:
+        repos = db_manager.get_repositories()
+        return jsonify(eqlts=[json.loads(str(repo)) for repo in repos])
+    except Exception:  # pylint: disable=broad-except
+        return ("Internal Server Error", 500)
 
 
 @app.route("/issues/", methods=["GET"])
+@cross_origin(supports_credentials=True)
 def get_all_issues() -> dict:
-    issues = db_manager.get_issues()
-    return jsonify(eqlts=[json.loads(str(issue)) for issue in issues])
+    try:
+        issues = db_manager.get_issues()
+        return jsonify(eqlts=[json.loads(str(issue)) for issue in issues])
+    except Exception:  # pylint: disable=broad-except
+        return ("Internal Server Error", 500)
 
 
 @app.route("/comments/", methods=["GET"])
+@cross_origin(supports_credentials=True)
 def get_all_comments() -> dict:
-    comments = db_manager.get_comments()
-    return jsonify(eqlts=[json.loads(str(comment)) for comment in comments])
+    try:
+        comments = db_manager.get_comments()
+        return jsonify(eqlts=[json.loads(str(comment)) for comment in comments])
+    except Exception:  # pylint: disable=broad-except
+        return ("Internal Server Error", 500)
 
 
 @app.route("/outcomes/", methods=["GET"])
+@cross_origin(supports_credentials=True)
 def get_all_outcomes() -> dict:
-    outcomes = db_manager.get_outcomes()
-    return jsonify(eqlts=[json.loads(str(outcome)) for outcome in outcomes])
-
-
-"""
-@app.route("/repo/<str:repo_user>/<str:repo_title>/issues/", defaults={"author": None}, methods=["GET"])
-@app.route("/repo/<str:repo_user>/<str:repo_title>/issues/author/<str:author>", methods=["GET"])
-def get_issues_from_repo(repo_user:str, repo_title: str, author: str) -> dict:
-    repo_dir: str = repo_user + "/" + repo_title
-    issues = db_manager.get_issues(repo_dir, author)
-    return jsonify(eqlts=[json.loads(str(issue)) for issue in issues])
-
-@app.route("/repo/<str:repo_user>/<str:repo_title>/issue/<int:issue_id>/comments/", defaults={"author": None}, methods=["GET"])
-@app.route("/repo/<str:repo_user>/<str:repo_title>/issue/<int:issue_id>/comments/<str:author>", methods=["GET"])
-def get_comments_from_issue(repo_user:str, repo_title: str, issue_id: int, author: str) -> dict:
-    repo_dir: str = repo_user + "/" + repo_title
-    comments = db_manager.get_comments(repo_dir, issue_id, author)
-    return jsonify(eqlts=[json.loads(str(comment)) for comment in comments])
-"""
-
-
-@ app.route("/task/", methods=["GET", "POST"])
-def create_task():
     try:
-        gh_user: str = request.form.get("gh_user")
-        gh_repo: str = request.form.get("gh_repo")
+        outcomes = db_manager.get_outcomes()
+        return jsonify(eqlts=[json.loads(str(outcome)) for outcome in outcomes])
+    except Exception:  # pylint: disable=broad-except
+        return ("Internal Server Error", 500)
+
+@app.route("/experiment/<int:task_id>", methods=["GET"])
+@cross_origin(supports_credentials=True)
+def get_outcome(task_id: int):
+    try:
+        outcome: Outcome = db_manager.get_outcome(task_id)
+        content: dict = json.loads(str(outcome))
+        return jsonify(eqlts=content)
+    except OutcomeNotExistsError:
+        return ("Not Found", 404)
+    except Exception:  # pylint: disable=broad-except
+        return ("Internal Server Error", 500)
+
+
+@ app.route("/extract/", methods=["POST"])
+@cross_origin(supports_credentials=True)
+def create_extraction_task():
+    try:
+        gh_user: str = request.form["gh_user"]
+        gh_repo: str = request.form["gh_repo"]
         repo_dir: str = gh_user + "/" + gh_repo
         if request.method == "POST":
-            task_added = db_manager.create_task(repo_dir, TaskType.EXTRACTION)
-            response = app.response_class(
-                response=json.dumps({"Añadido": task_added is not None}),
-                status=200,
-                mimetype='application/json'
-            )
-        else:
-            task = db_manager.get_task(repo_dir)
-            response = app.response_class(
-                response=jsonify(str(task)),
-                status=200,
-                mimetype='application/json'
-            )
-        return response
+            task_added: bool = db_manager.create_task(
+                repo_dir, TaskType.EXTRACTION)
+            if task_added:
+                return jsonify({"Added": True})
+            else:
+                return ("Internal Server Error", 500)
     except ValueError:
-        return False
+        return ("Bad Request", 400)
+    except Exception:  # pylint: disable=broad-except
+        return ("Internal Server Error", 500)
+
+
+@app.route("/user/<string:gh_user>/repo/<string:gh_repo>", methods=["GET"])
+@cross_origin(supports_credentials=True)
+def get_repo_info(gh_user: str, gh_repo: str):
+    repo_dir: str = gh_user + "/" + gh_repo
+    try:
+        task: Task = db_manager.get_lastest_task_from_repo(
+            repo_dir, TaskType.EXTRACTION)
+        if task.state == TaskState.DONE.value:
+            repo: Repository = db_manager.get_repository(repo_dir)
+            content: dict = json.loads(str(repo))
+            return jsonify(eqlts=content)
+        else:
+            return ("Accepted", 202)
+    except TaskNotExistsError:
+        return ("Not Found", 404)
+    except Exception:  # pylint: disable=broad-except
+        return ("Internal Server Error", 500)
+
+
+@app.route("/user/<string:gh_user>/repo/<string:gh_repo>/issues", methods=["GET"])
+@cross_origin(supports_credentials=True)
+def get_repo_issues(gh_user: str, gh_repo: str):
+    repo_dir: str = gh_user + "/" + gh_repo
+    try:
+        task: Task = db_manager.get_lastest_task_from_repo(
+            repo_dir, TaskType.EXTRACTION)
+        if task.state == TaskState.DONE.value:
+            issues: List[Issue] = db_manager.get_issues(repo_dir)
+            content: List[dict] = [json.loads(str(issue)) for issue in issues]
+            return jsonify(eqlts=content)
+        else:
+            return ("Accepted", 202)
+    except TaskNotExistsError:
+        return ("Not Found", 404)
+    except Exception:  # pylint: disable=broad-except
+        return ("Internal Server Error", 500)
+
+
+@app.route("/user/<string:gh_user>/repo/<string:gh_repo>/issue/<int:issue_id>/comments", methods=["GET"])
+@cross_origin(supports_credentials=True)
+def get_issue_comments(gh_user: str, gh_repo: str, issue_id: int):
+    repo_dir: str = gh_user + "/" + gh_repo
+    try:
+        task: Task = db_manager.get_lastest_task_from_repo(
+            repo_dir, TaskType.EXTRACTION)
+        if task.state == TaskState.DONE.value:
+            comments: List[Comment] = db_manager.get_comments(
+                repo_dir, issue_id)
+            content: List[dict] = [json.loads(
+                str(comment)) for comment in comments]
+            return jsonify(eqlts=content)
+        else:
+            return ("Accepted", 202)
+    except TaskNotExistsError:
+        return ("Not Found", 404)
+    except Exception:  # pylint: disable=broad-except
+        return ("Internal Server Error", 500)
+
+
+@app.route("/user/<string:gh_user>/repo/<string:gh_repo>/tasks", methods=["GET"])
+@cross_origin(supports_credentials=True)
+def get_repo_tasks(gh_user: str, gh_repo: str):
+    repo_dir: str = gh_user + "/" + gh_repo
+    try:
+        tasks: List[Task] = db_manager.get_tasks(repo_dir)
+        if tasks:
+            content: List[dict] = [json.loads(str(task)) for task in tasks]
+            return jsonify(eqlts=content)
+        else:
+            return ("No Content", 204)
+    except Exception:  # pylint: disable=broad-except
+        return ("Internal Server Error", 500)
+
+
+@app.route("/user/<string:gh_user>/repo/<string:gh_repo>/experiments", methods=["GET"])
+@cross_origin(supports_credentials=True)
+def get_repo_outcomes(gh_user: str, gh_repo: str):
+    repo_dir: str = gh_user + "/" + gh_repo
+    try:
+        outcomes: List[Outcome] = db_manager.get_outcomes(repo_dir)
+        if outcomes:
+            content: List[dict] = [json.loads(
+                str(outcome)) for outcome in outcomes]
+            return jsonify(eqlts=content)
+        else:
+            return ("No Content", 204)
+    except Exception:  # pylint: disable=broad-except
+        return ("Internal Server Error", 500)
+
+
+@app.route("/user/<string:gh_user>/repo/<string:gh_repo>/process/zsc/", methods=["POST"])
+@cross_origin(supports_credentials=True)
+def create_zsc_task(gh_user: str, gh_repo: str):
+    repo_dir: str = gh_user + "/" + gh_repo
+    try:
+        task: Task = db_manager.get_lastest_task_from_repo(
+            repo_dir, TaskType.EXTRACTION)
+        if task.state == TaskState.DONE.value:
+            params: dict = {
+                "issue_id": int(request.form["issue_id"]),
+                "accuracy": float(request.form["accuracy"]),
+                "use_desc": bool(request.form["use_desc"]),
+                "extra_labels": list(request.form["extra_labels"])
+            }
+            task_added: bool = db_manager.create_task(
+                repo_dir, TaskType.PROCESSING, params)
+            if task_added:
+                return jsonify({"Added": True})
+            else:
+                return ("Internal Server Error", 500)
+    except ValueError:
+        return ("Bad Request", 400)
+    except TypeError:
+        return ("Bad Request", 400)
+    except TaskNotExistsError:
+        return ("Not Acceptable", 406)
+    except Exception:  # pylint: disable=broad-except
+        return ("Internal Server Error", 500)
+
+
+@app.route("/user/<string:gh_user>/repo/<string:gh_repo>/process/sa/", methods=["POST"])
+@cross_origin(supports_credentials=True)
+def create_sa_task(gh_user: str, gh_repo: str):
+    repo_dir: str = gh_user + "/" + gh_repo
+    try:
+        task: Task = db_manager.get_lastest_task_from_repo(
+            repo_dir, TaskType.EXTRACTION)
+        if task.state == TaskState.DONE.value:
+            params: dict = {
+                "model_type": "sa",
+                "issue_id": int(request.form["issue_id"]),
+                "author": str(request.form["author"]) or None,
+                "with_comments": bool(request.form["with_comments"])
+            }
+            task_added: bool = db_manager.create_task(
+                repo_dir, TaskType.PROCESSING, params)
+            if task_added:
+                return jsonify({"Added": True})
+            else:
+                return ("Internal Server Error", 500)
+    except ValueError:
+        return ("Bad Request", 400)
+    except TaskNotExistsError:
+        return ("Not Acceptable", 406)
+    except Exception:  # pylint: disable=broad-except
+        return ("Internal Server Error", 500)
+
+
+@app.route("/user/<string:gh_user>/repo/<string:gh_repo>/process/summ/", methods=["POST"])
+@cross_origin(supports_credentials=True)
+def create_summ_task(gh_user: str, gh_repo: str):
+    repo_dir: str = gh_user + "/" + gh_repo
+    try:
+        task: Task = db_manager.get_lastest_task_from_repo(
+            repo_dir, TaskType.EXTRACTION)
+        if task.state == TaskState.DONE.value:
+            params: dict = {
+                "model_type": "summ",
+                "issue_id": int(request.form["issue_id"]),
+                "with_comments": bool(request.form["with_comments"]),
+                "max_length": int(request.form["max_length"]),
+                "min_length": int(request.form["min_length"])
+            }
+            task_added: bool = db_manager.create_task(
+                repo_dir, TaskType.PROCESSING, params)
+            if task_added:
+                return jsonify({"Added": True})
+            else:
+                return ("Internal Server Error", 500)
+    except ValueError:
+        return ("Bad Request", 400)
+    except TaskNotExistsError:
+        return ("Not Acceptable", 406)
+    except Exception:  # pylint: disable=broad-except
+        return ("Internal Server Error", 500)
 
 
 @ app.route("/test_zsc/", methods=["GET", "POST"])
+@cross_origin(supports_credentials=True)
 def test_zsc():
-    params = {
-        "model_type": "zsc",
-        "issue_id": 831250862,
-        "accuracy": 0.0,
-        "use_desc": False,
-        "extra_tags": ["test_tag"]
-    }
-    task_added = db_manager.create_task(
-        "MrpYA45/github-text-mining-tfg", TaskType.PROCESSING, params)
+    try:
+        params = {
+            "model_type": "zsc",
+            "issue_id": 831250862,
+            "accuracy": 0.0,
+            "use_desc": False,
+            "extra_tags": ["test_tag"]
+        }
+        task_added = db_manager.create_task(
+            "MrpYA45/github-text-mining-tfg", TaskType.PROCESSING, params)
 
-    response = app.response_class(
-        response=json.dumps({"TEST_ZSC_QUEUED": task_added is not None}),
-        status=200,
-        mimetype='application/json'
-    )
-
-    return response
+        if task_added:
+            return jsonify({"Added": True})
+    except Exception:  # pylint: disable=broad-except
+        return ("Internal Server Error", 500)
 
 
 @ app.route("/test_sa/", methods=["GET", "POST"])
+@cross_origin(supports_credentials=True)
 def test_sa():
-    params = {
-        "model_type": "sa",
-        "issue_id": 831250862,
-        "author": "MrpYA45",
-        "with_comments": False
-    }
-    task_added = db_manager.create_task(
-        "MrpYA45/github-text-mining-tfg", TaskType.PROCESSING, params)
+    try:
+        params = {
+            "model_type": "sa",
+            "issue_id": 831250862,
+            "author": "MrpYA45",
+            "with_comments": False
+        }
+        task_added = db_manager.create_task(
+            "MrpYA45/github-text-mining-tfg", TaskType.PROCESSING, params)
 
-    response = app.response_class(
-        response=json.dumps({"TEST_SA_QUEUED": task_added is not None}),
-        status=200,
-        mimetype='application/json'
-    )
-
-    return response
+        if task_added:
+            return jsonify({"Added": True})
+    except Exception:  # pylint: disable=broad-except
+        return ("Internal Server Error", 500)
 
 
 @ app.route("/test_summ/", methods=["GET", "POST"])
+@cross_origin(supports_credentials=True)
 def test_summ():
-    params = {
-        "model_type": "summ",
-        "issue_id": 831250862,
-        "with_comments": False,
-        "max_length": 150,
-        "min_length": 50
-    }
-    task_added = db_manager.create_task(
-        "MrpYA45/github-text-mining-tfg", TaskType.PROCESSING, params)
+    try:
+        params = {
+            "model_type": "summ",
+            "issue_id": 831250862,
+            "with_comments": False,
+            "max_length": 150,
+            "min_length": 50
+        }
+        task_added = db_manager.create_task(
+            "MrpYA45/github-text-mining-tfg", TaskType.PROCESSING, params)
 
-    response = app.response_class(
-        response=json.dumps({"TEST_SUMM_QUEUED": task_added is not None}),
-        status=200,
-        mimetype='application/json'
-    )
-
-    return response
+        if task_added:
+            return jsonify({"Added": True})
+        else:
+            return ("Internal Server Error", 500)
+    except Exception:  # pylint: disable=broad-except
+        return ("Internal Server Error", 500)
 
 
 if __name__ == "__main__":
