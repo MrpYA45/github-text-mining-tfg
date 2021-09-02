@@ -1,0 +1,128 @@
+/**
+ * Copyright (C) 2021 Pablo Fernández Bravo
+ * 
+ * This file is part of github-text-mining-tfg.
+ * 
+ * github-text-mining-tfg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * github-text-mining-tfg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with github-text-mining-tfg.  If not, see <http://www.gnu.org/licenses/>.
+ */
+.FormExperiment {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 98%;
+    height: 70%;
+    font-size: clamp(1rem, 1.5vw, 4rem);
+    background-color: var(--secondary-color);
+    padding: 2rem;
+    margin: 0;
+}
+.FormExperimentLabel {
+    display: flex;
+    justify-content: space-evenly;
+    margin: clamp(0.2rem, 1.5vw, 0.5rem);
+    width: 100%;
+}
+.FormExperimentSpan {
+    color: var(--main-color);
+    font-size: clamp(1rem, 3vw, 2rem);
+    width: 30%;
+    text-align: left;
+}
+.FormExperimentInput {
+    opacity: 0.8;
+    border: none;
+    border-bottom: 2px solid var(--main-color);
+    background: rgba(255, 255, 255, 0.1);
+    width: 60%;
+    height: 4rem;
+    color: var(--main-color);
+    font-size: 1.2rem;
+    padding: 0.2rem 0.5rem;
+}
+input:-webkit-autofill textarea:-webkit-autofill{
+    box-shadow: 0 0 0 50px rgba(0, 0, 0, 0.9) inset;
+    -webkit-text-fill-color: var(--main-color);
+}
+::placeholder {
+    font-size: 1.2rem;
+}
+.FormExperimentDropdown {
+    background: transparent;
+}
+.FormExperimentDropdown:hover,
+.FormExperimentDropdown:focus,
+.FormExperimentDropdown:active {
+    border: 2px solid rgba(255, 255, 255, 0.9);
+}
+.FormExperimentDropdownOption {
+    color: var(--main-color);
+    background-color: var(--secondary-color);
+    opacity: 0.7;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.FormExperimentTextArea {
+    border: 2px solid var(--main-color);
+    resize: none;
+}
+.FormExperimentSlider {
+    -webkit-appearance: none;
+    height: 1px;
+    background: var(--main-color);
+    outline: none;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    width: 50%;
+}
+.FormExperimentSlider:hover {
+    opacity: 1;
+}
+.FormExperimentSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: #FFF;
+    cursor: pointer;
+    border-radius: 50%;
+}
+.FormExperimentSlider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #FFF;
+    cursor: pointer;
+    border-radius: 50%;
+}
+.FormExperimentOutput {
+    color: var(--main-color);
+    font-size: clamp(1rem, 3vw, 2rem);
+    width: 5%;
+}
+.FormExperimentButton {
+    transition: all 0.3s ease;
+    margin: 2rem;
+    border: 2px solid;
+    background: var(--main-color);
+    padding: 1rem;
+    width: 100%;
+    font: inherit;
+    font-size: clamp(1rem, 3vw, 2rem);
+    font-weight: 300;
+}
+.FormExperimentButton:hover,
+.FormExperimentButton:focus,
+.FormExperimentButton:active {
+    color: rgba(255, 255, 255, 0.9);
+}
