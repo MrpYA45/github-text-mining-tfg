@@ -58,9 +58,8 @@ class ZeroShotClassifier(BaseModel):
 
             if self.__use_desc:
                 inputs += (" ", issue.description)
-                inputs += self.chunk_input(inputs, self.__pipeline.tokenizer)
 
-            self._inputs = inputs
+            self._inputs = self.chunk_input(inputs, self.__pipeline.tokenizer)
         except ValueError as err:
             raise ValueError(
                 "Missing, incorrect or damaged model paramethers.") from err

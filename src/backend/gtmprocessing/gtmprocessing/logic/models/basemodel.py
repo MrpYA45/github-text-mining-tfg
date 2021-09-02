@@ -38,7 +38,7 @@ class BaseModel(ABC):
         self._issue_id: int = -1
         self._inputs: List[str] = []
         self._outcome: Dict[str, Union[str,
-                                        float, List[str], List[float]]] = {}
+                                       float, List[str], List[float]]] = {}
         self._exec_time: float = 0.0
 
     def get_pipeline(self) -> Pipeline:
@@ -61,6 +61,10 @@ class BaseModel(ABC):
         # For each single raw input (piece of text).
         for raw_input in raw_inputs:
 
+            # raw_input empty strings are skipped.
+            if not "".join(raw_input.split()):
+                continue
+
             logging.debug("CHUNKING: %s", str(raw_input))
 
             # The sentences that compose each paragraph are checked.
@@ -71,7 +75,7 @@ class BaseModel(ABC):
 
             # Phrases are grouped into sections according to the tokenizer limits.
             sections: List[List[str]] = preprocessor.preprocess(sentences)
-            
+
             logging.debug("SECTIONS: %s", str(sections))
 
             # The sentences of each section are joined together to form new paragraphs.

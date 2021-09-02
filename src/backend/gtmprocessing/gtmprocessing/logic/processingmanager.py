@@ -48,7 +48,7 @@ class ProcessingManager():
                 "[GTMProcessing] STARTING TASK PROCESSING. TASK ID: %s | REPO: %s | TASK_TYPE: %s | PARAMS: %s",
                 task.task_id, task.repo_dir, task.task_type, json.dumps(task.params))
             
-            if self.__dbmanager.get_repository(task.repo_dir):
+            if self.__dbmanager.get_repository(task.repo_dir) is None:
                 raise RepositoryNotExistsError
 
             params: Dict[str, TaskArgsType] = json.loads(task.params)
