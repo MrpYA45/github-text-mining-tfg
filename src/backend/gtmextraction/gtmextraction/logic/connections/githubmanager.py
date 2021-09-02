@@ -46,7 +46,7 @@ class GitHubManager():
             self.__db_manager.create_repository(
                 repo_dir,
                 repo.name,
-                self.__downloaded_data_cleaner(repo.description),
+                self.__downloaded_data_cleaner(repo.description or ""),
                 self.__get_basic_iterable_data(iter(repo.get_labels()), "name")
             )
             return True
@@ -84,8 +84,8 @@ class GitHubManager():
                     task.repo_dir,
                     issue.id,
                     issue.user.login,
-                    self.__downloaded_data_cleaner(issue.title),
-                    self.__downloaded_data_cleaner(issue.body),
+                    self.__downloaded_data_cleaner(issue.title or ""),
+                    self.__downloaded_data_cleaner(issue.body or ""),
                     self.__get_basic_iterable_data(iter(issue.labels), "name"),
                     issue.pull_request is not None
                 )
@@ -124,7 +124,7 @@ class GitHubManager():
                     issue.id,
                     comment.id,
                     comment.user.login,
-                    self.__downloaded_data_cleaner(comment.body)
+                    self.__downloaded_data_cleaner(comment.body or "")
                 )
 
             except StopIteration:
@@ -151,7 +151,7 @@ class GitHubManager():
             try:
                 item = next(iterator)
                 markdown_data = getattr(item, property_name)
-                data.append(self.__downloaded_data_cleaner(markdown_data))
+                data.append(self.__downloaded_data_cleaner(markdown_data or ""))
             except StopIteration:
                 return data
             except RateLimitExceededException:
@@ -159,14 +159,14 @@ class GitHubManager():
                                      timedelta(0, 20)).total_seconds()
                 time.sleep(sleep_time)
 
-    def __downloaded_data_cleaner(self, raw_str: str) -> str:
+    def __downloaded_data_cleaner(self, md_str: str) -> str:
         """ Clears all markdown and non ASCII characters from the given raw string.
 
         Args:
-            raw_str (str): String with markdown, emojis and other non ASCII characters.
+            md_str (str): String with markdown, emojis and other non ASCII characters.
 
         Returns:
             str: A string without markdown or non ASCII characters.
         """
-        raw_text = DataUtils.markdown_to_raw_text(raw_str)
+        raw_text = DataUtils.markdown_to_raw_text(md_str)
         return DataUtils.remove_non_ascii_chars(raw_text)
