@@ -2,6 +2,7 @@
 [![Issues](https://img.shields.io/github/issues/MrpYA45/github-text-mining-tfg?color=blue)](https://github.com/MrpYA45/github-text-mining-tfg/issues)
 [![pylint score](https://github.com/MrpYA45/github-text-mining-tfg/actions/workflows/stylechecking.yml/badge.svg?style=for-the-badge)](https://github.com/MrpYA45/github-text-mining-tfg/actions/workflows/stylechecking.yml)
 [![mypy typechecking](https://github.com/MrpYA45/github-text-mining-tfg/actions/workflows/typechecking.yml/badge.svg)](https://github.com/MrpYA45/github-text-mining-tfg/actions/workflows/typechecking.yml)
+[![codebeat badge](https://codebeat.co/badges/b88ca615-8ccc-4770-a607-79e83b14dac5)](https://codebeat.co/projects/github-com-mrpya45-github-text-mining-tfg-main)
 
 # GitHub Text Mining (Bachelor's Degree Final Project)
 
