@@ -35,7 +35,7 @@ class GTMExtraction():
                     "[GTMExtraction] NEW TASK FOUND. TASK_ID: %d | TASK_REPO: %s | CREATED AT: %s",
                     task.task_id, task.repo_dir, task.timestamp)
 
-                self.__db_manager.set_task_state(
+                self.__db_manager.update_task_state(
                     task.task_id, TaskState.IN_PROGRESS)
 
                 self.current_task = task
@@ -53,7 +53,7 @@ class GTMExtraction():
             self.__gh_manager.get_repo_issues(
                 task, self.check_is_task_outdated)
 
-            self.__db_manager.set_task_state(task.task_id, TaskState.DONE)
+            self.__db_manager.update_task_state(task.task_id, TaskState.DONE)
 
             logger.debug(
                 "[GTMExtraction] ENDING DATA EXTRACTION FROM REPO: %s", task.repo_dir)
@@ -61,7 +61,7 @@ class GTMExtraction():
             return True
 
         except BadCredentialsException:
-            self.__db_manager.set_task_state(task.task_id, TaskState.QUEUED)
+            self.__db_manager.update_task_state(task.task_id, TaskState.QUEUED)
             logger.exception()
             sys.exit(
                 "[GTMExtraction] INVALID GITHUB CREDENTIALS. CHECK '/config/gtmextraction/settings.json' FILE.")  # pylint: disable=line-too-long
@@ -69,21 +69,21 @@ class GTMExtraction():
         except GithubException:
             logger.exception(
                 "[GTMExtraction] INVALID TASK. SET AS INVALID. REASON: GITHUB EXCEPTION.")
-            self.__db_manager.set_task_state(task.task_id, TaskState.FAILED)
+            self.__db_manager.update_task_state(task.task_id, TaskState.FAILED)
 
         except Exception:  # pylint: disable=broad-except
             logger.exception(
                 "[GTMExtraction] INVALID TASK. SET AS INVALID. REASON: UNKNOWN EXCEPTION.")
-            self.__db_manager.set_task_state(task.task_id, TaskState.FAILED)
+            self.__db_manager.update_task_state(task.task_id, TaskState.FAILED)
 
         finally:
             self.current_task = None
 
     def check_is_task_outdated(self, old_task: Task):
-        new_task: Task = self.__db_manager.get_lastest_task_from_repo(
+        new_task: Task = self.__db_manager.get_latest_task_from_repo(
             old_task.repo_dir, TaskType.EXTRACTION)
         if old_task.timestamp != new_task.timestamp:
-            self.__db_manager.set_task_state(
+            self.__db_manager.update_task_state(
                 old_task.task_id, TaskState.OUTDATED)
             return True
         return False

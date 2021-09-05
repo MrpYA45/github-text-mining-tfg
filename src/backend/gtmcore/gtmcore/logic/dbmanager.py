@@ -54,7 +54,7 @@ class DBManager():
                           title: str,
                           description: str,
                           labels: list) -> Repository:
-        """ Creates a new repository.
+        """ Creates a new Repository record.
 
         Args:
             repo_dir (str): The repository direction.
@@ -63,14 +63,14 @@ class DBManager():
             labels (list): The repository labels.
 
         Raises:
-            ValueError: Thrown when missing repo_dir, title or description.
+            ValueError: Thrown when missing repo_dir or title.
 
         Returns:
             Repository: The repository.
         """
-        if not repo_dir or not title or not description:
+        if not repo_dir or not title:
             raise ValueError(
-                "You cannot create a repository without a repo_dir, a title and a description.")
+                "You cannot create a repository without a repo_dir and a title.")
         session: Schema = self.get_schema()
         try:
             repo: Repository = Repositories.create(
@@ -81,7 +81,7 @@ class DBManager():
                 session, repo_dir, title, description, labels)
         return repo
 
-    def delete(self, repo_dir: str) -> None:
+    def delete_repository(self, repo_dir: str) -> None:
         """ Deletes the specified Repository record.
 
         Args:
@@ -92,12 +92,12 @@ class DBManager():
         """
         if not repo_dir:
             raise ValueError(
-                "You cannot create a repository without a repo_dir.")
+                "You cannot delete a repository without a repo_dir.")
         session: Schema = self.get_schema()
         Repositories.delete(session, repo_dir)
 
     def get_repository(self, repo_dir: str) -> Repository:
-        """ Gets the repository record.
+        """ Gets the specified repository record.
 
         Args:
             session (Session): The database session.
@@ -143,14 +143,15 @@ class DBManager():
             is_pull_request (bool): If true the issue is a pull request, otherwise false.
 
         Raises:
-            ValueError: Thrown when missing repo_dir, author or title.
+            ValueError: Thrown when missing repo_dir, issue_id, author or title.
 
         Returns:
             Issue: The issue.
         """
-        if not repo_dir or not author or not title:
+        if not repo_dir or issue_id is None or not author or not title:
             raise ValueError(
-                "You cannot create an issue without a repo_dir, an author and a title.")
+                "You cannot create an issue without a repo_dir, "
+                "an issue_id, an author and a title.")
         session: Schema = self.get_schema()
         return Issues.create(
             session, repo_dir, issue_id, author, title, description, labels, is_pull_request)
@@ -168,16 +169,16 @@ class DBManager():
         Returns:
             Issue: The issue.
         """
-        if not repo_dir:
+        if not repo_dir or issue_id is None:
             raise ValueError(
-                "You cannot get an issue without a repo_dir.")
+                "You cannot get an issue without a repo_dir and an issue_id.")
         session: Schema = self.get_schema()
         return Issues.get_issue(session, repo_dir, issue_id)
 
     def get_issues(self,
                    repo_dir: str = None,
                    author: str = None,
-                   pull_requests=True) -> List[Issue]:
+                   pull_requests: bool = True) -> List[Issue]:
         """ Gets a list of issues.
 
         Args:
@@ -197,6 +198,7 @@ class DBManager():
 
         Args:
             repo_dir (str): The task repository.
+            task_type (TaskType): The task type.
 
         Raises:
             ValueError: Thrown when missing repo_dir.
@@ -204,8 +206,9 @@ class DBManager():
         Returns:
             Task: The task.
         """
-        if not repo_dir:
-            raise ValueError("You cannot create a task without a repo_dir.")
+        if not repo_dir or task_type is None:
+            raise ValueError(
+                "You cannot create a task without a repo_dir and a task_type.")
         session: Schema = self.get_schema()
         return Tasks.create(
             session, TaskState.QUEUED, datetime.utcnow(), repo_dir, task_type, params)
@@ -215,9 +218,8 @@ class DBManager():
 
         Args:
             session (Session): The database session.
-            repo_dir (str): The task repository.
-            params (str, optional): The task parameters. Defaults to None.
-            
+            task_id (int): The task id.
+
         Raises:
             ValueError: Thrown when missing repo_dir.
 
@@ -225,74 +227,87 @@ class DBManager():
             Task: The task.
         """
         if task_id is None:
-            raise ValueError("You cannot get a task without a repo_dir.")
+            raise ValueError("You cannot get a task without a task_id.")
         session: Schema = self.get_schema()
         return Tasks.get_task(session, task_id)
 
-    def get_tasks(self, repo_dir: str = None, state: TaskState = None) -> List[Task]:
+    def get_tasks(self, repo_dir: str = None, task_state: TaskState = None) -> List[Task]:
         """ Gets a list of tasks.
 
         Args:
             session (Session): The database session.
             repo_dir (str, optional): The task repository. Defaults to None.
-            state (TaskState, optional): The task state. Defaults to None.
+            task_state (TaskState, optional): The task state. Defaults to None.
 
         Returns:
             List[Task]: List of tasks.
         """
         session: Schema = self.get_schema()
-        return Tasks.get_tasks(session, repo_dir, state)
+        return Tasks.get_tasks(session, repo_dir, task_state)
 
-    def get_lastest_task_from_repo(self, repo_dir: str, task_type: TaskType = None, state: TaskState = None) -> Task:
-        """ Gets the lastest task record with that repo_dir.
+    def get_latest_task_from_repo(self,
+                                  repo_dir: str,
+                                  task_type: TaskType = None,
+                                  task_state: TaskState = None) -> Task:
+        """ Gets the latest task record with that repo_dir.
 
         Args:
             repo_dir (str): The task repository.
-            task_type (TaskType): The task type. Defaults to None.
-            state (TaskState, optional): The task state. Defaults to None.
+            task_type (TaskType, optional): The task type. Defaults to None.
+            task_state (TaskState, optional): The task state. Defaults to None.
 
         Raises:
-            TaskNotExistsError:
-                Thrown when there isn't any task with that repo_dir in the database records.
+            ValueError:
+                Thrown when missing repo_dir.
 
         Returns:
             List[Task]: List of tasks.
         """
+        if not repo_dir:
+            raise ValueError(
+                "You cannot get the lastest task from an unknown repo_dir.")
         session: Schema = self.get_schema()
-        return Tasks.get_lastest_task_from_repo(session, repo_dir, task_type, state)
+        return Tasks.get_latest_task_from_repo(session, repo_dir, task_type, task_state)
 
-    def get_oldest_task_with_state(self, task_type: TaskType, state: TaskState) -> Task:
+    def get_oldest_task_with_state(self, task_type: TaskType, task_state: TaskState) -> Task:
         """ Gets the oldest queued task record.
 
         Args:
             task_type (TaskType): The task type.
-            state (TaskState): The task state.
+            task_state (TaskState): The task state.
 
         Raises:
-            TaskNotExistsError:
-                Thrown when there isn't any task with that type and state in the database records.
+            ValueError:
+                Thrown when missing task_type or task_state.
 
         Returns:
             Task: The oldest queued task with that type and state.
         """
+        if task_type is None or task_state is None:
+            raise ValueError(
+                "You cannot get the oldest task without a task_type and a task_state.")
         session: Schema = self.get_schema()
-        return Tasks.get_oldest_task_with_state(session, task_type, state)
+        return Tasks.get_oldest_task_with_state(session, task_type, task_state)
 
-    def set_task_state(self, task_id: int, state: TaskState) -> None:
+    def update_task_state(self, task_id: int, task_state: TaskState) -> None:
         """ Updates the state of a task.
 
         Args:
             task_id (str): The task id.
-            state (TaskState): The task state.
+            task_state (TaskState): The task state.
 
         Raises:
-            TaskNotExistsError:
-                Thrown when there isn't any task with that repo_dir in the database records.
+            ValueError:
+                Thrown when missing task_id or task_state.
         """
+        if task_id is None or task_state is None:
+            raise ValueError(
+                "You cannot get the update the state of a task "
+                "without a task_id and a task_state.")
         session: Schema = self.get_schema()
-        return Tasks.set_task_state(session, task_id, state)
+        return Tasks.update_task_state(session, task_id, task_state)
 
-    def set_task_type(self, task_id: int, task_type: TaskType, params: dict = None) -> None:
+    def update_task_type(self, task_id: int, task_type: TaskType, params: dict = None) -> None:
         """ Updates the type of a task and his parameters if needed.
 
         Args:
@@ -301,11 +316,15 @@ class DBManager():
             params (str, optional): The task parameters.
 
         Raises:
-            TaskNotExistsError:
-                Thrown when there isn't any task with that task_id in the database records.
+            ValueError:
+                Thrown when missing task_id or task_type.
         """
+        if task_id is None or task_type is None:
+            raise ValueError(
+                "You cannot get the update the type of a task "
+                "without a task_id and a task_type.")
         session: Schema = self.get_schema()
-        return Tasks.set_task_type(session, task_id, task_type, params)
+        return Tasks.update_task_type(session, task_id, task_type, params)
 
     def create_comment(self,
                        repo_dir: str,
@@ -323,14 +342,15 @@ class DBManager():
             body (str): The comment body.
 
         Raises:
-            ValueError: Thrown when missing author.
+            ValueError: Thrown when missing repo_dir, issue_id, comment_id or author.
 
         Returns:
             Comment: The comment.
         """
-        if not repo_dir or not author or not body:
+        if not repo_dir or issue_id is None or comment_id is None or not author:
             raise ValueError(
-                "You cannot create an issue without a repo_dir, an author and a body.")
+                "You cannot create an issue without a repo_dir, "
+                "an issue_id, a comment_id and an author.")
         session: Schema = self.get_schema()
         return Comments.create(session, repo_dir, issue_id, comment_id, author, body)
 
@@ -343,16 +363,16 @@ class DBManager():
             comment_id (int): The comment identifier.
 
         Raises:
-            CommentNotExistsError:
+            ValueError:
                 Thrown when there isn't any comment with that
                 repo_dir, issue_id and comment_id in the database records.
 
         Returns:
             Comment: The comment.
         """
-        if not repo_dir:
+        if not repo_dir or issue_id is None or comment_id is None:
             raise ValueError(
-                "You cannot get an issue without a repo_dir.")
+                "You cannot get an issue without a repo_dir, an issue_id and a comment_id.")
         session: Schema = self.get_schema()
         return Comments.get_comment(session, repo_dir, issue_id, comment_id)
 
@@ -390,14 +410,17 @@ class DBManager():
             exec_time (float): The task execution time.
 
         Raises:
-            ValueError: Thrown when missing author.
+            ValueError: Thrown when missing task_id, repo_dir,
+                model_type, outcome_data or exec_time.
 
         Returns:
             Outcome: The outcome.
         """
-        if not repo_dir or not model_type or not outcome_data or not exec_time:
+        if (task_id is None or not repo_dir or
+                not model_type or outcome_data is None or exec_time is None):
             raise ValueError(
-                "You cannot create a outcome without a repo_dir, a model_type, an outcome_data or an exec_time.")
+                "You cannot create an outcome without a task_id, a repo_dir, "
+                "a model_type, an outcome_data and an exec_time.")
         session: Schema = self.get_schema()
         return Outcomes.create(session, task_id, repo_dir, model_type, outcome_data, exec_time)
 
@@ -409,12 +432,14 @@ class DBManager():
             task_id (int): The task id.
 
         Raises:
-            OutcomeNotExistsError:
-                Thrown when there isn't any outcome with that task_id in the database records.
+            ValueError: Thrown when missing task_id.
 
         Returns:
             Outcome: The outcome.
         """
+        if task_id is None:
+            raise ValueError(
+                "You cannot get an outcome without a task_id.")
         session: Schema = self.get_schema()
         return Outcomes.get_outcome(session, task_id)
 

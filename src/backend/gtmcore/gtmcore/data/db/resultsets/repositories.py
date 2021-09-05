@@ -28,16 +28,16 @@ class Repositories():
             labels (str): The repository labels.
 
         Raises:
-            ValueError: Thrown when missing repo_dir, title or description.
+            ValueError: Thrown when missing repo_dir or title.
             RepositoryAlreadyExistError:
                 Thrown when already exists a repository with the same repo_dir.
 
         Returns:
             Repository: The repository.
         """
-        if not repo_dir or not title or not description:
+        if not repo_dir or not title:
             raise ValueError(
-                "You cannot create a repository without a repo_dir, a title and a description.")
+                "You cannot create a repository without a repo_dir and a title.")
         try:
             labels_1: str = json.dumps(labels)
             repo: Repository = Repository(

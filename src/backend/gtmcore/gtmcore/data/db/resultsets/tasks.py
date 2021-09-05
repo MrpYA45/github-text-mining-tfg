@@ -94,14 +94,14 @@ class Tasks():
         return query.all()
 
     @staticmethod
-    def get_lastest_task_from_repo(
+    def get_latest_task_from_repo(
             session: Session, repo_dir: str, task_type: TaskType = None, state: TaskState = None) -> Task:
-        """ Gets the lastest task record with that repo_dir.
+        """ Gets the latest task record with that repo_dir.
 
         Args:
             session (Session): The database session.
             repo_dir (str): The task repository. Defaults to None.
-            task_type (TaskType): The task type. Defaults to None.
+            task_type (TaskType, optional): The task type. Defaults to None.
             state (TaskState, optional): The task state. Defaults to None.
 
         Raises:
@@ -146,7 +146,7 @@ class Tasks():
         return task
 
     @staticmethod
-    def set_task_state(session: Session, task_id: int, state: TaskState) -> None:
+    def update_task_state(session: Session, task_id: int, state: TaskState) -> None:
         """ Updates the state of a task.
 
         Args:
@@ -163,10 +163,11 @@ class Tasks():
             task.state = state.value
             session.commit()
         except IntegrityError as err:
+            session.rollback()
             raise TaskNotExistsError from err
 
     @staticmethod
-    def set_task_type(session: Session, task_id: int,
+    def update_task_type(session: Session, task_id: int,
                       task_type: TaskType, params: dict = None) -> None:
         """ Updates the type of a task and his parameters if needed.
 

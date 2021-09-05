@@ -49,16 +49,18 @@ class Comments():
             body (str): The comment body.
 
         Raises:
-            ValueError: Thrown when missing author.
+            ValueError: Thrown when missing repo_dir, issue_id, comment_id or author.
             CommentAlreadyExistError:
-                Thrown when already exists a comment with the same repo_dir, issue_id and comment_id.
+                Thrown when already exists a comment with the same repo_dir,
+                issue_id and comment_id.
 
         Returns:
             Comment: The comment.
         """
-        if not author:
+        if not repo_dir or issue_id is None or comment_id is None or not author:
             raise ValueError(
-                "You cannot create a comment without an author.")
+                "You cannot create an issue without a repo_dir, "
+                "an issue_id, a comment_id and an author.")
         try:
             comment: Comment = Comment(
                 repo_dir, issue_id, comment_id, author, body)
@@ -66,6 +68,7 @@ class Comments():
             session.commit()
             return comment
         except IntegrityError as err:
+            session.rollback()
             raise CommentAlreadyExistsError from err
 
     @staticmethod

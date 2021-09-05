@@ -50,16 +50,20 @@ class Outcomes():
             exec_time (float): The task execution time.
 
         Raises:
-            ValueError: Thrown when missing author.
+        Raises:
+            ValueError: Thrown when missing task_id, repo_dir,
+                model_type, outcome_data or exec_time.
             OutcomeAlreadyExistError:
                 Thrown when already exists a outcome with the same task_id.
 
         Returns:
             Outcome: The outcome.
         """
-        if not repo_dir or not model_type or not outcome_data or not exec_time:
+        if (task_id is None or not repo_dir or
+                not model_type or outcome_data is None or exec_time is None):
             raise ValueError(
-                "You cannot create a outcome without a repo_dir, a model_type, an outcome_data or an exec_time.")
+                "You cannot create an outcome without a task_id, a repo_dir, "
+                "a model_type, an outcome_data and an exec_time.")
         try:
             outcome_data_str: str = json.dumps(outcome_data)
             outcome: Outcome = Outcome(
@@ -68,6 +72,7 @@ class Outcomes():
             session.commit()
             return outcome
         except IntegrityError as err:
+            session.rollback()
             raise OutcomeAlreadyExistsError from err
 
     @staticmethod

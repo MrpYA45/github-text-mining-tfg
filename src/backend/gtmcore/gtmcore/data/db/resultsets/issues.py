@@ -53,16 +53,17 @@ class Issues():
             is_pull_request (bool): If true the issue is a pull request, otherwise false.
 
         Raises:
-            ValueError: Thrown when missing issue_id, repo_dir, author or title.
+            ValueError: Thrown when missing repo_dir, issue_id, author or title.
             IssueAlreadyExistError:
                 Thrown when already exists an issuewith the same issue_id and repo_dir.
 
         Returns:
             Issue: The issue.
         """
-        if not repo_dir or not issue_id or not title:
+        if not repo_dir or issue_id is None or not author or not title:
             raise ValueError(
-                "You cannot create an issue without a repo_dir, an issue_id, an author and a title.")
+                "You cannot create an issue without a repo_dir, "
+                "an issue_id, an author and a title.")
         try:
             labels_1: str = json.dumps(labels)
             issue: Issue = Issue(repo_dir, issue_id, author,
@@ -71,6 +72,7 @@ class Issues():
             session.commit()
             return issue
         except IntegrityError as err:
+            session.rollback()
             raise IssueAlreadyExistsError from err
 
     @staticmethod

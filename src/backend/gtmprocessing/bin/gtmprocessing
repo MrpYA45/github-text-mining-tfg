@@ -30,7 +30,7 @@ class GTMProcessing():
                 logger.debug(
                     "[GTMProcessing] NEW TASK FOUND. TASK_ID: %d | TASK_REPO: %s | CREATED AT: %s",
                     task.task_id, task.repo_dir, task.timestamp)
-                self.__db_manager.set_task_state(
+                self.__db_manager.update_task_state(
                     task.task_id, TaskState.IN_PROGRESS)
 
                 self.current_task = task
@@ -47,22 +47,22 @@ class GTMProcessing():
     def process_task(self, task: Task) -> None:
         try:
             if ProcessingManager(self.__db_manager).process_task(task):
-                self.__db_manager.set_task_state(task.task_id, TaskState.DONE)
+                self.__db_manager.update_task_state(task.task_id, TaskState.DONE)
 
         except InvalidNLPModel:
-            self.__db_manager.set_task_state(task.task_id, TaskState.FAILED)
+            self.__db_manager.update_task_state(task.task_id, TaskState.FAILED)
             logger.exception(
                 "[GTMProcessing] INVALID TASK. SET AS INVALID. REASON: INVALID NLP MODEL.")
 
         except RepositoryNotExistsError:
-            self.__db_manager.set_task_state(task.task_id, TaskState.FAILED)
+            self.__db_manager.update_task_state(task.task_id, TaskState.FAILED)
             logger.exception(
                 "[GTMProcessing] INVALID TASK. SET AS INVALID. REASON: INVALID REPOSITORY.")
 
         except Exception:  # pylint: disable=broad-except
             logger.exception(
                 "[GTMProcessing] INVALID TASK. SET AS INVALID. REASON: UNKNOWN EXCEPTION.")
-            self.__db_manager.set_task_state(task.task_id, TaskState.FAILED)
+            self.__db_manager.update_task_state(task.task_id, TaskState.FAILED)
 
         finally:
             self.current_task = None
