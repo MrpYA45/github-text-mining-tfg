@@ -3,6 +3,7 @@ from typing import List, Text
 from blingfire import text_to_sentences  # type: ignore
 from bs4 import BeautifulSoup  # type: ignore
 from markdown import markdown  # type: ignore
+from unidecode import unidecode  # type: ignore
 
 
 class DataUtils():
@@ -81,5 +82,5 @@ class DataUtils():
         Returns:
             str: A string with only ASCII characters.
         """
-        clean_str: str = dirty_string.encode('ascii', 'ignore').decode('ascii')
+        clean_str: str = unidecode(dirty_string, 'ignore')
         return " ".join(clean_str.split())
