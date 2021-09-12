@@ -52,6 +52,10 @@ class DataUtils():
         # Strip newlines, tabulations and trailing whitespaces.
         text_str = " ".join(text_str.split())
 
+        # If no content, then return empty array.
+        if len(text_str) < 1:
+            return []
+
         # Adding dot at the end if necessary.
         if text_str[-1] not in ["?", "!", "."]:
             text_str += "."
