@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with github-text-mining-tfg.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 .FormAddRepo {
     display: flex;
     flex-direction: column;
@@ -29,26 +30,23 @@
 .FormAddRepoInput {
     opacity: 0.8;
     border: none;
-    border-bottom: 2px solid var(--main-color);
-    background: rgba(255, 255, 255, 0.1);
+    border-bottom: 2px solid var(--primary);
+    background: #aa223c30;
     width: 100%;
     height: 4rem;
     text-align: center;
-    color: var(--main-color);
+    color: var(--primary);
     font-size: clamp(1rem, 3vw, 2rem);
-}
-input:-webkit-autofill {
-    box-shadow: 0 0 0 50px rgba(0, 0, 0, 0.9) inset;
-    -webkit-text-fill-color: var(--main-color);
 }
 ::placeholder {
     font-size: clamp(1rem, 3vw, 2rem);
+    color: var(--dark)
 }
 .FormAddRepoButton {
     transition: all 0.3s ease;
     margin: 2rem;
     border: 2px solid #fff;
-    background: var(--main-color);
+    background: var(--primary);
     padding: 1rem;
     width: 100%;
     font: inherit;

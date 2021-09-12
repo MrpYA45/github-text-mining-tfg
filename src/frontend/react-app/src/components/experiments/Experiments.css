@@ -16,59 +16,45 @@
  * You should have received a copy of the GNU General Public License
  * along with github-text-mining-tfg.  If not, see <http://www.gnu.org/licenses/>.
  */
-.Repo {
-    display: grid;
-    grid-template-areas:
-        "title repo_dir"
-        "desc desc"
-        "tags tags";
-    grid-template-rows: auto 20fr auto;
-    grid-template-columns: 2fr 1fr;
-    grid-gap: 0 0;
-    margin: 0.5rem auto;
-    background-color: var(--secondary);
-    padding: 1rem 3rem;
+
+.ExperimentSection {
+    background: var(--secondary);
     width: 80%;
-    text-align: justify;
-    color: var(--primary);
-    border: 2px solid var(--secondary);
+    margin: 0.5rem auto;
+    padding: 1rem 3rem;
 }
-.Repo:hover {
-    filter: grayscale(1);
-    border: 2px solid rgba(255, 255, 255, 0.9);
+
+.ExperimentSection > * {
+    color: var(--primary)
 }
-.RepoTitle {
-    grid-area: title;
-    text-transform: uppercase;
-    font-size: 1.5rem;
+.ExperimentParamsContainer {
+    display: flex;
+    align-items: stretch;
+    flex: wrap;
+}
+.ExperimentParam {
+    margin: 0.3rem;
+    background-color: var(--secondary);
+    padding: 0.4rem;
     color: var(--primary);
+    font-weight: 400;
+    border-radius: 1%;
+    border: 1px var(--primary) solid;
+}
+.ExperimentParam {
+    display: flex;
     min-width: 0;
     min-height: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-.RepoDir {
-    grid-area: repo_dir;
-    text-align: right;
-    color: var(--primary);
-    min-width: 0;
-    min-height: 0;
-}
-.RepoDesc {
-    grid-area: desc;
-    padding: 1rem 0;
-    color: var(--primary);
-    min-width: 0;
-    min-height: 0;
-}
-.RepoTags {
+.ExperimentTagsContainer {
+    padding: 0 0.4rem;
     display: flex;
     flex-wrap: wrap;
-    grid-area: tags;
-    padding: 2rem auto;
-    flex-wrap: wrap;
-    min-width: 0;
-    min-height: 0;
+    color: var(--primary);
 }
-.RepoTags span {
+.ExperimentTag {
     margin: 0.3rem;
     background-color: var(--primary);
     padding: 0.4rem;
@@ -78,20 +64,13 @@
     min-width: 0;
     min-height: 0;
 }
-.Repo * {
-    align-self: center;
-    margin: 0;
-}
+
 @media (max-width: 720px) {
-    .Repo {
-        grid-template-areas:
-            "title"
-            "repo_dir"
-            "desc"
-            "tags";
-        grid-template-columns: 1fr;
+    .ExperimentParamsContainer {
+        flex-direction: column;
     }
-    .RepoDir {
-        text-align: left;
+
+    .ExperimentParam {
+        flex-direction: column;
     }
 }

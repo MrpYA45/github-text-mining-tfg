@@ -1,0 +1,216 @@
+/**
+ * Copyright (C) 2021 Pablo Fernández Bravo
+ * 
+ * This file is part of github-text-mining-tfg.
+ * 
+ * github-text-mining-tfg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * github-text-mining-tfg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with github-text-mining-tfg.  If not, see <http://www.gnu.org/licenses/>.
+ */
+ .FormExperiment {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 98%;
+    height: 70%;
+    font-size: clamp(1rem, 1.5vw, 4rem);
+    background-color: var(--secondary);
+    padding: 2rem;
+    margin: 0;
+}
+.FormExperimentLabel {
+	margin: clamp(0.2rem, 1.5vw, 0.5rem);
+	width: 100%;
+	display: flex;
+}
+.FormExperimentLabel > * {
+	margin-top: 3%;
+}
+.FormExperimentSpan {
+	width: 30%;
+	text-align: left;
+	color: var(--primary);
+	font-size: clamp(1rem, 3vw, 2rem);
+}
+.FormExperimentInput {
+    opacity: 0.8;
+    border: none;
+    border-bottom: 2px solid var(--primary);
+    background: #aa223c30;
+    width: 60%;
+    height: 4rem;
+    color: var(--primary);
+    font-size: 1.2rem;
+    padding: 0.2rem 0.5rem;
+}
+input:-webkit-autofill,
+textarea:-webkit-autofill {
+    box-shadow: 0 0 0 50px rgba(170, 34, 59, 0.50) inset;
+	-webkit-text-fill-color: var(--primary);
+}
+::placeholder {
+    font-size: 1.2rem;
+}
+.FormExperimentDropdown {
+	color: var(--primary);
+	background: #aa223c30;
+}
+.FormExperimentDropdown:disabled {
+	cursor: not-allowed;
+	background: var(--orange);
+}
+.FormExperimentDropdown:hover,
+.FormExperimentDropdown:focus,
+.FormExperimentDropdown:active {
+	border: 2px solid rgba(255, 255, 255, 0.9);
+}
+.FormExperimentDropdownOption {
+	opacity: 0.7;
+	background-color: var(--secondary);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	color: var(--primary);
+}
+.FormExperimentTextArea {
+	border: 2px solid var(--primary);
+	resize: none;
+}
+.FormExperimentSlider {
+	transition: opacity .2s;
+	outline: none;
+	background: var(--primary);
+	width: 50%;
+	height: 10px;
+	-webkit-appearance: none;
+	-webkit-transition: .2s;
+}
+.FormExperimentSlider:hover {
+	opacity: 1;
+}
+.FormExperimentSlider::-webkit-slider-thumb {
+	border-radius: 50%;
+	background: #FFF;
+	cursor: pointer;
+	width: 25px;
+	height: 25px;
+	-webkit-appearance: none;
+	appearance: none;
+}
+.FormExperimentSlider::-moz-range-thumb {
+	border-radius: 50%;
+	background: #FFF;
+	cursor: pointer;
+	width: 25px;
+	height: 25px;
+}
+.FormExperimentOutput {
+	width: 5%;
+	color: var(--primary);
+	font-size: clamp(1rem, 3vw, 2rem);
+}
+.FormExperimentButton {
+	transition: all 0.3s ease;
+	margin: 2rem;
+	border: 2px solid #fff;
+	background: var(--primary);
+	cursor: pointer;
+	padding: 1rem;
+	width: 100%;
+	font: inherit;
+	font-size: clamp(1rem, 3vw, 2rem);
+	font-weight: 300;
+}
+.FormExperimentButton:hover,
+.FormExperimentButton:focus,
+.FormExperimentButton:active {
+	color: rgba(255, 255, 255, 0.9);
+}
+.FormExperimentSwitch {
+	display: inline-block;
+	position: relative;
+	width: 61%;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.FormExperimentSwitch-checkbox {
+	position: absolute;
+	opacity: 0;
+	pointer-events: none;
+}
+.FormExperimentSwitch-label {
+	display: block;
+	border: 2px solid #FFFFFF;
+	border-radius: 5px;
+	cursor: pointer;
+	overflow: hidden;
+}
+.FormExperimentSwitch-inner {
+	display: block;
+	transition: margin 0.35s ease-in 0s;
+	margin-left: -100%;
+	width: 200%;
+}
+.FormExperimentSwitch-inner:before, .FormExperimentSwitch-inner:after {
+	box-sizing: border-box;
+	display: block;
+	float: left;
+	padding: 0;
+	width: 50%;
+	height: 41px;
+	line-height: 41px;
+	color: white;
+	font-size: 20px;
+	font-weight: bold;
+}
+.FormExperimentSwitch-inner:before {
+	background-color: #EEEEEE;
+	color: #AA223C;
+	content: "ACTIVADO";
+	text-align: center;
+}
+.FormExperimentSwitch-inner:after {
+	background-color: #EEEEEE;
+	text-align: center;
+	color: #999999;
+	content: "DESACTIVADO";
+}
+.FormExperimentSwitch-switch {
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 81%;
+	bottom: 0;
+	transition: all 0.35s ease-in 0s;
+	margin: -1%;
+	border: 2px solid #FFFFFF;
+	border-radius: 5px;
+	background: #A1A1A1;
+	width: 20%;
+}
+.FormExperimentSwitch-checkbox:checked + .FormExperimentSwitch-label .FormExperimentSwitch-inner {
+	margin-left: 0;
+}
+.FormExperimentSwitch-checkbox:checked + .FormExperimentSwitch-label .FormExperimentSwitch-switch {
+	right: 0px;
+	background-color: #AA223C;
+}
+@media (max-width: 600px) {
+	.FormExperimentLabel {
+		flex-direction: column;
+	}
+	.FormExperimentLabel > * {
+		width: 100%;
+	}
+}

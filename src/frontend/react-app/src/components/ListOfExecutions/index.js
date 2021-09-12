@@ -16,12 +16,13 @@
 // along with github-text-mining-tfg.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useEffect, useState } from "react";
+import getOutcomes from "../../services/getTasks"
 
-export default function ListOfExecutions() {
+export default function ListOfOutcomes() {
     const [tasks, setTasks] = useState({});
 
     useEffect(function () {
-        setInterval(() => getRepoTasks().then((task) => setTasks(tasks)), 1000);
+        setInterval(() => getOutcomes().then((task) => setTasks(tasks)), 1000);
     }, {});
 
     return <article>{}</article>;

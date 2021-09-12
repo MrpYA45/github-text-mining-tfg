@@ -16,14 +16,11 @@
 // along with github-text-mining-tfg.  If not, see <http://www.gnu.org/licenses/>.
 
 import { API_URL } from "./settings";
+import fetchData from "./fetchData"
 
-const extractReposInfo = (response) => {
-    const { eqlts = [] } = response;
-    if (Array.isArray(eqlts)) {
-        const repos = eqlts.map((repo) => {
-            const { repo_dir, title, description, labels } = repo;
-            return { title, repo_dir, description, labels };
-        });
+const extractRepos = (response) => {
+    const { eqlts: repos = [] } = response;
+    if (Array.isArray(repos)) {
         return repos;
     }
     return [];
@@ -31,8 +28,5 @@ const extractReposInfo = (response) => {
 
 export default function getRepos() {
     const apiURL = `${API_URL}/repos/`;
-    return fetch(apiURL)
-        .then((res) => res.json())
-        .then(extractReposInfo)
-        .catch((err) => console.error(err));
+    return fetchData(apiURL, extractRepos)
 }

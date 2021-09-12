@@ -15,11 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with github-text-mining-tfg.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, {useRef} from "react";
+import React from "react";
 import { useLocation } from "wouter";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import { API_URL } from "../../services/settings";
+import { API_URL } from "../../../services/settings";
 import "./FormAddRepo.css";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -33,10 +33,10 @@ export default function FormAddRepo() {
         const res = fetch(
             apiURL,
             { method: "POST", headers: { "Content-Type": "application/json"}, body: JSON.stringify(formData) })
-/*             .then(res => {
+            .then(res => {
                 setLocation(`/user/${formData["gh_user"]}/repo/${formData["gh_repo"]}`)
                 //if (res.ok) setLocation(`/user/${formData["gh_user"]}/repo/${formData["gh_repo"]}`)
-            }) */
+            })
         toast.promise(
             res,
             {
@@ -88,7 +88,7 @@ export default function FormAddRepo() {
                 <button
                     type="submit"
                     form="FormAddRepo"
-                    className="FormAddRepoButton"
+                    className="AppButton"
                     formMethod="post"
                     formAction={apiURL}
                 >

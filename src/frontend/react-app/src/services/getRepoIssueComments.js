@@ -18,15 +18,15 @@
 import { API_URL } from "./settings";
 import fetchData from "./fetchData"
 
-const extractRepoInfo = (response) => {
-    const { eqlts: repo = {} } = response;
-    if (repo.constructor === Object) {
-        return repo
+const extractRepoIssueComments = (response) => {
+    const { eqlts: comments = [] } = response;
+    if (Array.isArray(comments)) {
+        return comments;
     }
-    return {};
+    return [];
 };
 
-export default function getRepoInfo(gh_user, gh_repo) {
-    const apiURL = `${API_URL}/user/${gh_user}/repo/${gh_repo}`;
-    return fetchData(apiURL, extractRepoInfo)
+export default function getComments(gh_user, gh_repo, issue_id) {
+    let apiURL = `${API_URL}/user/${gh_user}/repo/${gh_repo}/issue/${issue_id}/comments`;
+    return fetchData(apiURL, extractRepoIssueComments)
 }

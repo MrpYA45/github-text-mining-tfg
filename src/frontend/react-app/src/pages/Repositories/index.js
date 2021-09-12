@@ -15,18 +15,24 @@
 // You should have received a copy of the GNU General Public License
 // along with github-text-mining-tfg.  If not, see <http://www.gnu.org/licenses/>.
 
-import { API_URL } from "./settings";
-import fetchData from "./fetchData"
+import React from "react";
+import ListOfRepos from "../../components/ListOfRepos";
+import FormAddRepo from "../../components/forms/FormAddRepo";
+import "./Repositories.css"
 
-const extractRepoInfo = (response) => {
-    const { eqlts: repo = {} } = response;
-    if (repo.constructor === Object) {
-        return repo
-    }
-    return {};
-};
-
-export default function getRepoInfo(gh_user, gh_repo) {
-    const apiURL = `${API_URL}/user/${gh_user}/repo/${gh_repo}`;
-    return fetchData(apiURL, extractRepoInfo)
+export default function Home() {
+    return (
+        <>
+            <main>
+                <section className="AppListRepos AppSection">
+                    <h2>Lista de Repositorios Disponibles</h2>
+                    <ListOfRepos />
+                </section>
+                <section className="AppAddRepoForm AppSection">
+                    <h2>Añade un nuevo repositorio</h2>
+                    <FormAddRepo />
+                </section>
+            </main>
+        </>
+    );
 }

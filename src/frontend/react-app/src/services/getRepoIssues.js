@@ -16,30 +16,11 @@
 // along with github-text-mining-tfg.  If not, see <http://www.gnu.org/licenses/>.
 
 import { API_URL } from "./settings";
+import fetchData from "./fetchData"
 
-const extractRepoIssuesInfo = (response) => {
-    const { eqlts = [] } = response;
-    if (Array.isArray(eqlts)) {
-        const issues = eqlts.map((issue) => {
-            const {
-                repo_dir,
-                issue_id,
-                author,
-                title,
-                description,
-                labels,
-                is_pull_request,
-            } = issue;
-            return {
-                repo_dir,
-                issue_id,
-                author,
-                title,
-                description,
-                labels,
-                is_pull_request,
-            };
-        });
+const extractRepoIssues = (response) => {
+    const { eqlts: issues = [] } = response;
+    if (Array.isArray(issues)) {
         return issues;
     }
     return [];
@@ -47,8 +28,5 @@ const extractRepoIssuesInfo = (response) => {
 
 export default function getRepoIssues(gh_user, gh_repo) {
     const apiURL = `${API_URL}/user/${gh_user}/repo/${gh_repo}/issues`;
-    return fetch(apiURL)
-        .then((res) => res.json())
-        .then(extractRepoIssuesInfo)
-        .catch((err) => console.error(err));
+    return fetchData(apiURL, extractRepoIssues)
 }

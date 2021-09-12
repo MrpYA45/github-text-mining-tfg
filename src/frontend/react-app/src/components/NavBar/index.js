@@ -1,32 +1,38 @@
 // Copyright (C) 2021 Pablo Fernández Bravo
-//
+// 
 // This file is part of github-text-mining-tfg.
-//
+// 
 // github-text-mining-tfg is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-//
+// 
 // github-text-mining-tfg is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-//
+// 
 // You should have received a copy of the GNU General Public License
 // along with github-text-mining-tfg.  If not, see <http://www.gnu.org/licenses/>.
 
-import { API_URL } from "./settings";
-import fetchData from "./fetchData"
+import React from "react";
+import { Link } from "wouter";
+import "./NavBar.css";
 
-const extractRepoInfo = (response) => {
-    const { eqlts: repo = {} } = response;
-    if (repo.constructor === Object) {
-        return repo
-    }
-    return {};
-};
-
-export default function getRepoInfo(gh_user, gh_repo) {
-    const apiURL = `${API_URL}/user/${gh_user}/repo/${gh_repo}`;
-    return fetchData(apiURL, extractRepoInfo)
+export default function NavBar() {
+    return (
+        <nav className="NavBar">
+            <ul>
+                <li className="NavItem">
+                    <Link href="/" className="NavLink">Inicio</Link>
+                </li>
+                <li className="NavItem">
+                    <Link href="/repos" className="NavLink">Repositorios</Link>
+                </li>
+                <li className="NavItem">
+                    <Link href="/about" className="NavLink">Sobre el proyecto</Link>
+                </li>
+            </ul>
+        </nav>
+    );
 }

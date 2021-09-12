@@ -18,15 +18,15 @@
 import { API_URL } from "./settings";
 import fetchData from "./fetchData"
 
-const extractRepoInfo = (response) => {
-    const { eqlts: repo = {} } = response;
-    if (repo.constructor === Object) {
-        return repo
+const extractIssueInfo = (response) => {
+    const { eqlts: issue = {} } = response;
+    if (issue.constructor === Object) {
+        return issue
     }
     return {};
 };
 
-export default function getRepoInfo(gh_user, gh_repo) {
-    const apiURL = `${API_URL}/user/${gh_user}/repo/${gh_repo}`;
-    return fetchData(apiURL, extractRepoInfo)
+export default function getIssueInfo(gh_user, gh_repo, issue_id) {
+    const apiURL = `${API_URL}/user/${gh_user}/repo/${gh_repo}/issue/${issue_id}`;
+    return fetchData(apiURL, extractIssueInfo)
 }

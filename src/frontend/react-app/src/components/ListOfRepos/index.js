@@ -17,14 +17,18 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import Repo from "../Repo";
+import Loading from "../Loading";
 import getRepos from "../../services/getRepos";
 import { REFRESH_DATA_INTERVAL } from "../../services/settings";
+import checkIsEmptyArrayOrDict from "../../services/checkEmptyArrayOrDict"
 import "./ListOfRepos.css";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 
 export default function ListOfRepos() {
     const [loading, setLoading] = useState(false);
     const [repos, setRepos] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [searchFilterAttributes] = useState(["repo_dir", "labels"]);
 
     const interval = useRef();
 
@@ -40,36 +44,57 @@ export default function ListOfRepos() {
     const updateRepos = () => {
         getRepos()
         .then((data) => {
-            if (data != null) {
+            if (!checkIsEmptyArrayOrDict(data)) {
                 setRepos(data);
+                setLoading(false);
             }
-            setLoading(false);
         })
         .catch((err) => console.error(err));
     }
 
-    if (loading)
-        return (
-            <article className="loader">
-                <div className="spinner"></div>
-                <span>Loading</span>
-            </article>
-        );
+    const applySearchFilter = () => {
+        return repos.filter((repo) => {
+            return searchFilterAttributes.some((key) => {
+                const value = Array.isArray(repo[key]) ? repo[key].join(" ") : repo[key];
+                return (
+                    value
+                        .toString()
+                        .toLowerCase()
+                        .indexOf(searchQuery.toLowerCase()) > -1
+                );
+            });
+        });
+    }
+
+    if (loading) return <Loading />
 
     if (!repos.length)
         return (
-            <article className="no-found">
-                <div className="no-found-icon">😢</div>
+            <article className="AppNoFound">
+                <div className="AppNoFoundIcon">😢</div>
                 <span>
-                    No repositories have been found.
-                    <AnchorLink href="#FormAddRepo">Try adding one</AnchorLink>
+                    No se han encontrado repositorios descargados.
+                    <AnchorLink href="#FormAddRepo">¡Prueba añadiendo uno!</AnchorLink>
                 </span>
             </article>
         );
 
     return (
-        <>
-            {repos.map(({ title, repo_dir, description, labels }) => (
+        <section className="ListOfRepos">
+            <form className="ListOfReposSearchForm">
+                <label htmlFor="ListOfReposSearchForm">
+                    <input
+                        type="search"
+                        name="ListOfReposSearchFormInput"
+                        className="ListOfReposSearchFormInput"
+                        placeholder="Prueba a buscar entre los repositorios disponibles..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                </label>
+            </form>
+
+            {applySearchFilter(repos).map(({ title, repo_dir, description, labels }) => (
                 <Repo
                     key={repo_dir}
                     title={title}
@@ -78,6 +103,6 @@ export default function ListOfRepos() {
                     labels={labels}
                 />
             ))}
-        </>
+        </section>
     );
 }

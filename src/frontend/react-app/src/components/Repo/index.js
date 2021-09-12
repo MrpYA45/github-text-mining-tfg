@@ -16,12 +16,17 @@
 // along with github-text-mining-tfg.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
+import { useLocation } from "wouter";
 import "./Repo.css";
-import { Link, Route } from "wouter";
 
-export default function Repo({ title, repo_dir, description, labels }) {
+export default function Repo({ title, repo_dir = "", description = "", labels =""}) {
+
+  const [, setLocation] = useLocation();
+
+  const [gh_user, gh_repo] = repo_dir.split('/');
+
     return (
-        <article className="Repo">
+        <article className="Repo" onClick={() => setLocation(`/user/${gh_user}/repo/${gh_repo}`)}>
             <h3 className="RepoTitle">{title}</h3>
             <p className="RepoDir">{repo_dir}</p>
             <p className="RepoDesc">{description}</p>
@@ -30,15 +35,6 @@ export default function Repo({ title, repo_dir, description, labels }) {
                     <span key={label}>#{label}</span>
                 ))}
             </div>
-            {/*
-          <div className="Gif-buttons">
-            <Fav id={id}></Fav>
-          </div>
-          <Link to={`/gif/${id}`} className='Gif-link'>
-            <h4>{title}</h4>
-            <img loading='lazy' alt={title} src={url} />
-          </Link>
-        */}
         </article>
     );
 }
