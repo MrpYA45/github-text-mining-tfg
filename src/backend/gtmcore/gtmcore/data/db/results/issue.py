@@ -22,7 +22,7 @@ import json
 from sqlalchemy.sql.schema import (Column, ForeignKey,  # type: ignore
                                    MetaData, Table)
 from sqlalchemy.sql.sqltypes import (JSON, Boolean, Integer,  # type: ignore
-                                     String, Text)
+                                     String)
 
 from .resultbase import ResultBase
 
@@ -77,7 +77,7 @@ class Issue(ResultBase):
             Column("issue_id", Integer, primary_key=True),
             Column("author", String(39), nullable=False),
             Column("title", String(255), nullable=False),
-            Column("description", Text, nullable=False),
+            Column("description", String(65536), nullable=False),
             Column("labels", JSON),
             Column("is_pull_request", Boolean, nullable=False)
         )
