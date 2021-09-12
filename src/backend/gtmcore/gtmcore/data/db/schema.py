@@ -39,7 +39,9 @@ class Schema():
         self.__declarative_base.metadata.create_all(self.__engine)
 
     def new_session(self) -> Session:
-        return self.__session_maker()
+        session: Session = self.__session_maker()
+        session.expire_on_commit = False
+        return session
 
     def dispose_engine(self) -> None:
         self.__engine.dispose()
