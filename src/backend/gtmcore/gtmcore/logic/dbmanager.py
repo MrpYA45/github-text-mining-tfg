@@ -221,7 +221,7 @@ class DBManager():
             task_id (int): The task id.
 
         Raises:
-            ValueError: Thrown when missing repo_dir.
+            ValueError: Thrown when missing task_id.
 
         Returns:
             Task: The task.
