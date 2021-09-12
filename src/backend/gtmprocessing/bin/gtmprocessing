@@ -10,7 +10,7 @@ from gtmcore.data.db.err.repositorynotexistserror import \
 from gtmcore.data.db.err.tasknotexistserror import TaskNotExistsError
 from gtmcore.data.db.results.task import Task
 from gtmcore.logic.dbmanager import DBManager
-from gtmprocessing.err.invalidnlpmodel import InvalidNLPModel
+from gtmprocessing.data.err.invalidnlpmodel import InvalidNLPModel
 from gtmprocessing.logic.processingmanager import ProcessingManager
 
 

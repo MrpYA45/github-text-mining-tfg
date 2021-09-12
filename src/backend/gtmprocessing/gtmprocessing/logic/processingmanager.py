@@ -22,7 +22,7 @@ from gtmcore.data.db.err.repositorynotexistserror import RepositoryNotExistsErro
 
 from gtmcore.data.db.results import Task
 from gtmcore.logic.dbmanager import DBManager
-from gtmprocessing.err.invalidnlpmodel import InvalidNLPModel
+from gtmprocessing.data.err.invalidnlpmodel import InvalidNLPModel
 from gtmprocessing.logic.models import (SentimentsAnalysis, Summarization,
                                         ZeroShotClassifier)
 from gtmprocessing.logic.models.basemodel import BaseModel
