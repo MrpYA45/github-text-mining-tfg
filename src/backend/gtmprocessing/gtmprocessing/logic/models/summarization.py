@@ -65,11 +65,13 @@ class Summarization(BaseModel):
 
         summarized_inputs: str = ""
 
-        for paragraph in self._inputs:
+        for text in self._inputs:
+            max_length = len(text) if self.__max_length > len(text) else self.__max_length
+            min_length = 0 if self.__min_length > len(text) else self.__min_length
             summarized_input = self.__pipeline(
-                paragraph,
-                max_length=self.__max_length,
-                min_length=self.__min_length,
+                text,
+                max_length=max_length,
+                min_length=min_length,
                 do_sample=False
             )[0].get("summary_text", "")
             summarized_inputs += (" " + summarized_input)
