@@ -39,30 +39,28 @@ class SentimentsAnalysis(BaseModel):
     def set_params(self, params: Dict[str, Any]) -> None:
         super().set_params(params)
 
-        self.__author = str(params.get("author", None))
+        self.__author = str(params.get("author", ""))
         self.__with_comments = bool(params.get("with_comments", False))
 
     def preprocess(self) -> None:
 
         inputs: List[str] = []
 
-        if self._issue_id > 0:
-            issue: Issue = self.__dbmanager.get_issue(
-                self._repo_dir, self._issue_id)
+        issue: Issue = self.__dbmanager.get_issue(
+            self._repo_dir, self._issue_id)
 
-            if self.__author == issue.author:
-                inputs = [issue.description]
-
-        else:
-            issues: List[Issue] = self.__dbmanager.get_issues(
-                self._repo_dir, self.__author)
-
-            inputs = [issue.description for issue in issues]
+        if self.__author == "" or self.__author == issue.author:
+            inputs = [issue.title, issue.description]
 
         if self.__with_comments:
             comments: List[Comment] = self.__dbmanager.get_comments(
                 self._repo_dir, self._issue_id, self.__author)
-            inputs += [comment.body for comment in comments]
+            if self.__author == "":
+                inputs += [comment.body for comment in comments]
+            else:
+                for comment in comments:
+                    if comment.author == self.__author:
+                        inputs.append(comment.body)
 
         self._inputs = self.chunk_input(inputs, self.__pipeline.tokenizer)
 
