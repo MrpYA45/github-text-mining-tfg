@@ -23,6 +23,8 @@ from sqlalchemy.sql.schema import (Column,  # type: ignore
                                    ForeignKeyConstraint, MetaData, Table)
 from sqlalchemy.sql.sqltypes import Integer, String  # type: ignore
 
+from sqlalchemy.dialects.mysql import LONGTEXT
+
 from .resultbase import ResultBase
 
 
@@ -67,7 +69,7 @@ class Comment(ResultBase):
             Column("issue_id", Integer, primary_key=True),
             Column("comment_id", Integer, primary_key=True),
             Column("author", String(39), nullable=False),
-            Column("body", String(65536), nullable=False),
+            Column("body", LONGTEXT, nullable=False),
             ForeignKeyConstraint(["repo_dir", "issue_id"],
                                  ["issues.repo_dir", "issues.issue_id"],
                                  ondelete="CASCADE")

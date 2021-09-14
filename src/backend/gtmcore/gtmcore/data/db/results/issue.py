@@ -24,6 +24,8 @@ from sqlalchemy.sql.schema import (Column, ForeignKey,  # type: ignore
 from sqlalchemy.sql.sqltypes import (JSON, Boolean, Integer,  # type: ignore
                                      String)
 
+from sqlalchemy.dialects.mysql import LONGTEXT
+
 from .resultbase import ResultBase
 
 
@@ -77,7 +79,7 @@ class Issue(ResultBase):
             Column("issue_id", Integer, primary_key=True),
             Column("author", String(39), nullable=False),
             Column("title", String(255), nullable=False),
-            Column("description", String(65536), nullable=False),
+            Column("description", LONGTEXT, nullable=False),
             Column("labels", JSON),
             Column("is_pull_request", Boolean, nullable=False)
         )
