@@ -24,11 +24,11 @@ docker-compose -f docker/config/docker-compose.yml build
 To run the application just use:
 
 ```
-docker-compose -f docker\config\docker-compose.yml up -d
+docker-compose -f docker/config/docker-compose.yml up -d
 ```
 To stop the application and remove the containers use:
 ```
-docker-compose -f docker\config\docker-compose.yml rm -sfv
+docker-compose -f docker/config/docker-compose.yml rm -sfv
 ```
 
 ## Authors and Acknowledgement
