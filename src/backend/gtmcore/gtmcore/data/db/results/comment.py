@@ -19,11 +19,10 @@
 """
 import json
 
-from sqlalchemy.sql.schema import (Column,  # type: ignore
-                                   ForeignKeyConstraint, MetaData, Table)
+from sqlalchemy.dialects.mysql import LONGTEXT  # type: ignore
+from sqlalchemy.sql.schema import Column  # type: ignore
+from sqlalchemy.sql.schema import ForeignKeyConstraint, MetaData, Table
 from sqlalchemy.sql.sqltypes import Integer, String  # type: ignore
-
-from sqlalchemy.dialects.mysql import LONGTEXT
 
 from .resultbase import ResultBase
 
