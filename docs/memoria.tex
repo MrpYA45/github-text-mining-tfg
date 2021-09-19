@@ -17,7 +17,7 @@
 % Links
 \PassOptionsToPackage{hyphens}{url}\usepackage[colorlinks]{hyperref}
 \hypersetup{
-	allcolors = {red}
+	allcolors = {blue}
 }
 
 % Ecuaciones
@@ -359,10 +359,21 @@
 \newcommand{\nombre}{Pablo Fernández Bravo} %%% cambio de comando
 
 % Datos de portada
-\title{título del TFG}
+\title{GTM - Plataforma de experimentación de Text Mining sobre repositorios de GitHub}
 \author{\nombre}
 \tutor{Dr. Carlos López Nozal y \\ Dr. Jesús María Alonso Abad}
 \date{\today}
+
+%in the preamble
+%--------------------------------
+  \usepackage[
+    backend=biber,
+    style=numeric,
+  ]{biblatex}
+  \usepackage{csquotes}
+
+ \addbibresource{bibliografia.bib}
+%--------------------------------
 
 \begin{document}
 
@@ -382,7 +393,7 @@
 
 \noindent Expone:
 
-\noindent Que el alumno D. \nombre, con DNI 71364831V, ha realizado el Trabajo final de Grado en Ingeniería Informática titulado título de TFG. 
+\noindent Que el alumno D. \nombre, con DNI 71364831-V, ha realizado el Trabajo final de Grado en Ingeniería Informática titulado <<GTM - Plataforma de experimentación de Text Mining sobre repositorios de GitHub>>. 
 
 \noindent Y que dicho trabajo ha sido realizado por el alumno bajo la dirección del que suscribe, en virtud de lo cual se autoriza su presentación y defensa.
 
@@ -426,12 +437,16 @@ D. Jesús María Alonso Abad
 % Abstract en castellano
 \renewcommand*\abstractname{Resumen}
 \begin{abstract}
-En este primer apartado se hace una \textbf{breve} presentación del tema que se aborda en el proyecto.
+Los sistemas de seguimiento de incidencias se han convertido en una herramienta esencial dentro de la gestión de un proyecto software. La naturaleza de este tipo de proyectos requiere de un importante mecanismo que se encargue de supervisar el progreso a lo largo de la resolución de los problemas. Este proceso de alto componente social requiere del establecimiento de un ecosistema que promueva la comunicación de conocimientos e ideas entre los miembros del equipo.
+
+Este ecosistema presenta una oportunidad para la aplicación de tecnologías de \textbf{procesamiento del lenguaje natural (PLN)}, que a través de sus diferentes modelos proveen de mecanismos que tienen como objetivo el análisis y comprensión las interacciones humanas con la tecnología. Estos modelos pueden colaborar en tareas como la clasificación de las incidencias, simplificando la comprensión de su finalidad y prioridad, la obtención de un extracto con aquella información más relevante dentro un reporte, o el análisis de la visión de los participantes con respecto una incidencia y la evolución de su resolución.
+
+El objetivo de este proyecto consiste en el desarrollo de una plataforma que permita a los usuarios experimentar con la aplicación de las técnicas de PLN anteriormente mencionadas a la gestión de tareas de aquellos proyectos de código abierto desarrollados a través de la plataforma \emph{GitHub}. Para simplificar el proceso al máximo la plataforma será la encargada de extraer, almacenar, preprocesar, aplicar los modelos a la información recolectada y mostrar los resultados obtenidos al usuario. Este alto nivel de automatización permitiendo al usuario centrarse en ajustar los parámetros para el lanzamiento de las distintas tareas y estudiar sus resultados.
 \end{abstract}
 
 \renewcommand*\abstractname{Descriptores}
 \begin{abstract}
-minería de textos, microservicios, github, python, pygithub
+\emph{Análisis de Sentimientos}, aprendizaje supervisado, API REST, aplicación web, arquitectura de microservicios, \emph{código abierto}, experimentación, gestión de proyectos, inteligencia artificial, \emph{minería de textos}, Procesamiento del Lenguaje Natural, \emph{Resúmenes Abstractivos}, \emph{Clasificación Zero-Shot}, \emph{NLP}
 \end{abstract}
 
 \clearpage
@@ -439,12 +454,16 @@ minería de textos, microservicios, github, python, pygithub
 % Abstract en inglés
 \renewcommand*\abstractname{Abstract}
 \begin{abstract}
-A \textbf{brief} presentation of the topic addressed in the project.
+Issue tracking systems have become an essential tool in software project management. The nature of this type of project requires an important mechanism to monitor progress throughout the resolution of the issues. This highly social process requires the establishment of an ecosystem that promotes the communication of knowledge and ideas between team members.
+
+This ecosystem presents an opportunity for the application of \textbf{natural language processing (NLP)} technologies, which through their different models provide mechanisms that aim to analyze and understand human interactions with technology. These models can assist in tasks such as issue classification, simplifying the understanding of their purpose and priority, obtaining an extract with the most relevant information within a report, or analyzing the vision of the participants with respect to an incident and the evolution of its resolution.
+
+The objective of this project is to develop a platform that allows users to experiment with the application of the NLP techniques mentioned above to the task management of those open source projects developed through the \emph{GitHub} platform. To simplify the process as much as possible, the platform will be in charge of extracting, storing, preprocessing, applying the models to the gathered information and displaying the achieved results to the user. This high level of automation allows the user to focus on adjusting the parameters for running the different tasks and studying their results.
 \end{abstract}
 
 \renewcommand*\abstractname{Keywords}
 \begin{abstract}
-text mining, microservices, github, python, pygithub
+Sentiment Analysis, supervised learning, REST API, web application, microservices architecture, open source, experimentation, project management, artificial intelligence, text mining, Natural Language Processing, Summarization, Zero-Shot Classification, NLP
 \end{abstract}
 
 \clearpage
@@ -458,8 +477,8 @@ text mining, microservices, github, python, pygithub
 
 \clearpage
 
-\listoftables
-\clearpage
+% \listoftables
+% \clearpage
 
 \mainmatter
 \include{./tex/1_Introduccion}
@@ -470,8 +489,7 @@ text mining, microservices, github, python, pygithub
 \include{./tex/6_Trabajos_relacionados}
 \include{./tex/7_Conclusiones_Lineas_de_trabajo_futuras}
 
-
-\bibliographystyle{plain}
-\bibliography{bibliografia}
+%Where the bibliography will be printed
+  \printbibliography
 
 \end{document}

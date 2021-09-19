@@ -17,7 +17,7 @@
 % Links
 \PassOptionsToPackage{hyphens}{url}\usepackage[colorlinks]{hyperref}
 \hypersetup{
-	allcolors = {red}
+	allcolors = {blue}
 }
 
 % Ecuaciones
@@ -349,12 +349,27 @@
   }
 \makeatother
 
+\newcommand{\nombre}{Pablo Fernández Bravo} %%% cambio de comando
 
 % Datos de portada
-\title{título del TFG \\Documentación Técnica}
-\author{nombre alumno}
-\tutor{nombre tutor}
+\title{GTM - Plataforma de experimentación de Text Mining sobre repositorios de GitHub \\Documentación Técnica}
+\author{\nombre}
+\tutor{Dr. Carlos López Nozal y \\ Dr. Jesús María Alonso Abad}
 \date{\today}
+
+%in the preamble
+%--------------------------------
+  \usepackage[
+    backend=biber,
+    style=numeric,
+  ]{biblatex}
+  \usepackage{csquotes}
+  \usepackage{multirow}
+  \usepackage{tablefootnote}
+  \usepackage{numprint}
+
+ \addbibresource{bibliografia.bib}
+%--------------------------------
 
 \begin{document}
 
@@ -399,7 +414,7 @@
 \include{./tex/E_Manual_usuario}
 
 
-\bibliographystyle{plain}
-\bibliography{bibliografiaAnexos}
+%Where the bibliography will be printed
+  \printbibliography
 
 \end{document}

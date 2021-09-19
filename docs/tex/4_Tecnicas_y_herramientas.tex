@@ -1,6 +1,110 @@
-\capitulo{4}{Técnicas y herramientas}
+\capitulo{4}{Técnicas y herramientas} \label{chapter:tecnicas_y_herramientas}
 
-Esta parte de la memoria tiene como objetivo presentar las técnicas metodológicas y las herramientas de desarrollo que se han utilizado para llevar a cabo el proyecto. Si se han estudiado diferentes alternativas de metodologías, herramientas, bibliotecas se puede hacer un resumen de los aspectos más destacados de cada alternativa, incluyendo comparativas entre las distintas opciones y una justificación de las elecciones realizadas. 
-No se pretende que este apartado se convierta en un capítulo de un libro dedicado a cada una de las alternativas, sino comentar los aspectos más destacados de cada opción, con un repaso somero a los fundamentos esenciales y referencias bibliográficas para que el lector pueda ampliar su conocimiento sobre el tema.
+Este capítulo tiene la finalidad de resaltar aquellas tecnologías, implementaciones de software de terceros y otro tipo de herramientas más relevantes que han sido utilizadas a lo largo del desarrollo del proyecto. Con el objetivo de organizar las tecnologías implicadas, estas han sido organizadas en torno a tres secciones:
+
+\vspace{-0.35cm}
+\begin{itemize} [\textbullet]
+	\item \hyperref[sec:tecnologias]{\textbf{Tecnologías}}. Esta sección pretende reflejar información relevante acerca de los diferentes lenguajes y tecnologías que han sido utilizadas a lo largo del desarrollo.
+	\item \hyperref[sec:dependencias]{\textbf{Dependencias}}. En esta sección se pretende indicar aquellos complementos más relevantes utilizados para ampliar las funcionalidades de \emph{Python} y \emph{NodeJS}.
+	\item \hyperref[sec:herramientas]{\textbf{Herramientas}}. Esta sección recopila las herramientas utilizadas para el desarrollo y documentación del proyecto.
+\end{itemize}
+
+\section{Tecnologías} \label{sec:tecnologias}
+
+\subsection{Python}
+
+\textbf{Python} \cite{lang:python} es un lenguaje de programación de código abierto, interpretado, y orientado a objetos con soporte de programación estructurada por procedimientos y programación funcional administrado por la Python Software Foundation \cite{tech:python_software_fundation}. Entre sus características más destacadas se encuentran la posibilidad de incorporar módulos que extiendan las funcionalidades del lenguaje de manera rápida y sencilla a través de su gestor de paquetes “PIP”, el tipado dinámico, la gestión automática de la memoria a través de su recolector de basura \cite{wiki:garbage_collection}, la amplia cobertura de funcionalidades que ofrece su biblioteca estándar y el alto grado de legibilidad que provee por medio de un estricto conjunto de reglas de indentación \cite{tech:advanced_python}.
+
+El uso de Python en nuestro proyecto resultará de vital importancia ya que es el lenguaje escogido como base para el desarrollo e implementación de los \hyperref[sec:microservicios]{microservicios}. En adición a sus bibliotecas estándares, cada módulo implementará una serie de paquetes que dotarán a estos de funcionalidades adicionales que faciliten la resolución de problemas para los que ya se posee una implementación previa que se ajuste a las necesidades del proyecto.
+
+Su elección frente a otro tipo de lenguajes back-end, como podrían ser Java o JavaScript con NodeJS, viene definida a razón de la experiencia previa con dicho lenguaje en la construcción de arquitecturas basadas en microservicios a lo largo de la asignatura de Diseño y Mantenimiento del Software.
 
 
+\subsection{JavaScript}
+
+\textbf{JavaScript (JS)} \cite{lang:javascript} es un lenguaje de programación interpretado que implementa el estándar \emph{ECMAScript} \cite{tech:ecmascript}. Entre sus principales características se encuentran su orientación a objetos por medio de programación basada en prototipos, el ser un lenguaje débilmente tipado, poseer tipado dinámico y el contar con funciones de primera clase \cite{tech:first_class_func}.
+
+Entre las principales aplicaciones del lenguaje se encuentra su uso como lenguaje de scripting en aplicaciones web, aunque debido a su versatilidad goza de un amplio uso en el lado del servidor a través de entornos como \emph{NodeJS}. La manera mediante la cual interactúa con la web se debe al amplio soporte del que goza por parte de los navegadores modelos, todos ellos integrando un intérprete de JavaScript, y el acceso que estos le otorgan a los elementos que componen la web a través del \emph{Document Object Model (DOM)} \cite{tech:dom}.
+
+No es necesario presentar grandes razones para conocer la decisión de escoger JavaScript como lenguaje de programación en el apartado front-end de la aplicación. JavaScript es el lenguaje más popular de desarrollo web, posee un amplio soporte en los principales navegadores web, se dispone de multitud de recursos físicos, digitales, textuales y audiovisuales para comprender su funcionamiento y posee una amplia comunidad de bibliotecas y frameworks que facilitan la ampliación de sus capacidades.
+
+\subsection{ReactJS}
+
+ReactJS \cite{tech:react} es una biblioteca para JavaScript de código abierto multiplataforma, mantenida por Facebook y aquellos desarrolladores que libremente hayan contribuido al proyecto, cuyo objetivo principal es facilitar la creación y diseño de interfaces de usuario a través del uso de aplicaciones en una sola página (SPA). React tiene la finalidad de actuar como la vista dentro de la arquitectura Modelo-Vista-Controlador (MVC) frente a otras alternativas, aunque su amplio ecosistema de módulos posibilita la resolver de otro tipo de cuestiones como el enrutamiento.
+
+Una de las características principales de React es su Virtual DOM \cite{tech:react_dom}, el cual se encarga de lidiar de manera transparente y eficiente con la actualización del contenido del DOM. Esto se logra debido a que en el momento que React detecta un cambio en la vista, este almacena estos cambios en su DOM Virtual, que es mucho más rápido que realizar una actualización completa del DOM del navegador. A partir de estos datos almacenados React lleva a cabo una comparación entre el estado previo, que se encuentra almacenado en su Virtual DOM, y el estado actual del DOM, detectando cuales son los componentes de la web que han sido modificados y deben de ser actualizados de manera individual, y cuales deben permanecen en el mismo estado.
+
+La elección de la biblioteca de React frente a otros frameworks de propósito similar como VueJS o Angular no fue sencilla ya que todos ellos poseen características que resultan muy convenientes a la hora de trabajar con ellos. Finalmente, escoger esta biblioteca vino determinado por el nivel de madurez del proyecto, cuyo efecto colateral implica la existencia de un mayor número de recursos online y una mayor variedad de complementos que simplifican el desarrollo del front-end.
+
+\subsection{Docker}
+
+Docker \cite{tech:docker} es un software de código abierto enfocado al despliegue automatizado de aplicaciones que se basan en arquitecturas de microservicios. Su funcionamiento consiste en la encapsulación de los distintos servicios en contenedores los cuales funcionan de manera similar a máquinas virtuales, aislando cada componente en su propio sistema operativo. 
+
+\subsection{CSS}
+
+CSS (Cascading Style Sheets) \cite{lang:css} es un lenguaje de diseño gráfico conformado por hojas de estilo en cascadas cuyo objetivo es definir la apariencia visual de los documentos de HTML o XML. Mediante CSS se pretende mantener de manera independiente el contenido de uno o varios documentos de su presentación facilitando la separación de responsabilidades entre los distintos componentes de una página web.
+El uso de CSS en el proyecto ha sido muy importante ya que se ha tratado de crear una plataforma intuitiva y estilizada de acuerdo con los estándares actuales que se pueden encontrar en cualquier plataforma. 
+
+\subsection{Bash}
+
+Bash \cite{wiki:bash} es un lenguaje de scripting utilizado en los sistemas operativos Unix para la ejecución de ordenes por medio de una terminal. Mediante Bash es posible lanzar multitud de comandos disponibles en sistema operativo que permiten controlar cualquier aspecto de este. El uso de Bash en proyecto se debe a la creación de script que permiten el arranque de los diferentes servicios que lo componen desde el interior de los contenedores Docker.
+
+\section{Dependencias} \label{sec:dependencias}
+
+\subsection{Python}
+
+\subsubsection{PyGitHub}
+
+PyGitHub \cite{dependencies:pygithub} es una biblioteca de Python que permite simplificar el proceso de establecer una conexión con la API REST de GitHub. Mediante su sistema de clases permite acceder y modificar los atributos de los diferentes elementos a los que GitHub permite su acceso sin tener que lidiar con peticiones HTTP. Otra de sus ventajas es el tratamiento de errores que realiza, que traduce los fallos de las peticiones HTTP en excepciones Python abstrayendo por completo la lógica del canal de comunicación.
+
+\subsubsection{SQLAlchemy}
+
+SQLAlchemy \cite{dependencies:sqlalchemy} es una biblioteca de Python que actúa como Object Relactional Mapper (ORM) permitiendo mapear las estructuras de una base de datos relacional a una estructura lógica de entidades y otorgando un alto nivel de abstracción entre la base de datos y la lógica de la aplicación. Esta abstracción facilita al desarrollador no centrarse en el detalle de las múltiples variaciones que poseen las diferentes implementaciones de SQL por parte distintos sistemas gestores de bases de datos (SGBD).
+
+\subsubsection{Flask}
+
+Flask \cite{dependencies:flask} es un microframework desarrollado en Python con el objetivo de simplificar el desarrollo de aplicaciones web siguiendo una arquitectura de Modelo-Vista-Controlador (MVC) \cite{tech:mvc}. Pese a que las funcionalidades base de Flask puedan parecer limitadas, esto es una decisión de diseño, que pretende mantener un paquete básico de funcionalidades y proporcionar a los desarrolladores escoger la extensión de sus funcionalidades a través de complementos.
+
+El principal motivo de escoger Flask frente a su principal alternativa en Python, el framework Django, se recae en el uso para el cual se proponía el uso de estos paquetes. Pese a que Django es un complemento más completo para el desarrollo web, Flask suplía las necesidades de generar una API REST sencilla que atendiese las peticiones por medio de endpoints.
+
+\subsubsection{Flask-CORS}
+
+Flask-CORS \cite{dependencies:flask_cors} un complemento de Flask que permite habilitar el intercambio de recursos de origen cruzado (CORS) por medio del uso de cabeceras adicionales. Esta funcionalidad capacita a nuestra web comunicarse con el back-end pese a encontrarse desplegados en servidores de orígenes (dominios) distintos.
+
+\subsubsection{PyTorch}
+
+PyTorch \cite{dependencies:pytorch} es una de las bibliotecas de aprendizaje automático más populares disponible para tanto para Python y como C++ basada en Torch. Su principal ventaja se encuentra en la computación por medio del uso de tensores, lo cual habilita la ejecución de operaciones que requieren de un alto coste computacional por medio de la GPU. Los tensores son una abstracción de los vectores numéricos que soportan múltiples dimensiones y sus respectivas operaciones. Su popularidad se debe en parte al robusto ecosistema de herramientas construido a su alrededor ha potenciado su uso en aplicaciones de aprendizaje profundo entre las que se encuentran el procesamiento del lenguaje natural o la visión artificial (computer visión).
+
+\subsubsection{Transformers}
+
+Transformers \cite{tech:transformers} es una biblioteca desarrollada por Hugging Face que proporciona el acceso a arquitecturas de propósito general modelos para la resolución de tareas de procesamiento natural a través de modelos previamente entrenados. Esta biblioteca se diseño inicialmente como haciendo uso de PyTorch, aunque en la actualidad permite al usuario hacer uso de las capacidades de las bibliotecas de TensorFlow diseñadas por Google. Dependiendo del tipo de tareas de procesamiento y generación de lenguaje natural con las que estemos buscando trabajar, Transformers pone a disposición de los desarrolladores más de 32 modelos entrenados en más de 100 lenguajes distintos. Esta abrumante cantidad de modelos disponibles para su aplicación de manera directa, sin necesidad de configuraciones o ajustes convirtieron al paquete en la opción escogida al cual confiar el procesamiento de las tareas de PLN lanzadas a través de nuestra plataforma.
+
+\subsubsection{Numpy}
+
+Numpy \cite{dependencies:numpy} es una biblioteca de Python que proporciona soporte para la creación de vectores multidimensionales y sus operaciones. Su uso es prácticamente imprescindible en proyecto Python que requiera de cálculos matemáticos sobre grandes volúmenes de datos debido a su alto rendimiento y facilidad de uso.
+Su eficiencia viene determinada por la manera en la que trabaja con los datos a través de su implementación propia de los arreglos “ndarray”. A expensas de perder la flexibilidad de los arreglos base de Python, esta implementación solo permite almacenar elementos de un único tipo por arreglo. Esta limitación es la que permite que los elementos sean almacenados de manera contigua en memoria, lo que agiliza en gran medida la ejecución de operaciones matemáticas de elevada complejidad.
+
+\subsection{React}
+
+\subsubsection{Wouter}
+
+Wouter \cite{dependencies:wouter} es una biblioteca minimalista de enrutamiento que se plantea como una alternativa al popular paquete React Router implementando exclusivamente sus funciones básicas más utilizadas, y descartando aquellas funciones que provocan que React Router sea una dependencia mucho más pesada. Los elementos incluidos permiten renderizar componentes de manera condicional a la ruta accedida y manipular la ubicación del navegador a través su envoltorio para la API del historial del navegador.
+La motivación para incluir esta biblioteca viene determinada por la necesidad de un complemento que facilitase el renderizado las diferentes secciones de la aplicación en función de la dirección a la que se dirigiese el usuario, así como una manera redireccionar el usuario a diferentes rutas en función de la información introducida por medio de los formularios dispuestos en la web.
+
+\subsubsection{React Google Charts}
+
+React Google Charts \cite{dependencies:react_google_charts} es una biblioteca para React que permite renderizar gráficos de manera sencilla actuando como un \emph{wrapper} de la \emph{Google Visualization API}. Su implementación tan solo requiere del uso del componente principal <<Chart>>, al cual se le suministran los datos y las opciones de personalización que se deseen. La selección de este complemento frente a otras alternativas más populares como \emph{ChartJS} viene dada por el hecho de que tras numerosas pruebas el complemento escogido requiere de una menor configuración para lograr una visualización de los datos adaptada al tipo de representación deseada.
+
+\section{Herramientas} \label{sec:herramientas}
+
+\subsection{Visual Studio Code}
+
+Visual Studio Code \cite{tech:vscode} es un popular editor de texto de código abierto especializado en la edición de código fuente desarrollado por Microsoft. Entre sus principales características destacan la integración con el software de control de versiones Git, el resaltado de la sintaxis de una gran variedad de lenguajes de programación, un destacable control de sus funciones por medio de atajos de teclados y la inclusión de herramientas de depuración. Su mayor virtud frente a sus competidores es el amplio apoyo de la comunidad entorno a la creación de extensiones que permiten modificar, añadir y personalizar casi cualquier funcionalidad del editor.
+
+\subsection{Codebeat}
+
+Codebeat \cite{tech:codebeat} es una herramienta de análisis de código automático con soporte a múltiples lenguajes de programación. El objetivo es obtener un informe que evalúe la calidad del código por medio de la detección de vulnerabilidades, indicadores de code smell, duplicidad de código y complejidad. La plataforma detecta automáticamente los cambios en el repositorio y envía un aviso por correo electrónico de los resultados obtenidos. Es de gran utilidad ya que proporciona con un alto nivel de detalle la información relativa a la gravedad del problema y la ubicación exacta del fragmento de código que lo ha producido.
+
+\subsection{Overleaf}
+
+Overleaf \cite{tech:overleaf} es un editor de LaTeX online colaborativo que facilita la generación de documentación científica. Entre sus virtudes se encuentra la sugerencia de comandos LaTeX, la compilación de los documentos de manera automática y la posibilidad de mantener una vista previa actualizada de los cambios que se producen en el documento en tiempo real. Incluye indicadores que señalan los errores detectados en la compilación directamente en el editor y conserva un historial de los cambios realizados en el documento.

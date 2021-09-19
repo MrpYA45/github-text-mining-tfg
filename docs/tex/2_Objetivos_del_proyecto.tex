@@ -1,3 +1,41 @@
 \capitulo{2}{Objetivos del proyecto}
 
-Este apartado explica de forma precisa y concisa cuales son los objetivos que se persiguen con la realización del proyecto. Se puede distinguir entre los objetivos marcados por los requisitos del software a construir y los objetivos de carácter técnico que plantea a la hora de llevar a la práctica el proyecto.
+Este capítulo tiene como objeto el recoger los objetivos generales que se establecieron al comienzo del proyecto con la finalidad de determinar y acotar el alcance del proyecto, así como los objetivos técnicos con el propósito de determinar las técnicas y tecnologías clave que se acordó utilizar.
+
+\section{Objetivos generales}
+
+En este apartado se exponen los objetivos de carácter general que se pactó implementar en el proyecto. A continuación se describen estos objetivos:
+
+\begin{itemize} [\textbullet]
+
+\item Realizar una aplicación web que permita al usuario experimentar con múltiples técnicas de procesamiento del lenguaje natural (PLN). Tras estudiar los posibles métodos que aplicar se decidió que en esta ocasión la plataforma trabajará con tareas de \emph{clasificación Zero-Shot}, el análisis de sentimientos y la generación de resúmenes abstractivos.
+
+\item Los modelos que se van a utilizar no se implementarán y entrenarán desde cero, en su lugar se recurrirá a la explotación del potencial de los \textbf{modelos preentrenados}. Mediante portales como \emph{Hugging Face} \cite{platform:hugging_face} es posible obtener modelos que aplican en multitud de campos con el beneficio de haber sido entrenados y ajustados por anterioridad. Este tipo de iniciativas realza el valor del software de código abierto y permiten que pequeños proyectos dispongan de acceso a potentes herramientas que ofrecen resultados con suficiente grado de calidad.
+
+\item Los datos sobre los que se aplicarán los modelos deberán ser extraídos desde las incidencias de repositorios de código abierto de \emph{GitHub} \cite{platform:github}. La motivación de que los datos de entrada se obtengan mediante esta vía surge con el fin de demostrar los beneficios de aplicar este tipo de metodologías a la gestión de tareas dentro de un proyecto. A partir de la aplicación se podría realizar una clasificación automática o semiautomática de tareas, obtener un análisis del estado moral del equipo u ofrecer una sinopsis de las tareas y su estado.
+
+\item Enfocar la \hyperref[sec:arquitectura]{arquitectura y diseño del proyecto} teniendo en cuenta la posibilidad de aplicar mejoras sobre el mismo y ampliar sus funcionalidades de cara futuras iteraciones tanto en el \emph{front-end} como en el \emph{back-end}. Esto incluye dotar al código de una buena documentación que permita a futuros desarrolladores comprender el funcionamiento interno de la aplicación.
+\item Trasladar a la práctica aquellos conocimientos adquiridos a lo largo del grado en las materias de Ingeniería del Software, Gestión de Proyectos, Metodología de la Programación, Bases de Datos, Algoritmia, Diseño y Mantenimiento del Software, y Minería de Datos.
+\item Ofrecer el código bajo una licencia que posibilite su libre uso y acceso, permitiendo la continuidad del proyecto más allá del alcance de este trabajo.
+
+\end{itemize}
+
+\bigskip
+
+\section{Objetivos técnicos}
+
+Este apartado tiene como finalidad presentar aquellos desafíos técnicos que afrontar de cara a dotar al proyecto de la tecnología necesaria para la implementación de sus funciones. Estos objetivos mencionados son los siguientes:
+
+\begin{itemize} [\textbullet]
+
+\item El proyecto debe plantearse teniendo en mente una \hyperref[sec:microservicios]{\textbf{arquitectura de microservicios}} que otorgue de independencia a cada fase del proceso. El objetivo de estar arquitectura consiste en otorgar la libertad de que en caso de que se requiriese una ampliación o reubicación de recursos por parte de uno de los servicios, estos puedan ser ajustados de manera individual sin alterar el funcionamiento completo de la aplicación. 
+
+\item Se deberá contar con un servicio encargado de establecer la conexión con la \emph{API} de \emph{GitHub} \cite{platform:github_api} para la \hyperref[sec:extraccion]{extracción de los datos} Este servicio a su vez se encargará de extraer aquella información que así se requiera de las incidencias, aplicar un preprocesado sobre estos datos, y una vez se obtengan los datos en limpio, se proceda a su almacenamiento en la base de datos.
+
+\item La base de datos que se escoja deberá soportar los accesos de manera concurrente por parte de los múltiples servicios que compondrán la aplicación. Esta se desplegará en un servicio independiente para facilitar su mantenimiento.
+
+\item Los \hyperref[sec:preentrenados]{\textbf{modelos preentrenados}} ofrecen la posibilidad de modificar ciertos parámetros con el objetivo de adaptar los resultados a la salida deseada. Siempre que sea posible se ofrecerá al usuario de la aplicación la posibilidad de configurar estos parámetros de acuerdo con sus preferencias para dotar a la aplicación de una mayor funcionalidad.
+
+\item Con el fin de mejorar los resultados de los \hyperref[sec:preentrenados]{\textbf{modelos preentrenados}} se estudiarán las limitaciones en el tamaño de sus entradas y se implementarán técnicas de \hyperref[sec:preprocesamiento]{preprocesado} que permitan mitigar sus efectos en situaciones donde los textos sean demasiado grandes.
+
+\end{itemize}

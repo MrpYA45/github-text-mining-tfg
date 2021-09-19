@@ -1,4 +1,27 @@
 \capitulo{7}{Conclusiones y Líneas de trabajo futuras}
 
-Todo proyecto debe incluir las conclusiones que se derivan de su desarrollo. Éstas pueden ser de diferente índole, dependiendo de la tipología del proyecto, pero normalmente van a estar presentes un conjunto de conclusiones relacionadas con los resultados del proyecto y un conjunto de conclusiones técnicas. 
-Además, resulta muy útil realizar un informe crítico indicando cómo se puede mejorar el proyecto, o cómo se puede continuar trabajando en la línea del proyecto realizado. 
+\section{Conclusiones}
+
+El proyecto \textbf{GitHub Text Mining} es el resultado del esfuerzo invertido durante un plazo de aproximadamente \textbf{6 meses} con el ambicioso objetivo de lograr desarrollar todos los aspectos que hacen a una plataforma funcional desde cero. En este trabajo se llevado a cabo un desarrollo \textbf{full stack}, o lo que es lo mismo, se ha desarrollado tanto el aspecto interno de una aplicación, trabajando con \textbf{tecnologías de servidor}, como el desarrollo de aquellos aspectos relacionados con la \textbf{presentación de la información} y el \textbf{establecimiento de conexiones con la fuente de los datos}.
+
+Las principal conclusión que se extrae del desarrollo de este proyecto es \textbf{la importancia de tomar una decisión y ser capaz de defenderla}. En un trabajo de tal magnitud es inevitable enfrentarse a momentos en los que afrontar decisiones que marcarán la dirección del proyecto a futuro. Estas decisiones son tomadas en base a los conocimientos que se poseen en dicho momento, y por lo tanto, es común que con el paso del tiempo y la adquisición de experiencia se formulen nuevas propuestas con la finalidad de perfeccionar las implementaciones en apartados previos. Es necesario establecerse límites en cuanto a \textbf{asumir que un proyecto nunca va a estar completo}, y consecuentemente ceñirse en sacar a delante los objetivos propuestos antes de tratar de actualizar aspectos que actualmente cumplen con su función.
+
+La segunda conclusión extraída de este proyecto, directamente relacionada con la mencionada en el anterior párrafo, es \textbf{la importancia de invertir tiempo en estudiar la dirección que va a tomar un proyecto y las alternativas disponibles} antes de aferrarse por completo a una idea. En un proyecto de gran magnitud, invertir recursos en la investigación y desarrollo de una buena arquitectura que dote a un proyecto de robustez resulta un aspecto clave de cara a la incorporación de cambios y novedades en un futuro.
+
+Para finalizar, se destaca la relevancia de afrontar este tipo de Trabajos de Fin de Grado como una oportunidad para \textbf{aplicar los conocimientos adquiridos} a lo largo del Grado, y aprovechar para indagar sobre aquellas áreas de interés en las que tal vez no se haya profundizado tanto como a uno le gustaría. \textbf{Aprovechar la libertad creativa del proyecto} es una forma de descubrir que facetas de la informática encajan con nuestra perspectiva y establecer nuestro próximo objetivo personal.
+
+\section{Líneas de trabajo futuras}
+
+En esta sección se incluyen ideas acerca de la incorporación de nuevas funcionalidades que quedaron descartadas debido al alcance establecido para el proyecto, así como posibles áreas de mejora sobre las que seguir trabajando.
+
+\subsection{Mejoras e incorporación de nuevas tareas}
+
+Desde el inicio el proyecto GitHub Text Mining se planteó con la idea de establecer una arquitectura base que permitiese la ampliación de los modelos soportados a otro tipo de tareas. Actualmente los experimentos que se incluyen permiten obtener una clasificación de las incidencias entorno a etiquetas, generar resúmenes a partir su contenido y realizar un análisis de sentimientos sobre las incidencias, incluyendo filtros de usuarios y comentarios. En adición a la introducción de mejoras en las respectivas implementaciones de estas tareas, se plantea la introducción de nuevas funcionalidades que permitan detectar incidencias duplicadas en un repositorio haciendo uso de modelos de \textbf{Sentence Similarity}, así como estudiar la introducción de tareas de \textbf{Traducción}.
+
+\subsection{Implementar acceso mediante el uso de tokenes de acceso personal por usuario}
+
+Una decisión de diseño tomada inicialmente condiciona a la utilización de un único token de acceso personal para el establecimiento de la conexión con la API de GitHub. Este factor puede resultar limitante en caso de que se pretenda desplegar la aplicación a causa de las \textbf{limitaciones de la API de GitHub} \cite{lf:github_api_limits}. Sería preferible diseñar alguna estrategia alternativa en la que cada usuario deba proporcionar su propio token para poder utilizar la plataforma. Se deberá tener en cuenta que estos tokenes son información personal, y por lo tanto deberán transferirse, tratarse y almacenarse de forma segura.
+
+\subsection{Refractorización de la API REST}
+
+La \emph{API REST} ha ido creciendo conforme se requerían nuevas formas de acceder a los datos desde la aplicación web. Esto ha propiciado la inclusión de una gran cantidad de métodos que deberían ser refractorizados con el objetivo de reducir su complejidad y deshacerse de aquellos \emph{endpoints} que resulten prescindibles. Otro punto de mejora a considerar implicaría la inclusión de un sistema que estableciese limitaciones en el número de peticiones que se permiten recibir desde una misma dirección durante un cierto periodo de tiempo.
