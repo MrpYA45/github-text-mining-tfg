@@ -30,34 +30,34 @@ class ModelDownloader():
     def get_zsc() -> Pipeline:
         filepath: Path = ModelDownloader.__model_path / "zero_shot_classification"
         if not filepath.exists():
+            print("Downloading Zero-Shot-Classification model. Please wait.")
             zsc_pipeline: Pipeline = pipeline(
                 "zero-shot-classification", model="facebook/bart-large-mnli")
             return zsc_pipeline.save_pretrained(str(filepath))
-        else:
-            return pipeline(
-                task="zero-shot-classification", model=str(filepath), tokenizer=str(filepath))
+        return pipeline(
+            task="zero-shot-classification", model=str(filepath), tokenizer=str(filepath))
 
-    @ staticmethod
+    @staticmethod
     def get_sa() -> Pipeline:
         filepath: Path = ModelDownloader.__model_path / "sentiment_analysis"
         if not filepath.exists():
+            print("Downloading Sentiment Analysis model. Please wait.")
             sa_pipeline: Pipeline = pipeline(
                 "sentiment-analysis", model="nlptown/bert-base-multilingual-uncased-sentiment")
             return sa_pipeline.save_pretrained(str(filepath))
-        else:
-            return pipeline(
-                task="sentiment-analysis", model=str(filepath), tokenizer=str(filepath))
+        return pipeline(
+            task="sentiment-analysis", model=str(filepath), tokenizer=str(filepath))
 
-    @ staticmethod
+    @staticmethod
     def get_summ() -> Pipeline:
         filepath: Path = ModelDownloader.__model_path / "summarization"
         if not filepath.exists():
+            print("Downloading Summarization model. Please wait.")
             summ_pipeline: Pipeline = pipeline(
                 "summarization", model="sshleifer/distilbart-cnn-12-6")
             return summ_pipeline.save_pretrained(str(filepath))
-        else:
-            return pipeline(
-                task="summarization", model=str(filepath), tokenizer=str(filepath))
+        return pipeline(
+            task="summarization", model=str(filepath), tokenizer=str(filepath))
 
 
 if __name__ == "__main__":
