@@ -30,7 +30,8 @@ class ModelDownloader():
     def get_zsc() -> Pipeline:
         filepath: Path = ModelDownloader.__model_path / "zero_shot_classification"
         if not filepath.exists():
-            print("Downloading Zero-Shot-Classification model. Please wait.")
+            print("Downloading Zero-Shot-Classification model. \
+                Please don't shutdown the container.")
             zsc_pipeline: Pipeline = pipeline(
                 "zero-shot-classification", model="facebook/bart-large-mnli")
             return zsc_pipeline.save_pretrained(str(filepath))
@@ -41,7 +42,8 @@ class ModelDownloader():
     def get_sa() -> Pipeline:
         filepath: Path = ModelDownloader.__model_path / "sentiment_analysis"
         if not filepath.exists():
-            print("Downloading Sentiment Analysis model. Please wait.")
+            print("Downloading Sentiment Analysis model. \
+                  Please don't shutdown the container.")
             sa_pipeline: Pipeline = pipeline(
                 "sentiment-analysis", model="nlptown/bert-base-multilingual-uncased-sentiment")
             return sa_pipeline.save_pretrained(str(filepath))
@@ -52,7 +54,8 @@ class ModelDownloader():
     def get_summ() -> Pipeline:
         filepath: Path = ModelDownloader.__model_path / "summarization"
         if not filepath.exists():
-            print("Downloading Summarization model. Please wait.")
+            print("Downloading Summarization model. \
+                  Please don't shutdown the container.")
             summ_pipeline: Pipeline = pipeline(
                 "summarization", model="sshleifer/distilbart-cnn-12-6")
             return summ_pipeline.save_pretrained(str(filepath))
