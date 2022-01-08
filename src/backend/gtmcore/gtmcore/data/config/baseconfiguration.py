@@ -20,6 +20,7 @@
 
 import json
 import logging
+import sys
 from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Union
@@ -42,6 +43,7 @@ class BaseConfiguration(ABC):
             self.create_config_file()
             logging.info("[GTMCORE] The configuration file for module '%s' has been created.",
                          self.get_config_module_str())
+            sys.exit()
         self.load_config()
 
     def check_config_file_exists(self) -> bool:
