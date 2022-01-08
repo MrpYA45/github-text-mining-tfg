@@ -51,7 +51,7 @@ export default function App() {
                 )}
             </Route>
             <footer className="AppFooter">
-                &copy; Created with ♥ by Pablo Fernández
+                &copy; Created with ♥ by Pablo Fernández with the support of Carlos López Nozal and Jesús Alonso Abad.
             </footer>
         </div>
     );
