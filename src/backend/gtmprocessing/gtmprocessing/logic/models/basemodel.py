@@ -22,14 +22,16 @@ from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-from gtmcore.logic.utils.datautils import DataUtils
-from gtmprocessing.logic.utils.textpreprocessor import TextPreprocessor
 from transformers import pipeline  # type: ignore
 from transformers.pipelines.base import Pipeline  # type: ignore
 from transformers.tokenization_utils import PreTrainedTokenizer  # type: ignore
+from gtmcore.logic.utils.datautils import DataUtils
+from gtmprocessing.logic.utils.textpreprocessor import TextPreprocessor
 
 
 class BaseModel(ABC):
+    """ Abstract base class used for NLP model classes.
+    """
 
     _base_path = Path("gtmprocessing/data/models").absolute()
 
@@ -42,15 +44,31 @@ class BaseModel(ABC):
         self._exec_time: float = 0.0
 
     def get_pipeline(self) -> Pipeline:
+        """ Gets the model pipeline.
+
+        Returns:
+            Pipeline: the model pipeline.
+        """
         return pipeline(
             task=self.get_model_str(),
             model=self.get_model_path(),
             tokenizer=self.get_model_path()
         )
 
-    def chunk_input(self,
+    @classmethod
+    def chunk_input(cls,
                     raw_inputs: List[str],
                     tokenizer: Optional[PreTrainedTokenizer]) -> List[str]:
+        """ Breaks inputs into smaller fragments according to the maximum size
+            accepted by the tokenizer of the model.
+
+        Args:
+            raw_inputs (List[str]): The list of inputs.
+            tokenizer (Optional[PreTrainedTokenizer]): The model tokenizer.
+
+        Returns:
+            List[str]: List of fragments of the entries.
+        """
 
         # Creates a text preprocessor instance with the tokenizer.
         preprocessor: TextPreprocessor = TextPreprocessor(tokenizer)
@@ -84,24 +102,39 @@ class BaseModel(ABC):
         return sliced_inputs
 
     def get_model_path(self) -> str:
+        """ Gets the path where the model is stored.
+
+        Returns:
+            str: The path to the model.
+        """
         model_folder: str = self.get_model_str().replace("-", "_")
         return str(self._base_path / model_folder)
 
     def set_params(self, params: Dict[str, Any]) -> None:
+        """ Sets the parameters needed to run the model pipeline.
+        """
         self._repo_dir = str(params.get("repo_dir", ""))
         self._issue_id = int(params.get("issue_id", -1))
 
     def get_outcome(self) -> Tuple[Dict[str, Any], float]:
+        """ Gets the outcome and the execution time of the model pipeline.
+
+        Returns:
+            Tuple[Dict[str, Any], float]: Tuple with the outcome data and the execution time.
+        """
         return (self._outcome, self._exec_time)
 
     @abstractmethod
     def preprocess(self) -> None:
-        pass
+        """ Calculate the model inputs from the experiment parameters.
+        """
 
     @abstractmethod
     def apply(self) -> None:
-        pass
+        """ Apply the model pipeline to the inputs using the experiment parameters.
+        """
 
     @abstractmethod
     def get_model_str(self) -> str:
-        pass
+        """ Gets the model string.
+        """

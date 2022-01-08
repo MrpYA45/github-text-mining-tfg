@@ -25,8 +25,9 @@ from bs4 import BeautifulSoup  # type: ignore
 from markdown import markdown  # type: ignore
 from unidecode import unidecode  # type: ignore
 
-
 class DataUtils():
+    """ Class with static data utility methods.
+    """
 
     @staticmethod
     def markdown_to_raw_text(markdown_str: str) -> str:

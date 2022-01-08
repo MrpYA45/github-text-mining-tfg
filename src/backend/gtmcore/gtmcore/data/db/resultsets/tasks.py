@@ -112,7 +112,10 @@ class Tasks():
 
     @staticmethod
     def get_latest_task_from_repo(
-            session: Session, repo_dir: str, task_type: TaskType = None, state: TaskState = None) -> Task:
+            session: Session,
+            repo_dir: str,
+            task_type: TaskType = None,
+            state: TaskState = None) -> Task:
         """ Gets the latest task record with that repo_dir.
 
         Args:
@@ -185,7 +188,7 @@ class Tasks():
 
     @staticmethod
     def update_task_type(session: Session, task_id: int,
-                      task_type: TaskType, params: dict = None) -> None:
+                         task_type: TaskType, params: dict = None) -> None:
         """ Updates the type of a task and his parameters if needed.
 
         Args:

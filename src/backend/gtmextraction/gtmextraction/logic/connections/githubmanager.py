@@ -176,7 +176,8 @@ class GitHubManager():
                                      timedelta(0, 20)).total_seconds()
                 time.sleep(sleep_time)
 
-    def __downloaded_data_cleaner(self, md_str: str) -> str:
+    @classmethod
+    def __downloaded_data_cleaner(cls, md_str: str) -> str:
         """ Clears all markdown and non ASCII characters from the given raw string.
 
         Args:

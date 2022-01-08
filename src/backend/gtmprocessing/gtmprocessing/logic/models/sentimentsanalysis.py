@@ -15,18 +15,23 @@
 # You should have received a copy of the GNU General Public License
 # along with github-text-mining-tfg.  If not, see <http://www.gnu.org/licenses/>.
 
+""" Sentiment Analysis Module.
+"""
+
 import time
 from typing import Any, Dict, List, Optional
 
 import numpy as np
+from transformers.pipelines.base import Pipeline  # type: ignore
 from gtmcore.data.db.results.comment import Comment
 from gtmcore.data.db.results.issue import Issue
 from gtmcore.logic.dbmanager import DBManager
 from gtmprocessing.logic.models.basemodel import BaseModel
-from transformers.pipelines.base import Pipeline  # type: ignore
 
 
 class SentimentsAnalysis(BaseModel):
+    """ Class in charge of applying the NLP Sentiment Analysis model.
+    """
 
     def __init__(self, dbmanager: DBManager) -> None:
         super().__init__()

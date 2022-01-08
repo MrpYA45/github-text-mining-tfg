@@ -15,17 +15,23 @@
 # You should have received a copy of the GNU General Public License
 # along with github-text-mining-tfg.  If not, see <http://www.gnu.org/licenses/>.
 
+""" Summarization Module.
+"""
+
 import time
 from typing import Any, Dict, List
 
-from gtmcore.data.db.results.comment import Comment
+from transformers.pipelines.base import Pipeline  # type: ignore
 from gtmcore.data.db.results.issue import Issue
+from gtmcore.data.db.results.comment import Comment
 from gtmcore.logic.dbmanager import DBManager
 from gtmprocessing.logic.models.basemodel import BaseModel
-from transformers.pipelines.base import Pipeline  # type: ignore
 
 
 class Summarization(BaseModel):
+    """ Class in charge of applying the NLP Summarization model.
+    """
+    # pylint: disable=too-many-instance-attributes
 
     def __init__(self, dbmanager: DBManager) -> None:
         super().__init__()

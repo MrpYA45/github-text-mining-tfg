@@ -21,8 +21,9 @@
 import json
 import logging
 from typing import Dict, List, Union
-from gtmcore.data.db.err.repositorynotexistserror import RepositoryNotExistsError
 
+from gtmcore.data.db.err.repositorynotexistserror import \
+    RepositoryNotExistsError
 from gtmcore.data.db.results import Task
 from gtmcore.logic.dbmanager import DBManager
 from gtmprocessing.data.err.invalidnlpmodel import InvalidNLPModel
@@ -34,6 +35,9 @@ TaskArgsType = Union[str, int, List[int], List[str]]
 
 
 class ProcessingManager():
+    """ Class in charge of selecting the model required
+        for the experiment and saving the obtained outcome.
+    """
 
     def __init__(self, db_manager: DBManager) -> None:
         self.__dbmanager: DBManager = db_manager
@@ -45,12 +49,24 @@ class ProcessingManager():
         }
 
     def process_task(self, task: Task) -> bool:
+        """ Process the experiment task selecting the model required for the experiment.
+
+        Args:
+            task (Task): The task
+
+        Raises:
+            RepositoryNotExistsError: The repository has not been located.
+            InvalidNLPModel: No matching model has been found.
+
+        Returns:
+            bool: Returns true if the task has been completed successfully.
+        """
         try:
             # pylint: disable=line-too-long
             logging.debug(
                 "[GTMProcessing] STARTING TASK PROCESSING. TASK ID: %s | REPO: %s | TASK_TYPE: %s | PARAMS: %s",
                 task.task_id, task.repo_dir, task.task_type, json.dumps(task.params))
-            
+
             if self.__dbmanager.get_repository(task.repo_dir) is None:
                 raise RepositoryNotExistsError
 

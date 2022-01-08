@@ -15,19 +15,24 @@
 # You should have received a copy of the GNU General Public License
 # along with github-text-mining-tfg.  If not, see <http://www.gnu.org/licenses/>.
 
+""" Zero-Shot Classifier Module
+"""
+
 import json
 import time
 from typing import Any, Dict, List
 
 import numpy as np
+from transformers.pipelines.base import Pipeline  # type: ignore
 from gtmcore.data.db.results.issue import Issue
 from gtmcore.data.db.results.repository import Repository
 from gtmcore.logic.dbmanager import DBManager
 from gtmprocessing.logic.models.basemodel import BaseModel
-from transformers.pipelines.base import Pipeline  # type: ignore
-
 
 class ZeroShotClassifier(BaseModel):
+    """ Class in charge of applying the NLP ZeroS-hot Classifier model.
+    """
+    # pylint: disable=too-many-instance-attributes
 
     def __init__(self, dbmanager: DBManager) -> None:
         super().__init__()

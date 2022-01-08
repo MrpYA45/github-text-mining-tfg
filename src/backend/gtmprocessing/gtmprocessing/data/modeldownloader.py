@@ -26,11 +26,19 @@ from transformers.pipelines.base import Pipeline  # type: ignore
 
 
 class ModelDownloader():
+    """ Class in charge of downloading HuggingFace models.
+    """
 
     __model_path: Path = Path("gtmprocessing/data/models/").absolute()
 
     @staticmethod
     def get_zsc() -> Pipeline:
+        """ Downloads the Zero-Shot Classification model to
+            gtmprocessing/data/models/zero_shot_classification.
+
+        Returns:
+            Pipeline: The Zero-Shot Classification model pipeline.
+        """
         filepath: Path = ModelDownloader.__model_path / "zero_shot_classification"
         if not filepath.exists():
             print("Downloading Zero-Shot-Classification model. \
@@ -43,6 +51,11 @@ class ModelDownloader():
 
     @staticmethod
     def get_sa() -> Pipeline:
+        """ Downloads the Sentiment Analysis model to gtmprocessing/data/models/sentiment_analysis.
+
+        Returns:
+            Pipeline: The Sentiment Analysis model pipeline.
+        """
         filepath: Path = ModelDownloader.__model_path / "sentiment_analysis"
         if not filepath.exists():
             print("Downloading Sentiment Analysis model. \
@@ -55,6 +68,11 @@ class ModelDownloader():
 
     @staticmethod
     def get_summ() -> Pipeline:
+        """ Downloads the Summarization model to gtmprocessing/data/models/summarization.
+
+        Returns:
+            Pipeline: The Summarization model pipeline.
+        """
         filepath: Path = ModelDownloader.__model_path / "summarization"
         if not filepath.exists():
             print("Downloading Summarization model. \
@@ -77,9 +95,9 @@ if __name__ == "__main__":
 
     sa: Pipeline = ModelDownloader.get_sa()
 
-    sequence = "I love you so much!"
+    sequence_2: str = "I love you so much!"
 
-    print("SA: ", sa(sequence))
+    print("SA: ", sa(sequence_2))
 
     summ: Pipeline = ModelDownloader.get_summ()
 

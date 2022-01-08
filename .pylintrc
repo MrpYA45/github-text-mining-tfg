@@ -2,3 +2,4 @@
 
 max-args=8
 min-public-methods=1
+max-public-methods=25

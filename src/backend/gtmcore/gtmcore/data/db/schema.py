@@ -20,16 +20,10 @@
 
 from gtmcore.data.config.dbconfiguration import DBConfiguration
 from gtmcore.data.db.results import Comment, Issue, Outcome, Repository, Task
-from sqlalchemy import create_engine, event  # type: ignore
-from sqlalchemy.engine import Engine  # type: ignore
+from sqlalchemy import create_engine  # type: ignore
 from sqlalchemy.ext.declarative import declarative_base  # type: ignore
 from sqlalchemy.orm import sessionmaker  # type: ignore
 from sqlalchemy.orm.session import Session  # type: ignore
-
-
-@event.listens_for(Engine, "connect")
-def set_sqlite_pragma(dbapi_connection, connection_record):  # pylint: disable=unused-argument
-    pass
 
 
 class Schema():
@@ -56,11 +50,18 @@ class Schema():
         self.__declarative_base.metadata.create_all(self.__engine)
 
     def new_session(self) -> Session:
+        """ Creates a new database session.
+
+        Returns:
+            Session: The database session.
+        """
         session: Session = self.__session_maker()
         session.expire_on_commit = False
         return session
 
     def dispose_engine(self) -> None:
+        """ Closes all current database connections.
+        """
         self.__engine.dispose()
 
     def get_engine_str(self) -> str:
