@@ -15,6 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with github-text-mining-tfg.  If not, see <http://www.gnu.org/licenses/>.
 
+""" Model Downloader Module
+"""
+
 from pathlib import Path
 from typing import List
 

@@ -48,7 +48,7 @@ class Issue(ResultBase):
             author (str): The issue author.
             title (str): The issue title.
             description (str): The issue description.
-            labels (list): The issue labels.
+            labels (str): The issue labels.
             is_pull_request (bool): If true the issue is a pull request, otherwise false.
         """
         self.repo_dir: str = repo_dir
