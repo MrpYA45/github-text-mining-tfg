@@ -73,7 +73,6 @@ class DBConfiguration(BaseConfiguration):
         Returns:
             int: The port.
         """
-        print("DICT: ", self.get_config())
         return int(str(self.get_value("MARIADB_PORT")))
 
     def get_dbname(self) -> str:
