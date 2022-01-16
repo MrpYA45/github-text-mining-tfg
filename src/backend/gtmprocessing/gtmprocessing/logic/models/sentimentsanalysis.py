@@ -91,6 +91,7 @@ class SentimentsAnalysis(BaseModel):
         }
 
     def get_model(self) -> AutoModelForSequenceClassification:
+        # pylint: disable=no-value-for-parameter
         return AutoModelForSequenceClassification.from_pretrained(
             self.get_model_path(), local_files_only = True)
 

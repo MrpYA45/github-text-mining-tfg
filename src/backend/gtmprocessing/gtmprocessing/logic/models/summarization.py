@@ -91,6 +91,7 @@ class Summarization(BaseModel):
         }
 
     def get_model(self) -> AutoModelForSeq2SeqLM:
+        # pylint: disable=no-value-for-parameter
         return AutoModelForSeq2SeqLM.from_pretrained(self.get_model_path(), local_files_only = True)
 
     def get_task_str(self) -> str:
