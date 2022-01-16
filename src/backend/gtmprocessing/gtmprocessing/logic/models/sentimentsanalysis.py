@@ -22,6 +22,7 @@ import time
 from typing import Any, Dict, List, Optional
 
 import numpy as np
+from transformers import AutoModelForSequenceClassification  # type: ignore
 from transformers.pipelines.base import Pipeline  # type: ignore
 from gtmcore.data.db.results.comment import Comment
 from gtmcore.data.db.results.issue import Issue
@@ -89,5 +90,9 @@ class SentimentsAnalysis(BaseModel):
             "avg_sa_score": avg_sa_score
         }
 
-    def get_model_str(self) -> str:
+    def get_model(self) -> AutoModelForSequenceClassification:
+        return AutoModelForSequenceClassification.from_pretrained(
+            self.get_model_path(), local_files_only = True)
+
+    def get_task_str(self) -> str:
         return "sentiment-analysis"

@@ -22,6 +22,7 @@ import time
 from typing import Any, Dict, List
 
 from transformers.pipelines.base import Pipeline  # type: ignore
+from transformers import AutoModelForSeq2SeqLM  # type: ignore
 from gtmcore.data.db.results.issue import Issue
 from gtmcore.data.db.results.comment import Comment
 from gtmcore.logic.dbmanager import DBManager
@@ -89,5 +90,8 @@ class Summarization(BaseModel):
             "summarized_text": summarized_inputs
         }
 
-    def get_model_str(self) -> str:
+    def get_model(self) -> AutoModelForSeq2SeqLM:
+        return AutoModelForSeq2SeqLM.from_pretrained(self.get_model_path(), local_files_only = True)
+
+    def get_task_str(self) -> str:
         return "summarization"

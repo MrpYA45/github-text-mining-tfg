@@ -23,6 +23,7 @@ import time
 from typing import Any, Dict, List
 
 import numpy as np
+from transformers import AutoModelForSequenceClassification  # type: ignore
 from transformers.pipelines.base import Pipeline  # type: ignore
 from gtmcore.data.db.results.issue import Issue
 from gtmcore.data.db.results.repository import Repository
@@ -99,5 +100,9 @@ class ZeroShotClassifier(BaseModel):
             "ratings": filtered_ratings.tolist()
         }
 
-    def get_model_str(self) -> str:
+    def get_model(self) -> AutoModelForSequenceClassification:
+        return AutoModelForSequenceClassification.from_pretrained(
+            self.get_model_path(), local_files_only = True)
+
+    def get_task_str(self) -> str:
         return "zero-shot-classification"

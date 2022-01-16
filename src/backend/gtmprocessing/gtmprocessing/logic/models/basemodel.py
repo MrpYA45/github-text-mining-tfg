@@ -18,22 +18,25 @@
 """ Base Model class module.
 """
 import logging
+import os
 from abc import ABC, abstractmethod
-from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Union
 
+from gtmcore.logic.utils.datautils import DataUtils
 from transformers import pipeline  # type: ignore
+from transformers import AutoTokenizer, AutoConfig  # type: ignore
+from transformers.modeling_utils import PreTrainedModel  # type: ignore
 from transformers.pipelines.base import Pipeline  # type: ignore
 from transformers.tokenization_utils import PreTrainedTokenizer  # type: ignore
-from gtmcore.logic.utils.datautils import DataUtils
 from gtmprocessing.logic.utils.textpreprocessor import TextPreprocessor
+import gtmprocessing
 
 
 class BaseModel(ABC):
     """ Abstract base class used for NLP model classes.
     """
 
-    _base_path = Path("gtmprocessing/data/models").absolute()
+    _base_path = os.path.dirname(gtmprocessing.__file__) + "/data/models/"
 
     def __init__(self) -> None:
         self._repo_dir: str = ""
@@ -50,9 +53,12 @@ class BaseModel(ABC):
             Pipeline: the model pipeline.
         """
         return pipeline(
-            task=self.get_model_str(),
-            model=self.get_model_path(),
-            tokenizer=self.get_model_path()
+            task=self.get_task_str(),
+            model=self.get_model(),
+            tokenizer=AutoTokenizer.from_pretrained(
+                self.get_model_path(),
+                config=AutoConfig.from_pretrained(self.get_model_path(), local_files_only=True),
+                local_files_only=True)
         )
 
     @classmethod
@@ -107,8 +113,8 @@ class BaseModel(ABC):
         Returns:
             str: The path to the model.
         """
-        model_folder: str = self.get_model_str().replace("-", "_")
-        return str(self._base_path / model_folder)
+        model_folder: str = self.get_task_str().replace("-", "_")
+        return self._base_path + model_folder + "/"
 
     def set_params(self, params: Dict[str, Any]) -> None:
         """ Sets the parameters needed to run the model pipeline.
@@ -135,6 +141,17 @@ class BaseModel(ABC):
         """
 
     @abstractmethod
-    def get_model_str(self) -> str:
-        """ Gets the model string.
+    def get_model(self) -> PreTrainedModel:
+        """ Gets the model.
+
+        Returns:
+            PreTrainedModel: The pretrained model.
+        """
+
+    @abstractmethod
+    def get_task_str(self) -> str:
+        """ Gets the task string.
+
+        Returns:
+            str: The task string.
         """
