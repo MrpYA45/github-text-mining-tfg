@@ -49,7 +49,7 @@ export default function ExperimentSA({gh_user, gh_repo, repo_info, task_data, is
 
     return (
         <section className="ExperimentCard AppSection">
-            <h2 className="ExperimentTitle">Experimento de Sentiment Análisis</h2>
+            <h2 className="ExperimentTitle">Experimento de Sentiment Analysis</h2>
             <Repo title={title} repo_dir={repo_dir} description={description} labels={repo_labels}/>
             <article className="ExperimentSection">
                 <h3>Parametros Introduccidos</h3>

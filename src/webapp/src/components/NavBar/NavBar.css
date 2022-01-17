@@ -30,7 +30,7 @@
 	flex-grow: 1;
 	height: 4rem;
 	text-align: center;
-	font-size: 1.5rem;
+	font-size: clamp(1rem, 4vw, 1.5rem);
 	border-bottom: 2px solid rgba(255,255,255, 1);
 	margin: 0 0.5rem;
 	transition: all 0.3s ease;
@@ -53,6 +53,13 @@
 		flex-direction: column;
 	}
 	.NavItem {
-		width: 98%;
+		width: 95%;
+		background: var(--secondary);
+		border-bottom: 0.3rem solid var(--primary);
+		padding: 5px;
+		margin: 0;
+	}
+	.NavLink {
+		color: var(--primary);
 	}
 }

@@ -25,10 +25,10 @@
 
 .AppWelcome {
     display: flex;
-    min-height: calc(100vh - 9rem);
+    min-height: 80vh;
     flex-direction: column;
     flex-direction: column;
-    width: 80%;;
+    width: 80%;
 }
 
 .AppTitle {
@@ -37,9 +37,13 @@
 
 .AppDesc{
     color: var(--primary);
-    font-size: 1.5rem;
-    text-align: justify;
+    font-size: clamp(1rem, 4vw, 1.5rem);
     font-weight: 400;
     background-color: var(--secondary);
-    margin: 2rem;
+}
+
+@media (max-width: 720px) {
+    .AppWelcome {
+        min-height: 75vh;
+    }
 }
