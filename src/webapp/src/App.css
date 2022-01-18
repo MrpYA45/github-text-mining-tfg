@@ -67,6 +67,12 @@ h3 {
     color: var(--primary);
 }
 
+h4 {
+    margin: 2%;
+    font-size: clamp(1rem, 3vw, 2.5rem);
+    color: var(--secondary);
+}
+
 .App {
     text-align: center;
     font-family: "Roboto", sans-serif;

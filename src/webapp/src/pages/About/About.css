@@ -1,0 +1,62 @@
+/**
+ * Copyright (C) 2022 Pablo Fernández Bravo
+ * 
+ * This file is part of github-text-mining-tfg.
+ * 
+ * github-text-mining-tfg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * github-text-mining-tfg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with github-text-mining-tfg.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+.AppAboutSection {
+    color: var(--primary);
+    background: var(--secondary);
+    border-radius: 0.5rem;
+    padding: 2rem;
+}
+
+.AppAboutTitle {
+    color: var(--primary);
+}
+
+.AppAboutH2 {
+    margin: 2rem auto;
+}
+
+.AppAboutP {
+    width: 70%;
+    color: var(--primary);
+    text-align: justify;
+}
+
+.AppAboutLink {
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+}
+
+.AppAboutLi {
+    color: var(--primary);
+    text-align: left;
+    margin: 1rem;
+}
+
+.AppAboutCreditsLi {
+    color: var(--primary);
+    list-style-type: none;
+    margin: 1rem;
+}
+
+.AppAboutUl {
+    width: 70%;
+    justify-content: center;
+}

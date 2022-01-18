@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Repositories from "./pages/Repositories"
 import RepoDetail from "./pages/RepoDetail";
 import RepoExperimentDetail from "./pages/RepoExperimentDetail";
+import About from "./pages/About"
 import { Route } from "wouter";
 
 export default function App() {
@@ -32,6 +33,7 @@ export default function App() {
             <NavBar />
             <Route component={Home} path="/" />
             <Route component={Repositories} path="/repos" />
+            <Route component={About} path="/about" />
             <Route path="/user/:gh_user/repo/:gh_repo">
                 {(params) => (
                     <RepoDetail
