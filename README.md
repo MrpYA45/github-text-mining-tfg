@@ -34,6 +34,8 @@ asegurar su correcto funcionamiento:
 
 -   **Docker Compose 1.29.2** o superior.
 
+-   (_Linux_) **libmariadb-dev 3.1.5** o superior.
+
 Se recomienda el uso del editor de texto **Visual Studio Code** debido a
 la versatilidad que ofrece a la hora de trabajar con diversos lenguajes
 de manera simultánea y el uso de extensiones que facilitan múltiples
@@ -82,9 +84,9 @@ Una vez se disponga de un entorno virtual deberemos activarlo, para la
 cual el comando a utilizar dependerá del sistema operativo que se vaya a
 utilizar.
 
-**MacOS/Linux:** `source venv/bin/activate`
+**MacOS/Linux:** `source env/bin/activate`
 
-**Windows:** `venv\Scripts\activate`
+**Windows:** `env\Scripts\activate.bat`
 
 Instalación de las dependencias del back-end
 --------------------------------------------
@@ -95,6 +97,10 @@ proporciona en el directorio raíz del proyecto mediante el fichero
 `requirements.txt`. La instalación se realizará a través del gestor de
 paquetes **PIP**, el cual se distribuye junto con Python desde la
 versión 3.4.
+
+Para utilizar el siguiente comando  se deberá poseer un entorno virtual 
+activo y situar la terminal el directorio raíz del proyecto 
+(`github-text-mining-tfg`).
 
 **MacOS/Linux:** `pip3 install -r requirements.txt`
 
