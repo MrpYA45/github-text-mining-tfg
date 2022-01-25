@@ -58,6 +58,17 @@ es el siguiente:
 ![Obtención del repositorio mediante
 Git.](docs/img/git_gtm.png)
 
+Si encuentran con la situación en la cual experimentan problemas en el momento de la 
+instalación/ejecución (Windows) debido a que _"no se encuentra el fichero especificado"_, 
+por favor rectifiquen la configuración de Git mediante el siguiente comando:
+
+`git config --global core.autocrlf false`
+
+La razón se debe a que por defecto Git adapta los códigos de control dependiendo del 
+sistema operativo utilizado para la obtención del repositorio (LF/CRLF). Para poder 
+lanzar de forma correcta los scripts en el interior de los contenedores Docker, 
+estos requieren del uso de la secuencuencia de control de Unix (LF).
+
 Preparación de un entorno virtual
 ---------------------------------
 
